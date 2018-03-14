@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <name>Maven Default Project</name>
+    <groupId>org.geneticdriver</groupId>
+    <artifactId>GeneticDriver</artifactId>
+    <version>1.0</version>
+
+    <developers>
+        <developer>
+            <id>meight</id>
+            <name>Matthieu Le Boucher</name>
+            <email>matt.leboucher@gmail.com</email>
+            <url>http://www.matt-elbe.com</url>
+        </developer>
+    </developers>
+
+    <properties>
+        <dyn4j.version>3.2.4</dyn4j.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.dyn4j</groupId>
+            <artifactId>dyn4j</artifactId>
+            <version>${dyn4j.version}</version>
+        </dependency>
+    </dependencies>
+
+</project>
