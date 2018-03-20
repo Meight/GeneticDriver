@@ -14,7 +14,8 @@ public class NURBSCurve {
         for (int i = 0; i < nodes.length - n - 1; i++) {
             base = BSpline.evaluate(nodes, i, n, t);
             denominator += weights[i] * base;
-            numerator.add(controlPoints[i].multiply(weights[i]).multiply(base));
+
+            numerator.add((new Vector2(controlPoints[i])).multiply(weights[i]).multiply(base));
         }
 
         return numerator.multiply(1 / denominator);

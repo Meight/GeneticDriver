@@ -3,6 +3,8 @@ package Model.Game.Track;
 import Utils.Math.NURBS.NURBSCurve;
 import org.dyn4j.geometry.Vector2;
 
+import java.util.Arrays;
+
 /**
  * @author Matthieu Le Boucher
  */
@@ -26,19 +28,31 @@ public class Track {
         this.controlPoints = controlPoints;
         this.nodes = nodes;
         this.weights = weights;
+        this.n = n;
 
         this.evaluateCurve();
     }
 
     private void evaluateCurve() {
         // Create linear space between first and last node.
-        float step = 0.25f;
-        points = new Vector2[(int) (Math.ceil(nodes[nodes.length - 1] - nodes[0]) / step)];
+        float step = 0.05f;
+        points = new Vector2[(int) (Math.round(nodes[nodes.length - 1] - nodes[0]) / step)];
 
         int i = 0;
         for(float t = nodes[0]; t < nodes[nodes.length - 1]; t += step) {
             points[i] = NURBSCurve.evaluate(nodes, weights, controlPoints, n, t);
             i++;
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Track{" +
+                "controlPoints=" + Arrays.toString(controlPoints) +
+                ",\nnodes=" + Arrays.toString(nodes) +
+                ",\nweights=" + Arrays.toString(weights) +
+                ",\nn=" + n +
+                ",\npoints=" + Arrays.toString(points) +
+                '}';
     }
 }

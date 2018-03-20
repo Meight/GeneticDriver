@@ -12,15 +12,17 @@ public class Main {
         };
 
         float[] nodes = new float[] {
-            0, 0, 0.25f, 0.5f, 0.5f, 1f, 1f
+                0, 0, 0, 0.5f, 1f, 1f, 1f
         };
 
         float[] weights = new float[] {
-            1, 1, 1, 1
+                1, 1, 1, 1
         };
 
         int n = 2;
 
         Track track = new Track(controlPoints, nodes, weights, n);
+
+        System.out.println(track);
     }
 }
