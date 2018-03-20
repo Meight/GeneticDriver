@@ -55,4 +55,8 @@ public class Track {
                 ",\npoints=" + Arrays.toString(points) +
                 '}';
     }
+
+    public Vector2[] getPoints() {
+        return points;
+    }
 }
