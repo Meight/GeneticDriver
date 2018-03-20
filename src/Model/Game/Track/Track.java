@@ -1,22 +1,37 @@
 package Model.Game.Track;
 
-import java.util.ArrayList;
-import java.util.List;
+import Utils.Math.NURBS.NURBSCurve;
+import org.dyn4j.geometry.Vector2;
 
 /**
  * @author Matthieu Le Boucher
  */
 public class Track {
-    /**
-     * Ordered list of the segments which constitute the track.
-     */
-    private List<Segment> segments;
+    private Vector2[] controlPoints;
 
-    public Track() {
-        this.segments = new ArrayList<Segment>();
+    private float[] nodes;
+
+    private float[] weights;
+
+    private int n;
+
+    private Vector2[] points;
+
+    public Track(Vector2[] controlPoints, float[] nodes, float[] weights, int n) {
+        this.controlPoints = controlPoints;
+        this.nodes = nodes;
+        this.weights = weights;
     }
 
-    public void addSegment(Segment segment) {
-        this.segments.add(segment);
+    private void evaluateCurve() {
+        // Create linear space between first and last node.
+        float step = 0.25f;
+        points = new Vector2[(int) (Math.ceil(nodes[nodes.length - 1] - nodes[0]) / step)];
+
+        int i = 0;
+        for(float t = nodes[0]; t < nodes[nodes.length - 1]; t += step) {
+            points[i] = NURBSCurve.evaluate(nodes, weights, controlPoints, n, t);
+            i++;
+        }
     }
 }
