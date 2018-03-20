@@ -15,7 +15,7 @@ public class TrackGenerator {
     private static final float SLOPE_DEVIATION = 5f;
 
     public static Track generateTrack(Genotype genotype) {
-        Track track = new Track();
+        Track track = null;
 
         List<SlopeRange> slopeRanges = generateSlopeRanges(genotype.getControlPoints());
 
