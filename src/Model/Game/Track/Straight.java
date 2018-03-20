@@ -1,7 +1,7 @@
 package Model.Game.Track;
 
 /**
- * @author : Matthieu Le Boucher
+ * @author Matthieu Le Boucher
  */
 public class Straight implements Segment {
     private int length;

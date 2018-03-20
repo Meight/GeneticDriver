@@ -1,7 +1,7 @@
 package Model.Game.Track;
 
 /**
- * @author : Matthieu Le Boucher
+ * @author Matthieu Le Boucher
  */
 public class Turn implements Segment {
     public enum Direction {
