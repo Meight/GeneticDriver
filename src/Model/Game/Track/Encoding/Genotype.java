@@ -16,4 +16,8 @@ public class Genotype {
     public void addControlPoint(ControlPoint controlPoint) {
         this.controlPoints.add(controlPoint);
     }
+
+    public List<ControlPoint> getControlPoints() {
+        return controlPoints;
+    }
 }
