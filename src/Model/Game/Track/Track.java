@@ -26,6 +26,8 @@ public class Track {
         this.controlPoints = controlPoints;
         this.nodes = nodes;
         this.weights = weights;
+
+        this.evaluateCurve();
     }
 
     private void evaluateCurve() {
