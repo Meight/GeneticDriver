@@ -17,7 +17,7 @@ public class TrackGenerator {
         return null;
     }
 
-    private static Segment generateSegment(ControlPoint p_i, ControlPoint p_j, float alpha) {
+    private static Segment generateSegment(ControlPoint p_i, ControlPoint p_j, float slope) {
         return null;
     }
 
