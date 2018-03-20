@@ -1,5 +1,7 @@
 package Model.Game.Track;
 
+import Model.Game.Track.Encoding.Genotype;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +14,7 @@ public class Track {
      */
     private List<Segment> segments;
 
-    public Track() {
+    public Track(Genotype genotype) {
         this.segments = new ArrayList<Segment>();
     }
 
