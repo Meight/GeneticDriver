@@ -3,6 +3,8 @@ package Model.Game.Track.Encoding;
 import Model.Game.Track.Segment;
 import Model.Game.Track.Track;
 
+import java.util.List;
+
 /**
  * @author : Matthieu Le Boucher
  *
@@ -16,6 +18,10 @@ public class TrackGenerator {
     }
 
     private static Segment generateSegment(ControlPoint p_i, ControlPoint p_j, float alpha) {
+        return null;
+    }
+
+    private List<SlopeRange> generateSlopeRanges(List<ControlPoint> controlPoints) {
         return null;
     }
 }
