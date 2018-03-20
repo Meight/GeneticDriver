@@ -6,7 +6,7 @@ import Model.Game.Track.Track;
 import java.util.List;
 
 /**
- * @author : Matthieu Le Boucher
+ * @author Matthieu Le Boucher
  *
  * Genotype to phenotype mapper.
  */
