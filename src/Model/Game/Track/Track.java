@@ -18,6 +18,11 @@ public class Track {
     private Vector2[] points;
 
     public Track(Vector2[] controlPoints, float[] nodes, float[] weights, int n) {
+        if(nodes.length != controlPoints.length + n + 1)
+            throw new IllegalArgumentException("Invalid track parameters: the amount of nodes (" + nodes.length + ") " +
+                    " must be equal to the amount of control points (" + controlPoints.length + ") plus the degree " +
+                    " of the curve (" + n + ") plus one.");
+
         this.controlPoints = controlPoints;
         this.nodes = nodes;
         this.weights = weights;
