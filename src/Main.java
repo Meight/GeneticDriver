@@ -18,7 +18,7 @@ public class Main extends JFrame {
         };
 
         float[] nodes = new float[] {
-                0, 0, 0, 0.5f, 0.5f, 1f, 1f, 1f
+                0, 0, 0.2f, 0.4f, 0.6f, 0.8f, 1f, 1f
         };
 
         float[] weights = new float[] {
@@ -31,8 +31,11 @@ public class Main extends JFrame {
 
         JPanel panel = new JPanel() {
             public void paintComponent(Graphics g) {
+                int i = 0;
                 for(Vector2 point : track.getPoints()) {
-                    g.drawString("X", (int) point.x, (int) point.y);
+                    Vector2 nextPoint = i == track.getPoints().length - 1 ? track.getPoints()[0] : track.getPoints()[i + 1];
+                    g.drawLine((int) point.x, (int) point.y, (int) nextPoint.x, (int) nextPoint.y);
+                    i++;
                 }
             }
         };
