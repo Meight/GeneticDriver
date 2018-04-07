@@ -7,11 +7,6 @@ import org.dyn4j.geometry.Vector2;
  */
 class Car extends RenderableObject {
     /**
-     * Current position vector of the car.
-     */
-    private Vector2 position;
-
-    /**
      * Current velocity vector of the car.
      */
     private Vector2 velocity;
@@ -25,4 +20,6 @@ class Car extends RenderableObject {
      * Steer force currently applied to the car.
      */
     private Vector2 steerForce;
+
+
 }
