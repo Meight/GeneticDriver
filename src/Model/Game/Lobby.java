@@ -1,5 +1,6 @@
 package Model.Game;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -8,11 +9,20 @@ import java.util.List;
 public class Lobby {
     private List<Player> players;
 
-    public void addPlayer(Player player) {
+    public Lobby(){
+        players = new ArrayList<Player>();
+    }
 
+    public Lobby(Player p){
+        players = new ArrayList<Player>();
+        players.add(p);
+    }
+
+    public void addPlayer(Player player) {
+        players.add(player);
     }
 
     public void removePlayer(Player player) {
-
+        players.remove(player);
     }
 }

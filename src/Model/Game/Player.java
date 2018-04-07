@@ -20,7 +20,13 @@ public class Player {
         this.color = color;
     }
 
-    public void changeCarColor(Color color) {
+    public Player(String name){
+        this.name = name;
+        this.car = new Car();
+        this.color = Color.color(Math.random(),Math.random(),Math.random());
+    }
 
+    public void changeCarColor(Color color) {
+        this.color = color;
     }
 }

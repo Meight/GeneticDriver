@@ -1,14 +1,54 @@
+import Controller.LobbyController;
+import Model.Game.Lobby;
+import Model.Game.Player;
 import Model.Game.Track.Track;
+import View.LobbyView;
 import org.dyn4j.geometry.Vector2;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 
 public class Main extends JFrame {
 
+    static LobbyController controller;
+    static LobbyView lobbyView;
+
     public Main() {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        JPanel panel = networkPanel();
+        setContentPane(panel);
+        setBounds(0, 0, 400, 400);
+        setVisible(true);
+    }
 
+    public static void main(String[] args) {
+        new Main();
+    }
+
+    public static JPanel networkPanel(){
+        JPanel panel = new JPanel(new BorderLayout());
+        JButton newRoom = new JButton("Create Room");
+        final JTextField pseudo = new JTextField(20);
+        panel.add(newRoom,BorderLayout.SOUTH);
+        panel.add(pseudo,BorderLayout.NORTH);
+        newRoom.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if(pseudo.getText().length() > 0){
+                    controller = new LobbyController(new Lobby(new Player(pseudo.getText())));
+                    lobbyView = new LobbyView(controller);
+                    JComponent b = (JComponent) e.getSource();
+                    JFrame frame = (JFrame)SwingUtilities.getRoot(b);
+                    frame.setVisible(false);
+                }
+            }
+        });
+        return panel;
+    }
+
+    public static JPanel trackPanel(){
         Vector2[] controlPoints = new Vector2[] {
                 new Vector2(50, 50),
                 new Vector2(300, 50),
@@ -40,12 +80,6 @@ public class Main extends JFrame {
             }
         };
 
-        setContentPane(panel);
-        setBounds(0, 0, 400, 400);
-        setVisible(true);
-    }
-
-    public static void main(String[] args) {
-        new Main();
+        return panel;
     }
 }
