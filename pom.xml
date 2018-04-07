@@ -27,6 +27,10 @@
             <artifactId>dyn4j</artifactId>
             <version>${dyn4j.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.slick2d</groupId>
+            <artifactId>slick2d-parent</artifactId>
+        </dependency>
     </dependencies>
 
     <!-- https://mvnrepository.com/artifact/org.slick2d/slick2d-core -->
