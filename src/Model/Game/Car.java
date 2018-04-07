@@ -37,24 +37,9 @@ public class Car extends RenderableObject implements KeyPressedListener {
     }
 
 
-
     @Override
     public void keyPressed(int key, char c) {
-        switch (key) {
-            case Input.KEY_UP:
 
-                break;
-            case Input.KEY_LEFT:
-                rotate(-10f);
-
-                break;
-            case Input.KEY_DOWN:
-
-                break;
-            case Input.KEY_RIGHT:
-                rotate(10f);
-                break;
-        }
     }
 
     @Override
