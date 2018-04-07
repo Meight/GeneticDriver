@@ -1,11 +1,16 @@
 package Model.Game;
 
+import Model.KeyPressedListener;
 import org.dyn4j.geometry.Vector2;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.Input;
+import org.newdawn.slick.SlickException;
 
 /**
  * @author Matthieu Boucher
  */
-class Car extends RenderableObject {
+public class Car extends RenderableObject implements KeyPressedListener {
     /**
      * Current velocity vector of the car.
      */
@@ -21,5 +26,43 @@ class Car extends RenderableObject {
      */
     private Vector2 steerForce;
 
+    public Car(int x, int y) {
+        this.position = new Vector2(x, y);
 
+        try {
+            this.image = new Image("cars/red-car.png");
+        } catch (SlickException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+    @Override
+    public void keyPressed(int key, char c) {
+        switch (key) {
+            case Input.KEY_UP:
+
+                break;
+            case Input.KEY_LEFT:
+                rotate(-10f);
+
+                break;
+            case Input.KEY_DOWN:
+
+                break;
+            case Input.KEY_RIGHT:
+                rotate(10f);
+                break;
+        }
+    }
+
+    @Override
+    public void update(GameContainer container, int delta) throws SlickException {
+        if(container.getInput().isKeyDown(Input.KEY_RIGHT)) {
+            rotate(10f);
+        } else if(container.getInput().isKeyDown(Input.KEY_LEFT)) {
+            rotate(-10f);
+        }
+    }
 }

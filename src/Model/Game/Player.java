@@ -22,11 +22,15 @@ public class Player {
 
     public Player(String name){
         this.name = name;
-        this.car = new Car();
+        this.car = new Car(20, 20);
         this.color = Color.color(Math.random(),Math.random(),Math.random());
     }
 
     public void changeCarColor(Color color) {
         this.color = color;
+    }
+
+    public Car getCar() {
+        return car;
     }
 }
