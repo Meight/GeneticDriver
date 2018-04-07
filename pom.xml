@@ -3,7 +3,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <name>Maven Default Project</name>
+    <name>Genetic Driver</name>
     <groupId>org.geneticdriver</groupId>
     <artifactId>GeneticDriver</artifactId>
     <version>1.0</version>
@@ -29,4 +29,10 @@
         </dependency>
     </dependencies>
 
+    <!-- https://mvnrepository.com/artifact/org.slick2d/slick2d-core -->
+    <dependency>
+        <groupId>org.slick2d</groupId>
+        <artifactId>slick2d-core</artifactId>
+        <version>1.0.2</version>
+    </dependency>
 </project>
