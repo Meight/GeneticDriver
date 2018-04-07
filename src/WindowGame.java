@@ -10,7 +10,7 @@ public class WindowGame extends BasicGame {
     }
 
     public WindowGame() {
-        super("Lesson 2 :: MapGame");
+        super("GeneticDriver");
     }
 
     @Override
