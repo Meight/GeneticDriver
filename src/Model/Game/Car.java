@@ -45,9 +45,9 @@ public class Car extends RenderableObject implements KeyPressedListener {
     @Override
     public void update(GameContainer container, int delta) throws SlickException {
         if(container.getInput().isKeyDown(Input.KEY_RIGHT)) {
-            rotate(10f);
+            rotate(delta);
         } else if(container.getInput().isKeyDown(Input.KEY_LEFT)) {
-            rotate(-10f);
+            rotate(-delta);
         }
     }
 }
