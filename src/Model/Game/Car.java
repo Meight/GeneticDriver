@@ -45,7 +45,7 @@ public class Car extends RenderableObject implements KeyPressedListener {
     }
 
     @Override
-    public void processInput(Input input, double time) throws SlickException {
+    public void processInput(Input input, double time) {
         if(input.isAccelerating()) {
             // Handle acceleration.
         } else {

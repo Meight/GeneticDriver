@@ -25,7 +25,7 @@ public abstract class RenderableObject {
         g.drawImage(image, (float) position.x, (float) position.y);
     }
 
-    public abstract void processInput(Input input, double time) throws SlickException;
+    public abstract void processInput(Input input, double time);
 
     protected void rotate(float angle) {
         currentRotation += angle;

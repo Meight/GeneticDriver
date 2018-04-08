@@ -48,7 +48,7 @@ public class WindowGame extends BasicGame {
     public void update(GameContainer container, int delta) throws SlickException {
         for (Player player : players) {
             RenderableObject car = player.getCar();
-            car.update(container, delta);
+            car.processInput(container, delta);
         }
     }
 
