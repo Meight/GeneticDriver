@@ -26,9 +26,13 @@ public abstract class RenderableObject {
 
     public abstract void update(GameContainer container, int delta) throws SlickException;
 
-    public void rotate(float angle) {
+    protected void rotate(float angle) {
         currentRotation += angle;
         image.setCenterOfRotation(image.getWidth() * scale / 2, image.getHeight() * scale / 2);
         image.setRotation(currentRotation);
+    }
+
+    protected void translate(Vector2 movement) {
+        position.add(movement);
     }
 }
