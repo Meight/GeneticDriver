@@ -46,6 +46,17 @@ public class Car extends RenderableObject implements KeyPressedListener {
 
     @Override
     public void processInput(Input input, double time) {
+        float currentTime = System.currentTimeMillis();
+
+        if (time < currentTime)
+            return; // Ignore packets out of order.
+
+        float deltaTime = (float) (currentTime - time);
+
+        updatePhysics(input, deltaTime);
+    }
+
+    private void updatePhysics(Input input, float deltaTime) {
         if(input.isAccelerating()) {
             // Handle acceleration.
         } else {
