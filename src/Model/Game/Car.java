@@ -2,6 +2,7 @@ package Model.Game;
 
 import Model.KeyPressedListener;
 import Model.Network.Input;
+import Model.Network.State;
 import org.dyn4j.geometry.Vector2;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
@@ -10,8 +11,7 @@ import org.newdawn.slick.SlickException;
  * @author Matthieu Boucher
  */
 public class Car extends RenderableObject implements KeyPressedListener {
-    private static final float MAX_VELOCITY_MAGNITUDE_SQUARED = 10f;
-
+    private static final int MAXIMAL_DISTANCE_BEFORE_SNAP = 5;
     /**
      * Current velocity vector of the car.
      */
@@ -54,6 +54,20 @@ public class Car extends RenderableObject implements KeyPressedListener {
         float deltaTime = (float) (currentTime - time);
 
         updatePhysics(input, deltaTime);
+    }
+
+    @Override
+    public void processState(State state, double time) {
+        Vector2 difference = state.getPosition().subtract(position);
+
+        double distance = difference.getMagnitudeSquared();
+
+        if (distance > MAXIMAL_DISTANCE_BEFORE_SNAP)
+            position = state.getPosition();
+        else if (distance > 0.1f)
+            position.add(difference.multiply(0.1f));
+
+        velocity = state.getVelocity();
     }
 
     private void updatePhysics(Input input, float deltaTime) {
