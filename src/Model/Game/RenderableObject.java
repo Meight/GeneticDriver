@@ -2,6 +2,7 @@ package Model.Game;
 
 import Model.Network.Input;
 import Model.Network.NetworkBehavior;
+import Model.Network.State;
 import org.dyn4j.geometry.Vector2;
 import org.newdawn.slick.*;
 
@@ -27,6 +28,8 @@ public abstract class RenderableObject implements NetworkBehavior {
     }
 
     public abstract void processInput(Input input, double time);
+
+    public abstract void processState(State state, double time);
 
     protected void rotate(float angle) {
         currentRotation += angle;

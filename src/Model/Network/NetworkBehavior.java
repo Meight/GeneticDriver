@@ -5,4 +5,6 @@ package Model.Network;
  */
 public interface NetworkBehavior {
     void processInput(Input input, double time);
+
+    void processState(State state, double time);
 }
