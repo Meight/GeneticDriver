@@ -1,16 +1,17 @@
 package Model.Game;
 
 import Model.KeyPressedListener;
+import Model.Network.Input;
 import org.dyn4j.geometry.Vector2;
-import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
-import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
 /**
  * @author Matthieu Boucher
  */
 public class Car extends RenderableObject implements KeyPressedListener {
+    private static final float MAX_VELOCITY_MAGNITUDE_SQUARED = 10f;
+
     /**
      * Current velocity vector of the car.
      */
@@ -28,6 +29,7 @@ public class Car extends RenderableObject implements KeyPressedListener {
 
     public Car(int x, int y) {
         this.position = new Vector2(x, y);
+        this.velocity = new Vector2();
 
         try {
             this.image = new Image("cars/red-car.png");
@@ -43,11 +45,11 @@ public class Car extends RenderableObject implements KeyPressedListener {
     }
 
     @Override
-    public void update(GameContainer container, int delta) throws SlickException {
-        if(container.getInput().isKeyDown(Input.KEY_RIGHT)) {
-            rotate(delta);
-        } else if(container.getInput().isKeyDown(Input.KEY_LEFT)) {
-            rotate(-delta);
+    public void processInput(Input input, double time) throws SlickException {
+        if(input.isAccelerating()) {
+            // Handle acceleration.
+        } else {
+            // Handle deceleration.
         }
     }
 }

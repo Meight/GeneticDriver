@@ -1,5 +1,6 @@
 package Model.Game;
 
+import Model.Network.Input;
 import org.dyn4j.geometry.Vector2;
 import org.newdawn.slick.*;
 
@@ -24,7 +25,7 @@ public abstract class RenderableObject {
         g.drawImage(image, (float) position.x, (float) position.y);
     }
 
-    public abstract void update(GameContainer container, int delta) throws SlickException;
+    public abstract void processInput(Input input, double time) throws SlickException;
 
     protected void rotate(float angle) {
         currentRotation += angle;
