@@ -1,13 +1,14 @@
 package Model.Game;
 
 import Model.Network.Input;
+import Model.Network.NetworkBehavior;
 import org.dyn4j.geometry.Vector2;
 import org.newdawn.slick.*;
 
 /**
  * @author Matthieu Le Boucher
  */
-public abstract class RenderableObject {
+public abstract class RenderableObject implements NetworkBehavior {
     protected Image image;
 
     protected Vector2 position;
