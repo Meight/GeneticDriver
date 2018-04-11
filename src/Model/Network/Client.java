@@ -2,6 +2,9 @@ package Model.Network;
 
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.net.SocketException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Matthieu Le Boucher
@@ -9,6 +12,8 @@ import java.net.DatagramSocket;
 
 public class Client {
     private int port;
+
+    private List<Server> listServer = new ArrayList<>();
 
     private static final int BUFFER_SIZE = 8192;
 
@@ -27,5 +32,14 @@ public class Client {
 
     public void sendPacket(byte[] buffer) {
         // Todo.
+    }
+
+    public void foundServers(){
+        try {
+            socket = new DatagramSocket(BUFFER_SIZE);
+            socket.setBroadcast(true);
+        } catch (SocketException e) {
+            e.printStackTrace();
+        }
     }
 }
