@@ -24,7 +24,7 @@ public abstract class RenderableObject implements NetworkBehavior {
     }
 
     public void render(GameContainer container, Graphics g) throws SlickException {
-        g.drawImage(image, (float) position.x, (float) position.y);
+        g.drawImage(image, (float) position.x - image.getWidth() * scale / 2, (float) position.y - image.getHeight() * scale / 2);
     }
 
     public abstract void processInput(Input input, double time);
