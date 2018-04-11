@@ -102,6 +102,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.dyn4j</groupId>
+            <artifactId>dyn4j</artifactId>
+            <version>${dyn4j.version}</version>
+        </dependency>
+        <dependency>
             <groupId>com.ninjacave.slick</groupId>
             <artifactId>slick</artifactId>
             <version>1.0.b237</version>
