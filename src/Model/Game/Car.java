@@ -4,8 +4,7 @@ import Model.KeyPressedListener;
 import Model.Network.Input;
 import Model.Network.State;
 import org.dyn4j.geometry.Vector2;
-import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
+import org.newdawn.slick.*;
 
 /**
  * @author Matthieu Boucher
@@ -29,7 +28,7 @@ public class Car extends RenderableObject implements KeyPressedListener {
 
     public Car(int x, int y) {
         this.position = new Vector2(x, y);
-        this.velocity = new Vector2();
+        this.velocity = new Vector2(10, 10);
 
         try {
             this.image = new Image("cars/red-car.png");
@@ -68,6 +67,16 @@ public class Car extends RenderableObject implements KeyPressedListener {
             position.add(difference.multiply(0.1f));
 
         velocity = state.getVelocity();
+    }
+
+    @Override
+    public void render(GameContainer container, Graphics g) throws SlickException {
+        super.render(container, g);
+
+        // Draw velocity.
+        g.setColor(Color.green);
+        g.setLineWidth(3);
+        g.drawLine((int) position.x, (int) position.y, (int) (position.x + velocity.x), (int) (position.y + velocity.y));
     }
 
     private void updatePhysics(Input input, float deltaTime) {
