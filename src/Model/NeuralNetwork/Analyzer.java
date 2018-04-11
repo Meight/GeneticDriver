@@ -1,12 +1,10 @@
 package Model.NeuralNetwork;
 
-import Model.NeuralNetwork.Transfer.TransferFunction;
-
 /**
  * @author Matthieu Le Boucher
  */
 public class Analyzer {
-    private int dimension;
+    /*private int dimension;
     private int neurons;
 
     private float[] outFunctionValues;
@@ -28,5 +26,5 @@ public class Analyzer {
 
     private float calculateOutFunctionValue(float[] x){
         return 0;
-    }
+    }*/
 }

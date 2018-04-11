@@ -10,7 +10,7 @@ import java.util.Random;
 public class IAMain {
 
     static boolean IS_TRAINING = true;
-    static int NUMBER_OF_TESTS = 6000;
+    static int NUMBER_OF_TESTS = 12000;
 
     public static void CreateTestFile() throws FileNotFoundException, UnsupportedEncodingException {
         PrintWriter writer = new PrintWriter("testXOR.txt", "UTF-8");

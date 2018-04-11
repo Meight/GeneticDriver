@@ -1,10 +1,10 @@
 package Model.NeuralNetwork;
 
+import Model.NeuralNetwork.Transfer.SigmoidFunction;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Vector;
-
 
 public class Neuron {
 
@@ -74,10 +74,10 @@ public class Neuron {
                     prevLayer.getLayer().get(n).outputWeights.get(myIndex).weight;
         }
 
-        outputVal = TransferFunction(sum);
+        outputVal = SigmoidFunction.Evaluate(sum);
     }
 
-    private static double TransferFunction(double x){
+    /*private static double TransferFunction(double x){
         //hyperbolic transfer function
         // tanh - output range [-1.0..1.0]
         return Math.tanh(x);
@@ -85,18 +85,18 @@ public class Neuron {
     private static double TransferFunctionDerivative(double x){
         //tanh approximated derivative
         return 1.0 - x * x;
-    }
+    }*/
 
     void CalcOutputGradients(double targetVal)
     {
         double delta = targetVal - outputVal;
-        gradient = delta * TransferFunctionDerivative(outputVal);
+        gradient = delta * SigmoidFunction.EvaluateDerivative(outputVal);
     }
 
     void CalcHiddenGradients(Layer nextLayer)
     {
         double dow = SumDOW(nextLayer);
-        gradient = dow * TransferFunctionDerivative(outputVal);
+        gradient = dow * SigmoidFunction.EvaluateDerivative(outputVal);
     }
 
     private double SumDOW(Layer nextLayer){
