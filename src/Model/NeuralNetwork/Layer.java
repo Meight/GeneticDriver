@@ -1,21 +1,30 @@
 package Model.NeuralNetwork;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
 
-/**
- * @author Matthieu Le Boucher
- */
 public class Layer {
-    private float[] bias;
-    private float[] weights;
 
-    public int neurons;
-    public int dimension;
+    List<Neuron> layer;
 
-    public Layer(int neurons, int dimension) {
-        this.neurons = neurons;
-        this.dimension = dimension;
+    public Layer(List<Neuron> layer) {
+        this.layer = layer;
     }
 
-    private void initialize() {
+    public Layer() {
+        this.layer = new ArrayList<>();
+    }
 
+    public List<Neuron> getLayer() {
+        return layer;
+    }
+
+    public void setLayer(List<Neuron> layer) {
+        this.layer = layer;
+    }
+
+    public void AddNeuron(Neuron n) {
+        this.layer.add(n);
     }
 }
+
