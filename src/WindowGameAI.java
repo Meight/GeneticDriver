@@ -8,7 +8,7 @@ import org.newdawn.slick.tiled.TiledMap;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WindowGame extends BasicGame {
+public class WindowGameAI extends BasicGame {
     private GameContainer container;
     private TiledMap map;
 
@@ -16,10 +16,10 @@ public class WindowGame extends BasicGame {
     private List<KeyPressedListener> keyPressedListeners = new ArrayList<KeyPressedListener>();
 
     public static void main(String[] args) throws SlickException {
-        new AppGameContainer(new WindowGame(), 960, 960, false).start();
+        new AppGameContainer(new WindowGameAI(), 960, 960, false).start();
     }
 
-    public WindowGame() {
+    public WindowGameAI() {
         super("GeneticDriver");
     }
 
@@ -28,7 +28,7 @@ public class WindowGame extends BasicGame {
         this.container = container;
         this.map = new TiledMap("maps/Map.tmx");
 
-        players.add(new Player("Matt", map, false));
+        players.add(new Player("Matt", map, true));
 
         for (Player player : players) {
             keyPressedListeners.add(player.getCar());
