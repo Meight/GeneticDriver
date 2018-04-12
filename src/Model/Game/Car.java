@@ -14,18 +14,15 @@ public class Car extends RenderableObject implements KeyPressedListener {
 
     private static final double LEFT_MOST_TURN = -0.03d;
     private static final double RIGHT_MOST_TURN = 0.03d;
-    private static final double MAXIMAL_SPEED = 3.0d;
+    private static final double MAXIMAL_SPEED = 1.0d;
     private static final double ACCELERATION_INCREMENT = 0.005d;
     private static final double ACCELERATION_DECREMENT = 0.003d;
 
     private double turn;
 
     private double angle;
-    private byte direction;
     private double speed;
-    private double backSpeed;
 
-    private int checkPointsPassed;
     private int laps;
 
     /**
@@ -84,7 +81,7 @@ public class Car extends RenderableObject implements KeyPressedListener {
 
         // Draw velocity.
         g.setColor(Color.green);
-        //g.drawLine((int) position.x, (int) position.y, (int) (position.x + velocity.x), (int) (position.y + velocity.y));
+        g.drawLine((int) position.x, (int) position.y, (int) (position.x + Math.cos(angle) * 100), (int) (position.y + Math.sin(angle) * 100));
 
         g.setColor(Color.blue);
         //Vector2 localAcceleration = new Vector2(position).add(acceleration);
@@ -95,9 +92,9 @@ public class Car extends RenderableObject implements KeyPressedListener {
     private void updatePhysics(Input input, float deltaTime) {
         turn = 0;
         if(input.isTurningRight())
-            turn = -10; //Math.min(RIGHT_MOST_TURN, 0.5d);
+            turn = 0.1; //Math.min(RIGHT_MOST_TURN, 0.5d);
         else if (input.isTurningLeft())
-            turn = 10; //Math.max(LEFT_MOST_TURN, -0.5d);
+            turn = -0.1; //Math.max(LEFT_MOST_TURN, -0.5d);
 
         if(input.isAccelerating())
             speed += ACCELERATION_INCREMENT;
@@ -110,8 +107,9 @@ public class Car extends RenderableObject implements KeyPressedListener {
         }
 
         speed = Math.min(MAXIMAL_SPEED, speed);
-        angle += Math.toRadians(turn * speed);
+        double angleContribution = turn * speed;
+        angle += Math.toRadians(angleContribution);
         position.add(Math.cos(angle) * speed, Math.sin(angle) * speed);
-        this.setAngle(-(float) angle);
+        rotate((float) angleContribution);
     }
 }
