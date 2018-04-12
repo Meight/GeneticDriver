@@ -7,7 +7,9 @@ import Model.Network.InputFactory;
 import org.newdawn.slick.tiled.TiledMap;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Random;
 
 public class GeneticSystem {
     List<Player> players;
@@ -32,7 +34,12 @@ public class GeneticSystem {
     }
 
     public void Update(int delta){
+        //if not all car dead
         ActivatesBrain(delta);
+        //if all car dead
+        //Select
+        //Evolve
+        //Let's GO
     }
 
     public void ActivatesBrain(int delta){
@@ -84,7 +91,37 @@ public class GeneticSystem {
          */
     }
 
-    public void CrossOver(){
+    public Player CrossOver(Player parentA, Player parentB){
+        Net netA = ((CarAI)parentA.getCar()).getNeuralNetwork();
+        Net netB = ((CarAI)parentB.getCar()).getNeuralNetwork();
+        int cutPoint = new Random().nextInt(netA.neuronsHiddenNumber());
+
+        //setup for the cross over
+        //cutting the hidden layer of parentA in two lists
+        Layer layerA = (Layer) netA.GetNet().get(1).getLayer();
+        Layer aBeforeCut = (Layer)layerA.getLayer().subList(0,cutPoint);
+        Layer aAfterCut = (Layer)layerA.getLayer().subList(cutPoint,layerA.getLayer().size());
+
+        //Same thing for B
+        Layer layerB = (Layer) netB.GetNet().get(1).getLayer();
+        Layer bBeforeCut = (Layer)layerB.getLayer().subList(0,cutPoint);
+        Layer bAfterCut = (Layer)layerB.getLayer().subList(cutPoint,layerB.getLayer().size());
+
+        //merge for parentA net
+        List<Neuron> finalA = new ArrayList<>();
+        finalA.addAll((Collection<? extends Neuron>) aBeforeCut);
+        finalA.addAll((Collection<? extends Neuron>) bAfterCut);
+        netA.GetNet().get(1).setLayer(finalA);
+        ((CarAI)parentA.getCar()).setNeuralNetwork(netA);
+        //merge for parentB net
+        List<Neuron> finalB = new ArrayList<>();
+        finalA.addAll((Collection<? extends Neuron>) bBeforeCut);
+        finalA.addAll((Collection<? extends Neuron>) aAfterCut);
+        netB.GetNet().get(1).setLayer(finalB);
+        ((CarAI)parentA.getCar()).setNeuralNetwork(netB);
+
+        return new Random().nextInt(2) == 1 ? parentA : parentB;
+        //Merge both layer
         /*
         // performs a single point crossover between two parents
         crossOver : function(parentA, parentB) {

@@ -145,4 +145,8 @@ public class Net {
         }
         return res;
     }
+
+    public int neuronsHiddenNumber(){
+       return layers.get(1).getLayer().size();
+    }
 }
