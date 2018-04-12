@@ -14,15 +14,15 @@
  </tileset>
  <layer name="Environment" width="20" height="15">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAACmNkYGBgpBMGASYSMEwfLjlamseAxx+4zMNlNi3NQzeXgYB5lMTRYDMPHZASfuS6j1bmocvhA8SmZ3zuJSd/kGseNTEAuv7Rc7AEAAA=
+   H4sIAAAAAAAACmNkYGBgpCNmIgHj00Nr84jxAzY+IbsH2jxK4miwmUeMPDHhR4r7aGUeNdIfPfMHKeZREwMAiF6gw7AEAAA=
   </data>
  </layer>
- <layer name="Slow" width="20" height="15" opacity="0.89">
+ <layer name="Slow" width="20" height="15" visible="0" opacity="0.89">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAACmNmYGBgpiMmBeDTQ2vziPEDNj4huwfaPFLiiAmHneSah8sP5JpHjDwhu0l1H63Mo0b6w2cXMYBW5lETAwDDUQKXsAQAAA==
+   H4sIAAAAAAAACmNmYGBgpiMmBeDTQ2vziPEDNj4huwfaPEriaLCZR4w8IbtJdR+tzKNG+sNnFzGAVuZREwMAOMoacbAEAAA=
   </data>
  </layer>
- <layer name="Walls" width="20" height="15">
+ <layer name="Walls" width="20" height="15" visible="0">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAACmNgGAX0AixYMKXmUROQYx42P1HLf9jsGknmjQJMAAD3Q8DLsAQAAA==
   </data>
