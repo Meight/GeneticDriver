@@ -11,15 +11,22 @@ import org.newdawn.slick.*;
  */
 public class Car extends RenderableObject implements KeyPressedListener {
     private static final int MAXIMAL_DISTANCE_BEFORE_SNAP = 5;
-    /**
-     * Current velocity vector of the car.
-     */
-    private Vector2 velocity;
 
-    /**
-     * Target velocity vector of the car, i.e. the next wanted velocity.
-     */
-    private Vector2 targetVelocity;
+    private static final double LEFT_MOST_TURN = -0.03d;
+    private static final double RIGHT_MOST_TURN = 0.03d;
+    private static final double MAXIMAL_SPEED = 3.0d;
+    private static final double ACCELERATION_INCREMENT = 0.005d;
+    private static final double ACCELERATION_DECREMENT = 0.003d;
+
+    private double turn;
+
+    private double angle;
+    private byte direction;
+    private double speed;
+    private double backSpeed;
+
+    private int checkPointsPassed;
+    private int laps;
 
     /**
      * Steer force currently applied to the car.
@@ -28,7 +35,9 @@ public class Car extends RenderableObject implements KeyPressedListener {
 
     public Car(int x, int y) {
         this.position = new Vector2(x, y);
-        this.velocity = new Vector2(10, 10);
+        this.turn = 0;
+        this.speed = 0;
+        this.angle = 0;
 
         try {
             this.image = new Image("cars/red-car.png");
@@ -45,14 +54,14 @@ public class Car extends RenderableObject implements KeyPressedListener {
 
     @Override
     public void processInput(Input input, double time) {
-        float currentTime = System.currentTimeMillis();
+        /*float currentTime = System.currentTimeMillis();
 
         if (time < currentTime)
             return; // Ignore packets out of order.
 
-        float deltaTime = (float) (currentTime - time);
+        float deltaTime = (float) (currentTime - time);*/
 
-        updatePhysics(input, deltaTime);
+        updatePhysics(input, (float) time);
     }
 
     @Override
@@ -66,24 +75,43 @@ public class Car extends RenderableObject implements KeyPressedListener {
         else if (distance > 0.1f)
             position.add(difference.multiply(0.1f));
 
-        velocity = state.getVelocity();
     }
 
     @Override
     public void render(GameContainer container, Graphics g) throws SlickException {
         super.render(container, g);
+        g.setLineWidth(3);
 
         // Draw velocity.
         g.setColor(Color.green);
-        g.setLineWidth(3);
-        g.drawLine((int) position.x, (int) position.y, (int) (position.x + velocity.x), (int) (position.y + velocity.y));
+        //g.drawLine((int) position.x, (int) position.y, (int) (position.x + velocity.x), (int) (position.y + velocity.y));
+
+        g.setColor(Color.blue);
+        //Vector2 localAcceleration = new Vector2(position).add(acceleration);
+
+        //g.drawLine((int) position.x, (int) position.y, (int) localAcceleration.x, (int) localAcceleration.y);
     }
 
     private void updatePhysics(Input input, float deltaTime) {
-        if(input.isAccelerating()) {
-            // Handle acceleration.
-        } else {
-            // Handle deceleration.
+        turn = 0;
+        if(input.isTurningRight())
+            turn = -10; //Math.min(RIGHT_MOST_TURN, 0.5d);
+        else if (input.isTurningLeft())
+            turn = 10; //Math.max(LEFT_MOST_TURN, -0.5d);
+
+        if(input.isAccelerating())
+            speed += ACCELERATION_INCREMENT;
+        else {
+            if (speed > 0) {
+                speed -= Math.min(speed, ACCELERATION_DECREMENT);
+            } else if (speed < 0) {
+                speed += Math.min(-speed, ACCELERATION_DECREMENT);
+            }
         }
+
+        speed = Math.min(MAXIMAL_SPEED, speed);
+        angle += Math.toRadians(turn * speed);
+        position.add(Math.cos(angle) * speed, Math.sin(angle) * speed);
+        this.setAngle(-(float) angle);
     }
 }

@@ -1,6 +1,7 @@
 import Model.Game.Player;
 import Model.Game.RenderableObject;
 import Model.KeyPressedListener;
+import Model.Network.InputFactory;
 import org.newdawn.slick.*;
 import org.newdawn.slick.tiled.TiledMap;
 
@@ -48,7 +49,7 @@ public class WindowGame extends BasicGame {
     public void update(GameContainer container, int delta) throws SlickException {
         for (Player player : players) {
             RenderableObject car = player.getCar();
-            //car.processInput(container, delta);
+            car.processInput(InputFactory.generateInput(container), delta);
         }
     }
 

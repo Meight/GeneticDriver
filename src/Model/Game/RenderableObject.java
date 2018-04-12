@@ -37,6 +37,11 @@ public abstract class RenderableObject implements NetworkBehavior {
         image.setRotation(currentRotation);
     }
 
+    protected void setAngle(float angle) {
+        image.setCenterOfRotation(image.getWidth() * scale / 2, image.getHeight() * scale / 2);
+        image.setRotation(angle);
+    }
+
     protected void translate(Vector2 movement) {
         position.add(movement);
     }
