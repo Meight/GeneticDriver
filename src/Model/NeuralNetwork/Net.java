@@ -1,5 +1,7 @@
 package Model.NeuralNetwork;
 
+import Model.Network.Input;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,8 +9,6 @@ public class Net {
 
     List<Layer> layers = new ArrayList<>(); // m_layers.get(layersNum).getLayer().get(neuronNum) pour un neuronne donné
     double error;
-
-
 
     double recentAverageError;
     double recentAverageSmoothingFactor;

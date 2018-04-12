@@ -1,6 +1,9 @@
 package Model.Network;
 
+import Model.Game.Track.CarAI;
 import org.newdawn.slick.GameContainer;
+
+import java.util.List;
 
 /**
  * @author : Matthieu
@@ -14,6 +17,17 @@ public class InputFactory {
         boolean turningLeft = container.getInput().isKeyDown(TURNING_LEFT_KEY);
         boolean turningRight = container.getInput().isKeyDown(TURNING_RIGHT_KEY);
         boolean isAccelerating = container.getInput().isKeyDown(ACCELERATING_KEY);
+
+        return new Input(turningLeft, turningRight, isAccelerating);
+    }
+
+    public static Input generateInputFromAI(CarAI car) {
+        //maybe the AI will ask for a double rotation
+        // in this case maybe we should go straight forward ?
+        List<Double> inputs = car.getResultVals();
+        boolean turningLeft = inputs.get(0) > 0.5;
+        boolean turningRight = inputs.get(1) > 0.5;
+        boolean isAccelerating = true;
 
         return new Input(turningLeft, turningRight, isAccelerating);
     }

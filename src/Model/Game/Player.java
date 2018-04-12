@@ -44,4 +44,8 @@ public class Player {
     public Car getCar() {
         return car;
     }
+
+    public Boolean IsAI() {
+        return isAI;
+    }
 }

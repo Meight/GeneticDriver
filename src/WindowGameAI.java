@@ -1,5 +1,6 @@
 import Model.Game.Player;
 import Model.Game.RenderableObject;
+import Model.Game.Track.CarAI;
 import Model.KeyPressedListener;
 import Model.Network.InputFactory;
 import org.newdawn.slick.*;
@@ -16,7 +17,7 @@ public class WindowGameAI extends BasicGame {
     private List<KeyPressedListener> keyPressedListeners = new ArrayList<KeyPressedListener>();
 
     public static void main(String[] args) throws SlickException {
-        new AppGameContainer(new WindowGameAI(), 960, 960, false).start();
+        new AppGameContainer(new WindowGameAI(), 1300, 960, false).start();
     }
 
     public WindowGameAI() {
@@ -49,7 +50,12 @@ public class WindowGameAI extends BasicGame {
     public void update(GameContainer container, int delta) throws SlickException {
         for (Player player : players) {
             RenderableObject car = player.getCar();
-            car.processInput(InputFactory.generateInput(container), delta);
+            if(!player.IsAI()){
+                car.processInput(InputFactory.generateInput(container), delta);
+            }else{
+                ((CarAI)car).ProcessNet();
+                car.processInput(InputFactory.generateInputFromAI((CarAI)car), delta);
+            }
         }
     }
 
