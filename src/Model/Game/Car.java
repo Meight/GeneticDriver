@@ -7,6 +7,9 @@ import org.dyn4j.geometry.Vector2;
 import org.newdawn.slick.*;
 import org.newdawn.slick.tiled.TiledMap;
 
+import java.io.File;
+import java.util.Random;
+
 /**
  * @author Matthieu Boucher
  */
@@ -40,8 +43,12 @@ public class Car extends RenderableObject implements KeyPressedListener {
         this.angle = 0;
         this.map = map;
 
+        File dir = new File("./resources/cars/");
+        File[] files = dir.listFiles();
+        Random rand = new Random();
+        File file = files[rand.nextInt(files.length)];
         try {
-            this.image = new Image("cars/red-car.png");
+            this.image = new Image(file.getPath());
         } catch (SlickException e) {
             e.printStackTrace();
         }
