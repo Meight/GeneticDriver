@@ -13,11 +13,10 @@ import org.newdawn.slick.tiled.TiledMap;
 public class Car extends RenderableObject implements KeyPressedListener {
     private static final int MAXIMAL_DISTANCE_BEFORE_SNAP = 5;
 
-    private static final double LEFT_MOST_TURN = -0.03d;
-    private static final double RIGHT_MOST_TURN = 0.03d;
-    private static final double MAXIMAL_SPEED = 1.0d;
-    private static final double ACCELERATION_INCREMENT = 0.005d;
-    private static final double ACCELERATION_DECREMENT = 0.003d;
+    private static final double TURN_INCREMENT = .5d;
+    private static final double MAXIMAL_SPEED = .3d;
+    private static final double ACCELERATION_INCREMENT = 0.0005d;
+    private static final double ACCELERATION_DECREMENT = 0.0003d;
 
     private double turn;
 
@@ -96,9 +95,9 @@ public class Car extends RenderableObject implements KeyPressedListener {
     private void updatePhysics(Input input, float deltaTime) {
         turn = 0;
         if(input.isTurningRight())
-            turn = 0.1; //Math.min(RIGHT_MOST_TURN, 0.5d);
+            turn = TURN_INCREMENT; //Math.min(RIGHT_MOST_TURN, 0.5d);
         else if (input.isTurningLeft())
-            turn = -0.1; //Math.max(LEFT_MOST_TURN, -0.5d);
+            turn = -TURN_INCREMENT; //Math.max(LEFT_MOST_TURN, -0.5d);
 
         if(input.isAccelerating())
             speed += ACCELERATION_INCREMENT;
