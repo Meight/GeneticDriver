@@ -17,6 +17,7 @@ public class Car extends RenderableObject implements KeyPressedListener {
     private static final double MAXIMAL_SPEED = .3d;
     private static final double ACCELERATION_INCREMENT = 0.0005d;
     private static final double ACCELERATION_DECREMENT = 0.0003d;
+    private static final double OBSTACLE_PENALTY_FACTOR = 2d;
 
     private double turn;
 
@@ -111,17 +112,21 @@ public class Car extends RenderableObject implements KeyPressedListener {
 
         speed = Math.min(MAXIMAL_SPEED, speed);
         double angleContribution = turn * speed;
-        angle += Math.toRadians(angleContribution);
 
         double x = Math.cos(angle) * speed;
         double y = Math.sin(angle) * speed;
 
         if(this.canMoveTo(position.x + x, position.y + y)) {
             position.add(x, y);
-            rotate((float) angleContribution);
         } else {
-            angle -= Math.toRadians(angleContribution);
+            x /= OBSTACLE_PENALTY_FACTOR;
+            y /= OBSTACLE_PENALTY_FACTOR;
+            position.add(x, y);
+            angleContribution /= OBSTACLE_PENALTY_FACTOR;
         }
+
+        angle += Math.toRadians(angleContribution);
+        rotate((float) angleContribution);
     }
 
     private boolean canMoveTo(double x, double y) {
