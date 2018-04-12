@@ -23,7 +23,7 @@ public class Player {
 
     public Player(String name, TiledMap map){
         this.name = name;
-        this.car = new Car(map, 20, 20);
+        this.car = new Car(map, 150, 150);
         this.color = Color.color(Math.random(),Math.random(),Math.random());
     }
 

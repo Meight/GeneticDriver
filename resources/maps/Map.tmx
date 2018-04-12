@@ -9,7 +9,7 @@
  <tileset firstgid="3" name="terrainTile4" tilewidth="64" tileheight="64" tilecount="1" columns="0">
    <image width="64" height="64" source="tiles/terrainTile4.png"/>
  </tileset>
- <layer name="Calque de Tile 1" width="15" height="15">
+ <layer name="Environment" width="15" height="15">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAACmNkYGBgHCDMhAfjkqemXmxuwccmpBeXG2ill1C4UlsvvvCmh15CcU8oTCnVSysMAP6eUwWEAwAA
   </data>
