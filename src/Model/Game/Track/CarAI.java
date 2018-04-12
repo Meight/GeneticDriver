@@ -26,7 +26,6 @@ public class CarAI extends Car {
         this.inputVals = new ArrayList<>();
         this.targetVals = new ArrayList<>();
         this.resultVals = new ArrayList<>();
-        System.out.println("Je suis une IA");
     }
 
     public List<Double> getResultVals() {
