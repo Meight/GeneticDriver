@@ -7,7 +7,6 @@ public class Connection {
     public Connection(double weight, double deltaWeight) {
         this.weight = weight;
         this.deltaWeight = deltaWeight;
-        System.out.println(this.toString());
     }
 
     public double getWeight() {

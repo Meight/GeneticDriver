@@ -8,7 +8,7 @@ import java.util.Vector;
 
 public class Neuron {
 
-    static double RandomWeight() { return new Random().nextFloat(); }
+    static double RandomWeight() { return new Random().nextDouble()*3.0-1.5; }
 
     double outputVal;
     List<Connection> outputWeights = new ArrayList<>();

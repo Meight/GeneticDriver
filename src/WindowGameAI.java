@@ -30,7 +30,10 @@ public class WindowGameAI extends BasicGame {
         this.map = new TiledMap("maps/Map.tmx");
 
         players.add(new Player("Matt", map, true));
-
+        players.add(new Player("Toon", map, true));
+        players.add(new Player("Perdu", map, true));
+        players.add(new Player("Rated", map, true));
+        players.add(new Player("Dalh", map, true));
         for (Player player : players) {
             keyPressedListeners.add(player.getCar());
         }

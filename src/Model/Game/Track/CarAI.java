@@ -6,6 +6,7 @@ import org.newdawn.slick.tiled.TiledMap;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class CarAI extends Car {
     private Net neuralNetwork;
@@ -34,8 +35,8 @@ public class CarAI extends Car {
 
     //use wall detectors
     private void UpdateNetInput(){
-        inputVals.add(1.0);
-        inputVals.add(1.0);
+        inputVals.add(new Random().nextDouble()*3.0-1.5);
+        inputVals.add(new Random().nextDouble()*3.0-1.5);
     }
 
     public void ClearNet(){
