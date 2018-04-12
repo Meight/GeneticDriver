@@ -16,7 +16,7 @@ public class WindowGame extends BasicGame {
     private List<KeyPressedListener> keyPressedListeners = new ArrayList<KeyPressedListener>();
 
     public static void main(String[] args) throws SlickException {
-        new AppGameContainer(new WindowGame(), 960, 960, false).start();
+        new AppGameContainer(new WindowGame(), 1300, 960, false).start();
     }
 
     public WindowGame() {
