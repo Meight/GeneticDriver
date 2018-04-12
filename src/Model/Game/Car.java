@@ -96,17 +96,17 @@ public class Car extends RenderableObject implements KeyPressedListener {
     private void updatePhysics(Input input, float deltaTime) {
         turn = 0;
         if(input.isTurningRight())
-            turn = TURN_INCREMENT; //Math.min(RIGHT_MOST_TURN, 0.5d);
+            turn = TURN_INCREMENT * deltaTime; //Math.min(RIGHT_MOST_TURN, 0.5d);
         else if (input.isTurningLeft())
-            turn = -TURN_INCREMENT; //Math.max(LEFT_MOST_TURN, -0.5d);
+            turn = -TURN_INCREMENT * deltaTime; //Math.max(LEFT_MOST_TURN, -0.5d);
 
         if(input.isAccelerating())
-            speed += ACCELERATION_INCREMENT;
+            speed += ACCELERATION_INCREMENT * deltaTime;
         else {
             if (speed > 0) {
-                speed -= Math.min(speed, ACCELERATION_DECREMENT);
+                speed -= Math.min(speed, ACCELERATION_DECREMENT * deltaTime);
             } else if (speed < 0) {
-                speed += Math.min(-speed, ACCELERATION_DECREMENT);
+                speed += Math.min(-speed, ACCELERATION_DECREMENT * deltaTime);
             }
         }
 
@@ -127,18 +127,22 @@ public class Car extends RenderableObject implements KeyPressedListener {
     }
 
     private double getTerrainFactor(double x, double y) {
-        if(this.map.getTileImage(
-                (int) x / this.map.getTileWidth(),
-                (int) y / this.map.getTileHeight(),
-                this.map.getLayerIndex("Walls")) != null)
+        try {
+            if (this.map.getTileImage(
+                    (int) x / this.map.getTileWidth(),
+                    (int) y / this.map.getTileHeight(),
+                    this.map.getLayerIndex("Walls")) != null)
+                return 9000;
+
+            if (this.map.getTileImage(
+                    (int) x / this.map.getTileWidth(),
+                    (int) y / this.map.getTileHeight(),
+                    this.map.getLayerIndex("Slow")) != null)
+                return OBSTACLE_PENALTY_FACTOR;
+
+            return 1;
+        } catch(ArrayIndexOutOfBoundsException e) {
             return 9000;
-
-        if(this.map.getTileImage(
-                (int) x / this.map.getTileWidth(),
-                (int) y / this.map.getTileHeight(),
-                this.map.getLayerIndex("Slow")) != null)
-            return OBSTACLE_PENALTY_FACTOR;
-
-        return 1;
+        }
     }
 }
