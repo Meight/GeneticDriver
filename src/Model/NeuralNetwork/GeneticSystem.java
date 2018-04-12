@@ -166,7 +166,13 @@ public class GeneticSystem {
         return null;
     }
 
-    public void MutateNeuron(){
+    public double MutateNeuron(double weight){
+        double mutatedWeight=weight;
+        if(new Random().nextFloat()< mutationRate){
+            double mutateFactor = (new Random().nextFloat() -0.5)*4;
+            mutatedWeight *= mutateFactor;
+        }
+        return mutatedWeight;
         /*
         // mutates a gene
         mutate : function (gene){
