@@ -1,5 +1,6 @@
 package Model.Game;
 
+import Model.Game.Track.CarAI;
 import javafx.scene.paint.Color;
 import org.newdawn.slick.tiled.TiledMap;
 
@@ -13,17 +14,26 @@ public class Player {
 
     private Color color;
 
+    private Boolean isAI;
+
     private int scoreboardPosition;
 
-    public Player(String name, Color color, Car car) {
+    public Player(String name, Color color, boolean isai, Car car) {
         this.name = name;
         this.car = car;
         this.color = color;
+        this.isAI = isai;
     }
 
-    public Player(String name, TiledMap map){
+    public Player(String name, TiledMap map, boolean isai){
         this.name = name;
-        this.car = new Car(map, 150, 150);
+        this.isAI = isai;
+        if(isAI){
+            this.car = new CarAI(map, 150, 150);
+        }else{
+            this.car = new Car(map, 150, 150);
+        }
+
         this.color = Color.color(Math.random(),Math.random(),Math.random());
     }
 
