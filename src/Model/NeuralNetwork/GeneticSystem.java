@@ -146,7 +146,16 @@ public class GeneticSystem {
         */
     }
 
-    public Player Mutate(){
+    //We choose to mutate the hidden layer only
+    public Player Mutate(Player player){
+
+        Layer finalLayer = ((CarAI)player.getCar()).getNeuralNetwork().GetNet().get(1);
+
+        for(int i=0;i<finalLayer.getLayer().size();i++){
+            finalLayer.getLayer().get(i).SetWeights(MutateNeuron(finalLayer.getLayer().get(i)));
+        }
+        ((CarAI)player.getCar()).getNeuralNetwork().GetNet().set(1,finalLayer);
+        return player;
         /*
         // performs random mutations on the offspring
         mutation : function (offspring){
@@ -163,16 +172,21 @@ public class GeneticSystem {
             return offspring;
         },
         */
-        return null;
     }
 
-    public double MutateNeuron(double weight){
-        double mutatedWeight=weight;
-        if(new Random().nextFloat()< mutationRate){
-            double mutateFactor = (new Random().nextFloat() -0.5)*4;
-            mutatedWeight *= mutateFactor;
+    public List<Double> MutateNeuron(Neuron neuron){
+        List<Double> weights = new ArrayList<>();
+        double mutatedWeight;
+
+        for (int i =0;i<neuron.GetOutputWeights().size();i++){
+            mutatedWeight = neuron.GetOutputWeights().get(i).getWeight();
+            if(new Random().nextFloat()< mutationRate){
+                double mutateFactor = (new Random().nextFloat() -0.5)*4;
+                mutatedWeight *= mutateFactor;
+            }
+            weights.add(mutatedWeight);
         }
-        return mutatedWeight;
+        return weights;
         /*
         // mutates a gene
         mutate : function (gene){
