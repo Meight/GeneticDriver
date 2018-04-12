@@ -17,7 +17,7 @@ public class Car extends RenderableObject implements KeyPressedListener {
     private static final double MAXIMAL_SPEED = .4d;
     private static final double ACCELERATION_INCREMENT = 0.0005d;
     private static final double ACCELERATION_DECREMENT = 0.0003d;
-    private static final double OBSTACLE_PENALTY_FACTOR = 2d;
+    private static final double OBSTACLE_PENALTY_FACTOR = 3d;
 
     private double turn;
 
@@ -115,24 +115,30 @@ public class Car extends RenderableObject implements KeyPressedListener {
 
         double x = Math.cos(angle) * speed;
         double y = Math.sin(angle) * speed;
+        double speedPenaltyFactor = getTerrainFactor(position.x + x, position.y + y);
 
-        if(this.canMoveTo(position.x + x, position.y + y)) {
-            position.add(x, y);
-        } else {
-            x /= OBSTACLE_PENALTY_FACTOR;
-            y /= OBSTACLE_PENALTY_FACTOR;
-            position.add(x, y);
-            angleContribution /= OBSTACLE_PENALTY_FACTOR;
-        }
+        x /= speedPenaltyFactor;
+        y /= speedPenaltyFactor;
+        position.add(x, y);
+        angleContribution /= speedPenaltyFactor;
 
         angle += Math.toRadians(angleContribution);
         rotate((float) angleContribution);
     }
 
-    private boolean canMoveTo(double x, double y) {
-        return this.map.getTileImage(
+    private double getTerrainFactor(double x, double y) {
+        if(this.map.getTileImage(
                 (int) x / this.map.getTileWidth(),
                 (int) y / this.map.getTileHeight(),
-                this.map.getLayerIndex("Obstacle")) == null;
+                this.map.getLayerIndex("Walls")) != null)
+            return 9000;
+
+        if(this.map.getTileImage(
+                (int) x / this.map.getTileWidth(),
+                (int) y / this.map.getTileHeight(),
+                this.map.getLayerIndex("Slow")) != null)
+            return OBSTACLE_PENALTY_FACTOR;
+
+        return 1;
     }
 }
