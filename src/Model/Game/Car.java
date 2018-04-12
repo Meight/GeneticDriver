@@ -113,7 +113,22 @@ public class Car extends RenderableObject implements KeyPressedListener {
         speed = Math.min(MAXIMAL_SPEED, speed);
         double angleContribution = turn * speed;
         angle += Math.toRadians(angleContribution);
-        position.add(Math.cos(angle) * speed, Math.sin(angle) * speed);
-        rotate((float) angleContribution);
+
+        double x = Math.cos(angle) * speed;
+        double y = Math.sin(angle) * speed;
+
+        if(this.canMoveTo(position.x + x, position.y + y)) {
+            position.add(x, y);
+            rotate((float) angleContribution);
+        } else {
+            angle -= Math.toRadians(angleContribution);
+        }
+    }
+
+    private boolean canMoveTo(double x, double y) {
+        return this.map.getTileImage(
+                (int) x / this.map.getTileWidth(),
+                (int) y / this.map.getTileHeight(),
+                this.map.getLayerIndex("Obstacle")) == null;
     }
 }
