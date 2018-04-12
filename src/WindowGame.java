@@ -28,7 +28,7 @@ public class WindowGame extends BasicGame {
         this.container = container;
         this.map = new TiledMap("maps/Map.tmx");
 
-        players.add(new Player("Matt"));
+        players.add(new Player("Matt", map));
 
         for (Player player : players) {
             keyPressedListeners.add(player.getCar());

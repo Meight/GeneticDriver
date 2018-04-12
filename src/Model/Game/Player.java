@@ -1,6 +1,7 @@
 package Model.Game;
 
 import javafx.scene.paint.Color;
+import org.newdawn.slick.tiled.TiledMap;
 
 /**
  * @author Matthieu Boucher
@@ -20,9 +21,9 @@ public class Player {
         this.color = color;
     }
 
-    public Player(String name){
+    public Player(String name, TiledMap map){
         this.name = name;
-        this.car = new Car(20, 20);
+        this.car = new Car(map, 20, 20);
         this.color = Color.color(Math.random(),Math.random(),Math.random());
     }
 

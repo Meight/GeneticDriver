@@ -5,6 +5,7 @@ import Model.Network.Input;
 import Model.Network.State;
 import org.dyn4j.geometry.Vector2;
 import org.newdawn.slick.*;
+import org.newdawn.slick.tiled.TiledMap;
 
 /**
  * @author Matthieu Boucher
@@ -25,16 +26,19 @@ public class Car extends RenderableObject implements KeyPressedListener {
 
     private int laps;
 
+    private TiledMap map;
+
     /**
      * Steer force currently applied to the car.
      */
     private Vector2 steerForce;
 
-    public Car(int x, int y) {
+    public Car(TiledMap map, int x, int y) {
         this.position = new Vector2(x, y);
         this.turn = 0;
         this.speed = 0;
         this.angle = 0;
+        this.map = map;
 
         try {
             this.image = new Image("cars/red-car.png");
