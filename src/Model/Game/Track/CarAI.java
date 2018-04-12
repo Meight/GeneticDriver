@@ -13,6 +13,10 @@ public class CarAI extends Car {
     private List<Double> inputVals;
     private List<Double> targetVals;
     private List<Double> resultVals;
+    private double score;
+    private double fitness;
+    private boolean isWinner;
+    private boolean isAlive;
 
     public CarAI(TiledMap map, int x, int y) {
         super(map, x, y);
@@ -26,6 +30,10 @@ public class CarAI extends Car {
         this.inputVals = new ArrayList<>();
         this.targetVals = new ArrayList<>();
         this.resultVals = new ArrayList<>();
+        this.score = 0;
+        this.fitness = 0;
+        this.isWinner = false;
+        this.isAlive=true;
     }
 
     public List<Double> getResultVals() {
@@ -49,5 +57,37 @@ public class CarAI extends Car {
         UpdateNetInput();
         neuralNetwork.FeedForward(inputVals);
         resultVals = neuralNetwork.GetResult();
+    }
+
+    public double getScore() {
+        return score;
+    }
+
+    public void setScore(double score) {
+        this.score = score;
+    }
+
+    public double getFitness() {
+        return fitness;
+    }
+
+    public void setFitness(double fitness) {
+        this.fitness = fitness;
+    }
+
+    public boolean isWinner() {
+        return isWinner;
+    }
+
+    public void setWinner(boolean winner) {
+        isWinner = winner;
+    }
+
+    public boolean isAlive() {
+        return isAlive;
+    }
+
+    public void setAlive(boolean alive) {
+        isAlive = alive;
     }
 }

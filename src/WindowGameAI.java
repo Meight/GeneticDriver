@@ -29,7 +29,7 @@ public class WindowGameAI extends BasicGame {
     public void init(GameContainer container) throws SlickException {
         this.container = container;
         this.map = new TiledMap("maps/Map.tmx");
-        this.geneticSys = new GeneticSystem(10,map);
+        this.geneticSys = new GeneticSystem(10,map,4);
         for (Player player : geneticSys.getPlayers()) {
             keyPressedListeners.add(player.getCar());
         }
@@ -47,15 +47,7 @@ public class WindowGameAI extends BasicGame {
 
     @Override
     public void update(GameContainer container, int delta) throws SlickException {
-        for (Player player : geneticSys.getPlayers()) {
-            RenderableObject car = player.getCar();
-            if(!player.IsAI()){
-                car.processInput(InputFactory.generateInput(container), delta);
-            }else{
-                ((CarAI)car).ProcessNet();
-                car.processInput(InputFactory.generateInputFromAI((CarAI)car), delta);
-            }
-        }
+        geneticSys.Update(delta);
     }
 
     @Override
