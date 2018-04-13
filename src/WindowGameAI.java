@@ -1,7 +1,9 @@
+import Model.Game.CarAI;
 import Model.Game.Player;
 import Model.Game.RenderableObject;
 import Model.KeyPressedListener;
 import Model.NeuralNetwork.GeneticSystem;
+import View.NeuralNetworkView;
 import org.newdawn.slick.*;
 import org.newdawn.slick.tiled.TiledMap;
 
@@ -31,6 +33,12 @@ public class WindowGameAI extends BasicGame {
         for (Player player : geneticSys.getPlayers()) {
             keyPressedListeners.add(player.getCar());
         }
+
+        (new Thread() {
+            public void run() {
+                NeuralNetworkView neuralNetworkView = new NeuralNetworkView(((CarAI) geneticSys.getPlayers().get(0).getCar()).getNeuralNetwork());
+            }
+        }).start();
     }
 
     @Override
