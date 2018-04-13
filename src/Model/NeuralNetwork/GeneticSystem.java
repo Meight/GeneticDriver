@@ -41,7 +41,11 @@ public class GeneticSystem {
      */
     public void Update(int delta){
         //if not all car dead
-        ActivatesBrain(delta);
+        if(AreAllCarAlive()){
+            ActivatesBrain(delta);
+        } else {
+            
+        }
         //if all car dead
         //Select
         //Evolve
@@ -51,9 +55,11 @@ public class GeneticSystem {
 
     public void ActivatesBrain(int delta){
         for (Player player : players) {
-            RenderableObject car = player.getCar();
-            ((CarAI)car).ProcessNet();
-            car.processInput(InputFactory.generateInputFromAI((CarAI)car), delta);
+            if(player.getCar().isAlive()){
+                RenderableObject car = player.getCar();
+                ((CarAI)car).ProcessNet();
+                car.processInput(InputFactory.generateInputFromAI((CarAI)car), delta);
+            }
         }
     }
 
@@ -265,6 +271,13 @@ public class GeneticSystem {
         return list.get(new Random().nextInt(players.size()));
     }
 
+    private boolean AreAllCarAlive(){
+        boolean res = true;
+        for (Player p: players) {
+            res &= p.getCar().isAlive();
+        }
+        return res;
+    }
 
     public List<Player> getPlayers() {
         return players;
