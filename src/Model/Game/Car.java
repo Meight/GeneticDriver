@@ -20,9 +20,9 @@ public class Car extends RenderableObject implements KeyPressedListener {
     private static final int MAXIMAL_DISTANCE_BEFORE_SNAP = 5;
 
     private static final double TURN_INCREMENT = .5d;
-    private static final double MAXIMAL_SPEED = .4d;
-    private static final double ACCELERATION_INCREMENT = 0.0005d;
-    private static final double ACCELERATION_DECREMENT = 0.0003d;
+    private static final double MAXIMAL_SPEED = .5d;
+    private static final double ACCELERATION_INCREMENT = 0.001d;
+    private static final double ACCELERATION_DECREMENT = 0.001d;
     private static final double OBSTACLE_PENALTY_FACTOR = 3d;
 
     protected double turn;

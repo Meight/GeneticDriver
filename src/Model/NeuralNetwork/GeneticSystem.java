@@ -2,7 +2,7 @@ package Model.NeuralNetwork;
 
 import Model.Game.Player;
 import Model.Game.RenderableObject;
-import Model.Game.Track.CarAI;
+import Model.Game.CarAI;
 import Model.Network.InputFactory;
 import org.newdawn.slick.tiled.TiledMap;
 

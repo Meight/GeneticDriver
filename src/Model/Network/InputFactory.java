@@ -1,6 +1,6 @@
 package Model.Network;
 
-import Model.Game.Track.CarAI;
+import Model.Game.CarAI;
 import org.newdawn.slick.GameContainer;
 
 import java.util.List;
