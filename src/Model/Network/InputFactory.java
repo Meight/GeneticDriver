@@ -28,7 +28,8 @@ public class InputFactory {
         boolean turningLeft = inputs.get(0) > 0.5;
         boolean turningRight = inputs.get(1) > 0.5;
         boolean isAccelerating = true;
-
+        if (turningLeft && turningRight)
+            return new Input(false, false, isAccelerating);
         return new Input(turningLeft, turningRight, isAccelerating);
     }
 }

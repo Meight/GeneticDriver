@@ -18,8 +18,6 @@ public class CarAI extends Car implements Comparable<CarAI>{
     private List<Double> inputVals;
     private List<Double> targetVals;
     private List<Double> resultVals;
-    private double score = 0.0;
-    private double fitness = 0.0;
     private boolean isWinner;
 
     /**
@@ -90,22 +88,6 @@ public class CarAI extends Car implements Comparable<CarAI>{
                         (float) raycastHit.getHitPoint().y);
             }
         }
-    }
-
-    public double getScore() {
-        return score;
-    }
-
-    public void setScore(double score) {
-        this.score = score;
-    }
-
-    public double getFitness() {
-        return fitness;
-    }
-
-    public void setFitness(double fitness) {
-        this.fitness = fitness;
     }
 
     public boolean isWinner() {
