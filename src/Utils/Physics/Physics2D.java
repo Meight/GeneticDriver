@@ -18,7 +18,6 @@ public class Physics2D {
         List<Vector2> rayLine = BresenhamLine(position,
                 new Vector2(position).add(direction.getNormalized().multiply(rayLength)));
 
-        System.out.println(rayLine);
         for(Vector2 point : rayLine) {
             if (!isPixelAccessible(point.x, point.y, map)) {
                 hit = new RaycastHit(position, direction, new Vector2(point), point.distance(position));
@@ -27,10 +26,6 @@ public class Physics2D {
         }
 
         return hit;
-    }
-
-    private static boolean isPointingUp(Vector2 vector) {
-        return vector.y < 0;
     }
 
     private static boolean isPixelAccessible(double x, double y, TiledMap map) {
@@ -44,12 +39,6 @@ public class Physics2D {
         } catch(ArrayIndexOutOfBoundsException e) {
             return false;
         }
-    }
-
-    private static <T> void Swap(T a, T b) {
-        T c = a;
-        a = b;
-        b = c;
     }
 
     private static List<Vector2> BresenhamLine(Vector2 p0, Vector2 p1) {
