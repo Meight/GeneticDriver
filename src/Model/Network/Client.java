@@ -24,27 +24,18 @@ public class Client {
     private static final String SERVERS = "getServers";
     private static final int BUFFER_SIZE = 8192;
     private static final int CLIENT_PORT  = 13584;
-    private static final long DELTATIME = 30000;
+    private static final int SERVER_PORT  = 13594;
+    private static final long DELTATIME = 1000;
     private byte[] buf = new byte[BUFFER_SIZE];
 
     public Client() {
         try {
             socket = new DatagramSocket(CLIENT_PORT);
             this.port = CLIENT_PORT;
-            foundServers();
+            //foundServers();
         } catch (SocketException e) {
             e.printStackTrace();
         }
-    }
-
-    public DatagramPacket readPacket() {
-        byte[] buffer = new byte[BUFFER_SIZE];
-        DatagramPacket packet = new DatagramPacket(buffer, buffer.length); //Todo change logic
-        return packet;
-    }
-
-    public void sendPacket(byte[] buffer) {
-        // Todo.
     }
 
     public void foundServers(){
@@ -52,16 +43,33 @@ public class Client {
             socket = new DatagramSocket(BUFFER_SIZE);
             socket.setBroadcast(true);
             buf = SERVERS.getBytes();
-            DatagramPacket packet = new DatagramPacket(buf, buf.length);
+            final InetAddress[] address = {InetAddress.getByName("255.255.255.255")};
+            final DatagramPacket packet = new DatagramPacket(buf, buf.length, address[0], SERVER_PORT);
             socket.send(packet);
             long begin = System.currentTimeMillis();
+            Thread search = new Thread(){
+                @Override
+                public void run() {
+                    super.run();
+                    while (true){
+                        try {
+                            socket.receive(packet);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        address[0] = packet.getAddress();
+                        addressServer.add(address[0]);
+                        String received = new String(packet.getData(), 0, packet.getLength());
+                        nomServer.add(received);
+                    }
+                }
+            };
+            search.start();
             while (begin + DELTATIME > System.currentTimeMillis()){
-                socket.receive(packet);
-                InetAddress address = packet.getAddress();
-                addressServer.add(address);
-                String received = new String(packet.getData(), 0, packet.getLength());
-                nomServer.add(received);
+                System.out.println("WAITING");
             }
+            search.interrupt();
+            System.out.println("CLOSING");
         } catch (Exception e) {
             e.printStackTrace();
         }

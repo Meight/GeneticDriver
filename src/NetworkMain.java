@@ -27,7 +27,6 @@ public class NetworkMain extends JFrame {
         setContentPane(panel);
         setBounds(0, 0, 800, 800);
         setVisible(true);
-        myClient = new Client();
     }
 
     public static void main(String[] args) {
@@ -51,8 +50,8 @@ public class NetworkMain extends JFrame {
         JPanel panel = new JPanel(new BorderLayout());
         panel.add(cli,BorderLayout.WEST);
         panel.add(serv,BorderLayout.EAST);
-        who = new JLabel();
-        panel.add(who,BorderLayout.LINE_START);
+        who = new JLabel("WHO I AM");
+        panel.add(who,BorderLayout.PAGE_START);
 
         searchServer.addActionListener(new ActionListener() {
             @Override
@@ -79,14 +78,16 @@ public class NetworkMain extends JFrame {
             searchServer.setEnabled(false);
             who.setText("Je suis le serveur "+nameServ.getText());
             myServer = new Server(nameServ.getText());
-            myServer.run();
+            myServer.start();
         }
     }
 
     private static void actionClient(){
         who.setText("Je suis le client");
         searchServer.setEnabled(true);
-        myServer.stopServer();
+        if(myServer != null){
+            myServer.stopServer();
+        }
         myClient = new Client();
     }
 }

@@ -26,6 +26,7 @@ public class Server extends Thread{
         running = true;
         while (running) {
             try {
+                System.out.println("I AM "+serverName);
                 DatagramPacket packet = new DatagramPacket(buf, buf.length);
                 socket.receive(packet);
                 InetAddress address = packet.getAddress();
