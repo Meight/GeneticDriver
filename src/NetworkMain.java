@@ -12,9 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class NetworkMain extends JFrame {
-
-    static LobbyController controller;
-    static LobbyView lobbyView;
+    
     private static Client myClient;
     private static Server myServer;
     private static JTextField nameServ;
@@ -57,7 +55,11 @@ public class NetworkMain extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 myClient.DEBUG_getServers();
-                myClient.foundServers();
+                try {
+                    myClient.foundServers();
+                } catch (Exception e1) {
+                    e1.printStackTrace();
+                }
             }
         });
         client.addActionListener(new ActionListener() {

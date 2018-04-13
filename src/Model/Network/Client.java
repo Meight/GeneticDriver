@@ -3,10 +3,7 @@ package Model.Network;
 //import org.aspectj.org.eclipse.jdt.internal.core.SourceType;
 
 import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
-import java.net.SocketException;
+import java.net.*;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Date;
@@ -31,6 +28,7 @@ public class Client {
     public Client() {
         try {
             socket = new DatagramSocket(CLIENT_PORT);
+            socket.setBroadcast(true);
             this.port = CLIENT_PORT;
             //foundServers();
         } catch (SocketException e) {
@@ -38,14 +36,14 @@ public class Client {
         }
     }
 
-    public void foundServers(){
-        try {
-            socket = new DatagramSocket(BUFFER_SIZE);
-            socket.setBroadcast(true);
+    public void foundServers() throws Exception {
+            System.out.println("1");
             buf = SERVERS.getBytes();
             final InetAddress[] address = {InetAddress.getByName("255.255.255.255")};
             final DatagramPacket packet = new DatagramPacket(buf, buf.length, address[0], SERVER_PORT);
+            System.out.println("2");
             socket.send(packet);
+            System.out.println("3");
             long begin = System.currentTimeMillis();
             Thread search = new Thread(){
                 @Override
@@ -66,14 +64,12 @@ public class Client {
             };
             search.start();
             while (begin + DELTATIME > System.currentTimeMillis()){
-                System.out.println("WAITING");
+                System.out.println("44444");
             }
-            search.interrupt();
-            System.out.println("CLOSING");
-        } catch (Exception e) {
-            e.printStackTrace();
+            search.stop();
+            System.out.println("5");
         }
-    }
+
 
     public void DEBUG_getServers(){
         for(int i = 0; i < nomServer.size(); ++i){
