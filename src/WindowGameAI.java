@@ -1,8 +1,6 @@
 import Model.Game.Player;
 import Model.Game.RenderableObject;
-import Model.Game.Track.CarAI;
 import Model.KeyPressedListener;
-import Model.Network.InputFactory;
 import Model.NeuralNetwork.GeneticSystem;
 import org.newdawn.slick.*;
 import org.newdawn.slick.tiled.TiledMap;

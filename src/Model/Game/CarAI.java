@@ -1,8 +1,12 @@
-package Model.Game.Track;
+package Model.Game;
 
-import Model.Game.Car;
 import Model.NeuralNetwork.Net;
+import Utils.Physics.Physics2D;
+import Utils.Physics.RaycastHit;
 import org.dyn4j.geometry.Vector2;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
 
 import java.util.ArrayList;
@@ -18,6 +22,12 @@ public class CarAI extends Car implements Comparable<CarAI>{
     private double fitness = 0.0;
     private boolean isWinner;
     private boolean isAlive;
+    /**
+     * List of the directions the AI will constantly check for obstacles using raycasts.
+     */
+    private Vector2[] checkedDirections = { forward, right, left };
+
+    private double raycastsLength = 700;
 
     public CarAI(TiledMap map, int x, int y) {
         super(map, x, y);
@@ -60,7 +70,20 @@ public class CarAI extends Car implements Comparable<CarAI>{
         resultVals = neuralNetwork.GetResult();
     }
 
+    @Override
+    public void render(GameContainer container, Graphics g) throws SlickException {
+        super.render(container, g);
 
+        for(Vector2 direction : checkedDirections) {
+            RaycastHit raycastHit = Physics2D.raycast(position, direction, map, raycastsLength);
+
+            if (raycastHit != null) {
+                g.drawLine((int) position.x, (int) position.y,
+                        (float) raycastHit.getHitPoint().x,
+                        (float) raycastHit.getHitPoint().y);
+            }
+        }
+    }
 
     public double getScore() {
         return score;
