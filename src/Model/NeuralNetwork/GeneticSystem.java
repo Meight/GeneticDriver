@@ -58,6 +58,7 @@ public class GeneticSystem {
     public void DisplayGeneticSystem(){
         System.out.flush();
         System.out.println("Iteration "+iteration);
+        System.out.println("Number of cars "+players.size());
         System.out.println("Best Population "+bestPopulation);
         System.out.println("Best Fitness "+bestFitness);
         System.out.println("Best Score "+bestScore);

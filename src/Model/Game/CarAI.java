@@ -62,7 +62,7 @@ public class CarAI extends Car implements Comparable<CarAI>{
         if(distances.size()==3){
             inputVals.clear();
             inputVals.addAll(distances);
-            System.out.println(inputVals);
+            //System.out.println(inputVals);
         }
     }
 
@@ -127,11 +127,10 @@ public class CarAI extends Car implements Comparable<CarAI>{
     }
 
     public void ResetStats(){
-        score=0;
-        fitness=0;
-        isWinner=false;
-        isAlive=true;
-        currentRotation=0f;
+        this.score=0;
+        this.fitness=0;
+        this.isWinner=false;
+        this.currentRotation=0f;
         this.position = new Vector2(150, 150);
         this.turn = 0;
         this.speed = 0;
@@ -141,6 +140,7 @@ public class CarAI extends Car implements Comparable<CarAI>{
         this.right = new Vector2(forward).rotate(Math.PI / 2);
         this.left = new Vector2(forward).rotate(-Math.PI / 2);
         checkedDirections = new Vector2[]{forward, right, left};
+        this.isAlive=true;
     }
 
     @Override
