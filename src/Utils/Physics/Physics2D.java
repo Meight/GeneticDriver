@@ -1,7 +1,6 @@
 package Utils.Physics;
 
 import org.dyn4j.geometry.Vector2;
-import org.newdawn.slick.Graphics;
 import org.newdawn.slick.tiled.TiledMap;
 
 import java.util.ArrayList;
