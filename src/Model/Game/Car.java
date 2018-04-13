@@ -3,10 +3,11 @@ package Model.Game;
 import Model.KeyPressedListener;
 import Model.Network.Input;
 import Model.Network.State;
-import Utils.Physics.Physics2D;
-import Utils.Physics.RaycastHit;
 import org.dyn4j.geometry.Vector2;
-import org.newdawn.slick.*;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
 
 import java.io.File;
@@ -33,7 +34,7 @@ public class Car extends RenderableObject implements KeyPressedListener {
 
     protected TiledMap map;
 
-    protected Vector2 forward;
+    protected Vector2 forward, right, left;
 
     public Car(TiledMap map, int x, int y) {
         this.position = new Vector2(x, y);
@@ -42,6 +43,8 @@ public class Car extends RenderableObject implements KeyPressedListener {
         this.angle = 0;
         this.map = map;
         this.forward = new Vector2(1, 0);
+        this.right = new Vector2(forward).rotate(Math.PI / 2);
+        this.left = new Vector2(forward).rotate(-Math.PI / 2);
 
         File dir = new File("./resources/cars/");
         File[] files = dir.listFiles();
@@ -88,24 +91,6 @@ public class Car extends RenderableObject implements KeyPressedListener {
     @Override
     public void render(GameContainer container, Graphics g) throws SlickException {
         super.render(container, g);
-        g.setLineWidth(3);
-
-        // Draw velocity.
-        g.setColor(Color.green);
-        g.drawLine((int) position.x, (int) position.y, (float) ((int) position.x + (forward.x) * 50), (float) ((int) position.y + (forward.y) * 50));
-
-        Vector2 endRay = new Vector2(position).add(forward.getNormalized().multiply(200));
-        g.drawRect((int) endRay.x, (int) endRay.y, 10, 10);
-
-        g.setColor(Color.magenta);
-
-        RaycastHit raycastHit = Physics2D.raycast(position, forward, map, 500);
-        if(raycastHit != null) {
-            g.drawLine((int) position.x, (int) position.y,
-                    (float) raycastHit.getHitPoint().x,
-                    (float) raycastHit.getHitPoint().y);
-            g.drawString(Double.toString(raycastHit.getDistance()), (int) position.x, (int) position.y);
-        }
     }
 
     private void updatePhysics(Input input, float deltaTime) {
@@ -140,7 +125,8 @@ public class Car extends RenderableObject implements KeyPressedListener {
         angle += Math.toRadians(angleContribution);
         rotate((float) angleContribution);
         forward.rotate(Math.toRadians(angleContribution));
-
+        right.rotate(Math.toRadians(angleContribution));
+        left.rotate(Math.toRadians(angleContribution));
     }
 
     private double getTerrainFactor(double x, double y) {
