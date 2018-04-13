@@ -33,7 +33,7 @@ public class CarAI extends Car implements Comparable<CarAI>{
         super(map, x, y);
         List<Integer> topology = new ArrayList<>();
         topology.add(3);
-        topology.add(4);
+        topology.add(8);
         topology.add(2);
 
         this.neuralNetwork = new Net(topology);
@@ -52,8 +52,18 @@ public class CarAI extends Car implements Comparable<CarAI>{
 
     //use wall detectors
     private void UpdateNetInput(){
-        inputVals.add(new Random().nextDouble()*3.0-1.5);
-        inputVals.add(new Random().nextDouble()*3.0-1.5);
+        List<Double> distances = new ArrayList<>();
+        for(Vector2 direction : checkedDirections) {
+            RaycastHit raycastHit = Physics2D.raycast(position, direction, map, raycastsLength);
+            if (raycastHit != null) {
+                distances.add(Math.floor(raycastHit.getDistance()/raycastsLength*100)/100);
+            }
+        }
+        if(distances.size()==3){
+            inputVals.clear();
+            inputVals.addAll(distances);
+            System.out.println(inputVals);
+        }
     }
 
     public void ClearNet(){
@@ -64,7 +74,7 @@ public class CarAI extends Car implements Comparable<CarAI>{
 
     public void ProcessNet(){
         ClearNet();
-        //UpdateNetInput();
+        UpdateNetInput();
         neuralNetwork.FeedForward(inputVals);
         resultVals = neuralNetwork.GetResult();
     }
@@ -72,21 +82,13 @@ public class CarAI extends Car implements Comparable<CarAI>{
     @Override
     public void render(GameContainer container, Graphics g) throws SlickException {
         super.render(container, g);
-        List<Double> distances = new ArrayList<>();
         for(Vector2 direction : checkedDirections) {
             RaycastHit raycastHit = Physics2D.raycast(position, direction, map, raycastsLength);
-
             if (raycastHit != null) {
-                distances.add(Math.floor(raycastHit.getDistance()/raycastsLength*100)/100);
                 g.drawLine((int) position.x, (int) position.y,
                         (float) raycastHit.getHitPoint().x,
                         (float) raycastHit.getHitPoint().y);
             }
-        }
-        if(distances.size()==3){
-            inputVals.clear();
-            inputVals.addAll(distances);
-            //System.out.println(inputVals);
         }
     }
 
@@ -129,12 +131,16 @@ public class CarAI extends Car implements Comparable<CarAI>{
         fitness=0;
         isWinner=false;
         isAlive=true;
+        currentRotation=0f;
         this.position = new Vector2(150, 150);
         this.turn = 0;
         this.speed = 0;
         this.angle = 0;
         this.laps = 0;
         this.forward = new Vector2(1, 0);
+        this.right = new Vector2(forward).rotate(Math.PI / 2);
+        this.left = new Vector2(forward).rotate(-Math.PI / 2);
+        checkedDirections = new Vector2[]{forward, right, left};
     }
 
     @Override

@@ -28,9 +28,9 @@ public class Layer {
     }
 
     public Neuron GetBiasNeuron() {
-        return this.layer.get(this.layer.size());
+        return this.layer.get(this.layer.size()-1);
     }
 
-    public void SetBiasNeuron(Neuron neuron){this.layer.set(this.layer.size(),neuron);}
+    public void SetBiasNeuron(Neuron neuron){this.layer.set(this.layer.size()-1,neuron);}
 }
 

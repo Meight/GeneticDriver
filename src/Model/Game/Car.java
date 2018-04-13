@@ -144,8 +144,11 @@ public class Car extends RenderableObject implements KeyPressedListener {
             if (this.map.getTileImage(
                     (int) x / this.map.getTileWidth(),
                     (int) y / this.map.getTileHeight(),
-                    this.map.getLayerIndex("Slow")) != null)
+                    this.map.getLayerIndex("Slow")) != null){
+                isAlive = false;
                 return OBSTACLE_PENALTY_FACTOR;
+            }
+
 
             return 1;
         } catch(ArrayIndexOutOfBoundsException e) {

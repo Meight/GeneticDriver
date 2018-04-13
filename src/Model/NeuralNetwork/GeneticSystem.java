@@ -41,16 +41,26 @@ public class GeneticSystem {
      */
     public void Update(int delta){
         //if not all car dead
-        if(AreAllCarAlive()){
+        if(AreAllCarNotDead()){
             ActivatesBrain(delta);
         } else {
-            
+            players = EvolvePopulation();
+            iteration++;
+            DisplayGeneticSystem();
         }
         //if all car dead
         //Select
         //Evolve
         //iteration++
         //Let's GO
+    }
+
+    public void DisplayGeneticSystem(){
+        System.out.flush();
+        System.out.println("Iteration "+iteration);
+        System.out.println("Best Population "+bestPopulation);
+        System.out.println("Best Fitness "+bestFitness);
+        System.out.println("Best Score "+bestScore);
     }
 
     public void ActivatesBrain(int delta){
@@ -70,7 +80,7 @@ public class GeneticSystem {
         }
     }
 
-    public void EvolvePopulation(){
+    public List<Player> EvolvePopulation(){
 
         // select the top units of the current population to get an array of winners
         // (they will be copied to the next population)
@@ -112,9 +122,10 @@ public class GeneticSystem {
                 ((CarAI)winners.get(j).getCar()).ResetStats();
             }
             //The new players list is the concatenation of the winners and offsprings generated previously
-            players.clear();
-            players.addAll(winners);
-            players.addAll(offsprings);
+            //players.clear();
+            //players.addAll(winners);
+            //players.addAll(offsprings);
+            winners.addAll(offsprings);
         }
         // if the top winner has the best fitness in the history, store its achievement!
         if (((CarAI)winners.get(0).getCar()).getFitness() > bestFitness){
@@ -122,6 +133,7 @@ public class GeneticSystem {
             bestFitness = ((CarAI)winners.get(0).getCar()).getFitness();
             bestScore = ((CarAI)winners.get(0).getCar()).getScore();
         }
+        return winners;
     }
 
 
@@ -268,13 +280,13 @@ public class GeneticSystem {
      */
 
     private Player GetRandomPlayer(List<Player> list){
-        return list.get(new Random().nextInt(players.size()));
+        return list.get(new Random().nextInt(list.size()-1));
     }
 
-    private boolean AreAllCarAlive(){
-        boolean res = true;
+    private boolean AreAllCarNotDead(){
+        boolean res = false;
         for (Player p: players) {
-            res &= p.getCar().isAlive();
+            res |= p.getCar().isAlive();
         }
         return res;
     }
