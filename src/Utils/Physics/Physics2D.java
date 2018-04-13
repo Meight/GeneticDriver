@@ -1,6 +1,7 @@
 package Utils.Physics;
 
 import org.dyn4j.geometry.Vector2;
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.tiled.TiledMap;
 
 import java.util.ArrayList;
@@ -12,15 +13,17 @@ import java.util.List;
 public class Physics2D {
     private static final int MAXIMAL_LOOPS = 100;
 
-    public static RaycastHit raycast(Vector2 position, Vector2 direction, TiledMap map) {
+    public static RaycastHit raycast(Vector2 position, Vector2 direction, TiledMap map, Graphics g) {
         RaycastHit hit = null;
 
-        double rayLength = 1000;
+        double rayLength = 200;
 
         List<Vector2> rayLine = BresenhamLine(position,
                 new Vector2(position).add(direction.getNormalized().multiply(rayLength)));
 
+        System.out.println(rayLine);
         for(Vector2 point : rayLine) {
+            g.drawRect((int) point.x, (int) point.y, 4, 4);
             if (!isPixelAccessible(point.x, point.y, map)) {
                 hit = new RaycastHit(position, direction, new Vector2(point), point.distance(position));
                 break;
@@ -57,32 +60,47 @@ public class Physics2D {
         return BresenhamLine((int) p0.x, (int) p0.y, (int) p1.x, (int) p1.y);
     }
 
-    private static List<Vector2> BresenhamLine(int x0, int y0, int x1, int y1) {
+    private static List<Vector2> BresenhamLine(int x1, int y1, int x2, int y2) {
         List<Vector2> result = new ArrayList<>();
 
-        boolean steep = Math.abs(y1 - y0) > Math.abs(x1 - x0);
-        if (steep) {
-            Swap(x0, y0);
-            Swap(x1, y1);
-        }
-        if (x0 > x1) {
-            Swap(x0, x1);
-            Swap(y0, y1);
-        }
+        // delta of exact value and rounded value of the dependent variable
+        int d = 0;
 
-        int deltaX = x1 - x0;
-        int deltaY = Math.abs(y1 - y0);
-        int error = 0;
-        int yStep;
-        int y = y0;
-        if (y0 < y1) yStep = 1; else yStep = -1;
-        for (int x = x0; x <= x1; x++) {
-            if (steep) result.add(new Vector2(y, x));
-            else result.add(new Vector2(x, y));
-            error += deltaY;
-            if (2 * error >= deltaX) {
-                y += yStep;
-                error -= deltaX;
+        int dx = Math.abs(x2 - x1);
+        int dy = Math.abs(y2 - y1);
+
+        int dx2 = 2 * dx; // slope scaling factors to
+        int dy2 = 2 * dy; // avoid floating point
+
+        int ix = x1 < x2 ? 1 : -1; // increment direction
+        int iy = y1 < y2 ? 1 : -1;
+
+        int x = x1;
+        int y = y1;
+
+        if (dx >= dy) {
+            while (true) {
+                result.add(new Vector2(x, y));
+                if (x == x2)
+                    break;
+                x += ix;
+                d += dy2;
+                if (d > dx) {
+                    y += iy;
+                    d -= dx2;
+                }
+            }
+        } else {
+            while (true) {
+                result.add(new Vector2(x, y));
+                if (y == y2)
+                    break;
+                y += iy;
+                d += dx2;
+                if (d > dy) {
+                    x += ix;
+                    d -= dy2;
+                }
             }
         }
 
