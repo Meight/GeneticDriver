@@ -13,17 +13,14 @@ import java.util.List;
 public class Physics2D {
     private static final int MAXIMAL_LOOPS = 100;
 
-    public static RaycastHit raycast(Vector2 position, Vector2 direction, TiledMap map, Graphics g) {
+    public static RaycastHit raycast(Vector2 position, Vector2 direction, TiledMap map, double rayLength) {
         RaycastHit hit = null;
-
-        double rayLength = 200;
 
         List<Vector2> rayLine = BresenhamLine(position,
                 new Vector2(position).add(direction.getNormalized().multiply(rayLength)));
 
         System.out.println(rayLine);
         for(Vector2 point : rayLine) {
-            g.drawRect((int) point.x, (int) point.y, 4, 4);
             if (!isPixelAccessible(point.x, point.y, map)) {
                 hit = new RaycastHit(position, direction, new Vector2(point), point.distance(position));
                 break;
