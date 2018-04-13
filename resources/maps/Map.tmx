@@ -6,23 +6,23 @@
  <tileset firstgid="2" name="terrainTile2" tilewidth="64" tileheight="64" tilecount="1" columns="1">
   <image source="tiles/terrainTile2.png" width="64" height="64"/>
  </tileset>
- <tileset firstgid="3" name="terrainTile4" tilewidth="64" tileheight="64" tilecount="1" columns="0">
-   <image width="64" height="64" source="tiles/terrainTile4.png"/>
+ <tileset firstgid="3" name="terrainTile4" tilewidth="64" tileheight="64" tilecount="1" columns="1">
+  <image source="tiles/terrainTile4.png" width="64" height="64"/>
  </tileset>
- <tileset firstgid="4" name="terrainTile6" tilewidth="64" tileheight="64" tilecount="1" columns="0">
-   <image width="64" height="64" source="tiles/terrainTile6.png"/>
+ <tileset firstgid="4" name="terrainTile6" tilewidth="64" tileheight="64" tilecount="1" columns="1">
+  <image source="tiles/terrainTile6.png" width="64" height="64"/>
  </tileset>
  <layer name="Environment" width="20" height="15">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAACmNkYGBgpCNmIgHj00Nr84jxAzY+IbsH2jxK4miwmUeMPDHhR4r7aGUeNdIfPfMHKeZREwMAiF6gw7AEAAA=
+   H4sIAAAAAAAACmNgoC9gIgHj00Nr84jxAzY+IbsH2jxiALHhN9DmESNPTPiR4j5amUes3/DpoWf+IMU8agIAeCNDXrAEAAA=
   </data>
  </layer>
- <layer name="Slow" width="20" height="15" visible="0" opacity="0.89">
+ <layer name="Slow" width="20" height="15" opacity="0.89">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAACmNmYGBgpiMmBeDTQ2vziPEDNj4huwfaPEriaLCZR4w8IbtJdR+tzKNG+sNnFzGAVuZREwMAOMoacbAEAAA=
   </data>
  </layer>
- <layer name="Walls" width="20" height="15" visible="0">
+ <layer name="Walls" width="20" height="15">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAACmNgGAX0AixYMKXmUROQYx42P1HLf9jsGknmjQJMAAD3Q8DLsAQAAA==
   </data>
