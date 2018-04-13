@@ -29,7 +29,7 @@ public class Car extends RenderableObject implements KeyPressedListener {
 
     protected double angle;
     protected double speed;
-
+    protected boolean isAlive;
     protected int laps;
 
     protected TiledMap map;
@@ -42,6 +42,7 @@ public class Car extends RenderableObject implements KeyPressedListener {
         this.speed = 0;
         this.angle = 0;
         this.map = map;
+        this.isAlive = true;
         this.forward = new Vector2(1, 0);
         this.right = new Vector2(forward).rotate(Math.PI / 2);
         this.left = new Vector2(forward).rotate(-Math.PI / 2);
@@ -134,8 +135,11 @@ public class Car extends RenderableObject implements KeyPressedListener {
             if (this.map.getTileImage(
                     (int) x / this.map.getTileWidth(),
                     (int) y / this.map.getTileHeight(),
-                    this.map.getLayerIndex("Walls")) != null)
+                    this.map.getLayerIndex("Walls")) != null){
+                isAlive = false;
                 return 9000;
+            }
+
 
             if (this.map.getTileImage(
                     (int) x / this.map.getTileWidth(),
@@ -145,7 +149,16 @@ public class Car extends RenderableObject implements KeyPressedListener {
 
             return 1;
         } catch(ArrayIndexOutOfBoundsException e) {
+            isAlive = false;
             return 9000;
         }
+    }
+
+    public boolean isAlive() {
+        return isAlive;
+    }
+
+    public void setAlive(boolean alive) {
+        isAlive = alive;
     }
 }

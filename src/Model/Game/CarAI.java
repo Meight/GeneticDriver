@@ -21,7 +21,7 @@ public class CarAI extends Car implements Comparable<CarAI>{
     private double score = 0.0;
     private double fitness = 0.0;
     private boolean isWinner;
-    private boolean isAlive;
+
     /**
      * List of the directions the AI will constantly check for obstacles using raycasts.
      */
@@ -32,7 +32,7 @@ public class CarAI extends Car implements Comparable<CarAI>{
     public CarAI(TiledMap map, int x, int y) {
         super(map, x, y);
         List<Integer> topology = new ArrayList<>();
-        topology.add(2);
+        topology.add(3);
         topology.add(4);
         topology.add(2);
 
@@ -44,7 +44,6 @@ public class CarAI extends Car implements Comparable<CarAI>{
         this.score = 0;
         this.fitness = 0;
         this.isWinner = false;
-        this.isAlive=true;
     }
 
     public List<Double> getResultVals() {
@@ -65,7 +64,7 @@ public class CarAI extends Car implements Comparable<CarAI>{
 
     public void ProcessNet(){
         ClearNet();
-        UpdateNetInput();
+        //UpdateNetInput();
         neuralNetwork.FeedForward(inputVals);
         resultVals = neuralNetwork.GetResult();
     }
@@ -73,15 +72,21 @@ public class CarAI extends Car implements Comparable<CarAI>{
     @Override
     public void render(GameContainer container, Graphics g) throws SlickException {
         super.render(container, g);
-
+        List<Double> distances = new ArrayList<>();
         for(Vector2 direction : checkedDirections) {
             RaycastHit raycastHit = Physics2D.raycast(position, direction, map, raycastsLength);
 
             if (raycastHit != null) {
+                distances.add(Math.floor(raycastHit.getDistance()/raycastsLength*100)/100);
                 g.drawLine((int) position.x, (int) position.y,
                         (float) raycastHit.getHitPoint().x,
                         (float) raycastHit.getHitPoint().y);
             }
+        }
+        if(distances.size()==3){
+            inputVals.clear();
+            inputVals.addAll(distances);
+            //System.out.println(inputVals);
         }
     }
 
@@ -109,13 +114,7 @@ public class CarAI extends Car implements Comparable<CarAI>{
         isWinner = winner;
     }
 
-    public boolean isAlive() {
-        return isAlive;
-    }
 
-    public void setAlive(boolean alive) {
-        isAlive = alive;
-    }
 
     public Net getNeuralNetwork() {
         return neuralNetwork;
