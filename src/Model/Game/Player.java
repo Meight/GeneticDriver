@@ -31,7 +31,7 @@ public class Player implements Comparable<Player>{
         if(isAI){
             this.car = new CarAI(map, 150, 150);
         }else{
-            this.car = new Car(map, 150, 150);
+            this.car = new AICar(map, 150, 150);
         }
 
         this.color = Color.color(Math.random(),Math.random(),Math.random());
