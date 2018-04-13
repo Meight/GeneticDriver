@@ -2,19 +2,20 @@ package Model.Game.Track;
 
 import Model.Game.Car;
 import Model.NeuralNetwork.Net;
+import org.dyn4j.geometry.Vector2;
 import org.newdawn.slick.tiled.TiledMap;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class CarAI extends Car {
+public class CarAI extends Car implements Comparable<CarAI>{
     private Net neuralNetwork;
     private List<Double> inputVals;
     private List<Double> targetVals;
     private List<Double> resultVals;
-    private double score;
-    private double fitness;
+    private double score = 0.0;
+    private double fitness = 0.0;
     private boolean isWinner;
     private boolean isAlive;
 
@@ -59,6 +60,8 @@ public class CarAI extends Car {
         resultVals = neuralNetwork.GetResult();
     }
 
+
+
     public double getScore() {
         return score;
     }
@@ -97,5 +100,29 @@ public class CarAI extends Car {
 
     public void setNeuralNetwork(Net neuralNetwork) {
         this.neuralNetwork = neuralNetwork;
+    }
+
+    public void ResetStats(){
+        score=0;
+        fitness=0;
+        isWinner=false;
+        isAlive=true;
+        this.position = new Vector2(150, 150);
+        this.turn = 0;
+        this.speed = 0;
+        this.angle = 0;
+        this.laps = 0;
+        this.forward = new Vector2(1, 0);
+    }
+
+    @Override
+    public int compareTo(CarAI other) {
+        if(this.fitness > other.fitness){
+            return 1;
+        }else if(this.fitness < other.fitness){
+            return -1;
+        }else{
+            return 0;
+        }
     }
 }

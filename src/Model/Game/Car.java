@@ -24,16 +24,16 @@ public class Car extends RenderableObject implements KeyPressedListener {
     private static final double ACCELERATION_DECREMENT = 0.0003d;
     private static final double OBSTACLE_PENALTY_FACTOR = 3d;
 
-    private double turn;
+    protected double turn;
 
-    private double angle;
-    private double speed;
+    protected double angle;
+    protected double speed;
 
-    private int laps;
+    protected int laps;
 
     private TiledMap map;
 
-    private Vector2 forward;
+    protected Vector2 forward;
 
     public Car(TiledMap map, int x, int y) {
         this.position = new Vector2(x, y);

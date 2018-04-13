@@ -6,15 +6,14 @@ import Model.Game.Track.CarAI;
 import Model.Network.InputFactory;
 import org.newdawn.slick.tiled.TiledMap;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class GeneticSystem {
     List<Player> players;
     int topUnitsToKeep;
     int iteration;
+    int carNumber;
+    TiledMap map;
     float mutationRate;
     int bestPopulation;
     double bestFitness;
@@ -22,23 +21,31 @@ public class GeneticSystem {
 
     public GeneticSystem(int carNumber, TiledMap map,int topUnitsToKeep) {
         this.topUnitsToKeep=topUnitsToKeep;
+        this.carNumber=carNumber;
+        this.map = map;
         players = new ArrayList<>();
-        for(int i =0;i<carNumber;i++){
-            players.add(new Player("AI", map, true));
-        }
+        CreateNewPopulation();
         this.iteration = 0;
         this.mutationRate = 1.0f;
         this.bestPopulation = 0;
         this.bestFitness = 0;
         this.bestScore = 0;
+
     }
 
+    /*
+    TODO:
+    HANDLE DEATH
+    HANDLE SCORE
+    HANDLE RAYCAST DISTANCE AS INPUT
+     */
     public void Update(int delta){
         //if not all car dead
         ActivatesBrain(delta);
         //if all car dead
         //Select
         //Evolve
+        //iteration++
         //Let's GO
     }
 
@@ -50,31 +57,78 @@ public class GeneticSystem {
         }
     }
 
-
-
-    public void EvolvePopulation(){
-        // select the top units of the current population to get an array of winners
-        // (they will be copied to the next population)
-
-        // If the best unit from the initial population has a negative fitness
-        // then it means there is no any bird which reached the first barrier!
-        // Playing as the God, we can destroy this bad population and try with another one.
-        // else set the mutatation rate to the real value
-
-        // fill the rest of the next population with new units using crossover and mutation
-        // 1 offspring is made by a crossover of two best winners
-        // Max - 3 offspring is made by a crossover of two random winners
-        //2 offsprings is a random winner
-        //for a total of 10 new Cars
-
-        // mutate the offspring
-
-        // create a new unit using the neural network from the offspring
-
-        // if the top winner has the best fitness in the history, store its achievement!
+    public void CreateNewPopulation(){
+        players.clear();
+        for(int i =0;i<carNumber;i++){
+            players.add(new Player("AI", map, true));
+        }
     }
 
-    public void Select(){
+    public void EvolvePopulation(){
+
+        // select the top units of the current population to get an array of winners
+        // (they will be copied to the next population)
+        List<Player> winners = Selection();
+        List<Player> offsprings = new ArrayList<>();
+        if (this.mutationRate == 1 && ((CarAI)players.get(0).getCar()).getFitness() < 0){
+            // If the best unit from the initial population has a negative fitness
+            // then it means there is no any bird which reached the first barrier!
+            // Playing as the God, we can destroy this bad population and try with another one.
+            CreateNewPopulation();
+        } else {
+            this.mutationRate = 0.2f; // else set the mutation rate to the real value
+            // fill the rest of the next population with new units using crossover and mutation
+            for(int i = topUnitsToKeep; i<carNumber;i++){
+                Player offspring;
+                if (i == topUnitsToKeep){
+                    // offspring is made by a crossover of two best winners
+                    Player parentA = winners.get(0);
+                    Player parentB = winners.get(1);
+                    offspring = CrossOver(parentA, parentB);
+
+                } else if (i < carNumber-2){
+                    // offspring is made by a crossover of two random winners
+                    Player parentA = GetRandomPlayer(winners);
+                    Player parentB = GetRandomPlayer(winners);
+                    offspring = CrossOver(parentA, parentB);
+
+                } else {
+                    // offspring is a random winner
+                    offspring = GetRandomPlayer(winners);
+                }
+                // mutate the new population
+                offspring = Mutate(offspring);
+                ((CarAI)offspring.getCar()).ResetStats();
+                offsprings.add(offspring);
+            }
+
+            for(int j = 0; j<winners.size();j++) {
+                ((CarAI)winners.get(j).getCar()).ResetStats();
+            }
+            //The new players list is the concatenation of the winners and offsprings generated previously
+            players.clear();
+            players.addAll(winners);
+            players.addAll(offsprings);
+        }
+        // if the top winner has the best fitness in the history, store its achievement!
+        if (((CarAI)winners.get(0).getCar()).getFitness() > bestFitness){
+            bestPopulation = this.iteration;
+            bestFitness = ((CarAI)winners.get(0).getCar()).getFitness();
+            bestScore = ((CarAI)winners.get(0).getCar()).getScore();
+        }
+    }
+
+
+
+
+
+    public List<Player> Selection(){
+        Collections.sort(players);
+
+        for(int i =0;i<this.topUnitsToKeep;i++){
+            ((CarAI)players.get(i).getCar()).setWinner(true);
+        }
+        return players.subList(0, topUnitsToKeep);
         /*
         // sort the units of the current population	in descending order by their fitness
 		var sortedPopulation = this.Population.sort(
@@ -206,6 +260,10 @@ public class GeneticSystem {
 	},
 
      */
+
+    private Player GetRandomPlayer(List<Player> list){
+        return list.get(new Random().nextInt(players.size()));
+    }
 
 
     public List<Player> getPlayers() {
