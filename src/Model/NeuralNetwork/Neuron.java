@@ -28,7 +28,7 @@ public class Neuron {
 
     void SetOutputVal(double val) { outputVal = val; }
     double GetOutputVal() { return outputVal; }
-    List<Connection> GetOutputWeights() { return outputWeights; }
+    public List<Connection> GetOutputWeights() { return outputWeights; }
 
     public void SetWeights(List<Double> weights) {
 
@@ -36,6 +36,10 @@ public class Neuron {
         {
             outputWeights.get(i).weight = weights.get(i);
         }
+    }
+
+    public void setOutputWeights(List<Connection> outputWeights) {
+        this.outputWeights = outputWeights;
     }
 
     void UpdateInputWeights(Layer prevLayer)

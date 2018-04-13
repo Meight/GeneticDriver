@@ -90,4 +90,12 @@ public class CarAI extends Car {
     public void setAlive(boolean alive) {
         isAlive = alive;
     }
+
+    public Net getNeuralNetwork() {
+        return neuralNetwork;
+    }
+
+    public void setNeuralNetwork(Net neuralNetwork) {
+        this.neuralNetwork = neuralNetwork;
+    }
 }
