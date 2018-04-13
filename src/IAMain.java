@@ -4,12 +4,13 @@ import sun.font.CreatedFontTracker;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
 public class IAMain {
 
-    static boolean IS_TRAINING = true;
+    static boolean IS_TRAINING = false;
     static int NUMBER_OF_TESTS = 12000;
 
     public static void CreateTestFile() throws FileNotFoundException, UnsupportedEncodingException {

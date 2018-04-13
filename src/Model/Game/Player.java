@@ -7,7 +7,7 @@ import org.newdawn.slick.tiled.TiledMap;
 /**
  * @author Matthieu Boucher
  */
-public class Player {
+public class Player implements Comparable<Player>{
     private String name;
 
     private Car car;
@@ -47,5 +47,11 @@ public class Player {
 
     public Boolean IsAI() {
         return isAI;
+    }
+
+
+    @Override
+    public int compareTo(Player o) {
+        return ((CarAI)this.car).compareTo((CarAI)o.car);
     }
 }
