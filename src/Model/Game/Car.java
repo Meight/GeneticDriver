@@ -31,7 +31,7 @@ public class Car extends RenderableObject implements KeyPressedListener {
 
     protected int laps;
 
-    private TiledMap map;
+    protected TiledMap map;
 
     protected Vector2 forward;
 
