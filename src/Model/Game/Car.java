@@ -19,7 +19,7 @@ import java.util.Random;
 public class Car extends RenderableObject implements KeyPressedListener {
     private static final int MAXIMAL_DISTANCE_BEFORE_SNAP = 5;
 
-    private static final double TURN_INCREMENT = .3d;
+    private static final double TURN_INCREMENT = .10d;
     private static final double MAXIMAL_SPEED = .5d;
     private static final double ACCELERATION_INCREMENT = 0.001d;
     private static final double ACCELERATION_DECREMENT = 0.001d;
@@ -30,6 +30,8 @@ public class Car extends RenderableObject implements KeyPressedListener {
     protected double angle;
     protected double speed;
     protected boolean isAlive;
+    protected double score = 0.0;
+    protected double fitness = 0.0;
     protected int laps;
 
     protected TiledMap map;
@@ -145,6 +147,8 @@ public class Car extends RenderableObject implements KeyPressedListener {
                 isAlive = false;
                 return OBSTACLE_PENALTY_FACTOR;
             }else{
+                score++;
+                fitness++;
                 return 1;
             }
 
@@ -160,5 +164,21 @@ public class Car extends RenderableObject implements KeyPressedListener {
 
     public void setAlive(boolean alive) {
         isAlive = alive;
+    }
+
+    public double getScore() {
+        return score;
+    }
+
+    public void setScore(double score) {
+        this.score = score;
+    }
+
+    public double getFitness() {
+        return fitness;
+    }
+
+    public void setFitness(double fitness) {
+        this.fitness = fitness;
     }
 }

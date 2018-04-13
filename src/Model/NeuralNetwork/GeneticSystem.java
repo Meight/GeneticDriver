@@ -24,7 +24,7 @@ public class GeneticSystem {
         this.carNumber=carNumber;
         this.map = map;
         players = new ArrayList<>();
-        CreateNewPopulation();
+        players = CreateNewPopulation();
         this.iteration = 0;
         this.mutationRate = 1.0f;
         this.bestPopulation = 0;
@@ -74,11 +74,13 @@ public class GeneticSystem {
         }
     }
 
-    public void CreateNewPopulation(){
-        players.clear();
+    public List<Player> CreateNewPopulation(){
+        List<Player> p = new ArrayList<>();
+        //players.clear();
         for(int i =0;i<carNumber;i++){
-            players.add(new Player("AI", map, true));
+            p.add(new Player("AI", map, true));
         }
+        return p;
     }
 
     public List<Player> EvolvePopulation(){
@@ -91,7 +93,7 @@ public class GeneticSystem {
             // If the best unit from the initial population has a negative fitness
             // then it means there is no any bird which reached the first barrier!
             // Playing as the God, we can destroy this bad population and try with another one.
-            CreateNewPopulation();
+            return CreateNewPopulation();
         } else {
             this.mutationRate = 0.2f; // else set the mutation rate to the real value
             // fill the rest of the next population with new units using crossover and mutation
