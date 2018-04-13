@@ -95,17 +95,17 @@ public class Car extends RenderableObject implements KeyPressedListener {
         g.drawLine((int) position.x, (int) position.y, (float) ((int) position.x + (forward.x) * 50), (float) ((int) position.y + (forward.y) * 50));
 
 
-        g.setColor(Color.blue);
+        g.setColor(Color.magenta);
         //Vector2 localAcceleration = new Vector2(position).add(acceleration);
 
         RaycastHit raycastHit = Physics2D.raycast(position, forward, map);
         if(raycastHit != null) {
             g.drawLine((int) position.x, (int) position.y,
-                    (float) ((int) position.x + (raycastHit.getDirection().x) * raycastHit.getDistance()),
-                    (float) ((int) position.y + (raycastHit.getDirection().y) * raycastHit.getDistance()));
+                    (float) raycastHit.getHitPoint().x,
+                    (float) raycastHit.getHitPoint().y);
 
-            g.drawOval((float) raycastHit.getHitPoint().x, (float) raycastHit.getHitPoint().y, 10f, 10f, 10);
-            System.out.println(raycastHit.getHitPoint());
+            //g.drawOval((float) raycastHit.getHitPoint().x, (float) raycastHit.getHitPoint().y, 10f, 10f, 10);
+            //System.out.println(raycastHit.getHitPoint());
 
         }
 

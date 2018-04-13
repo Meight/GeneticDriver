@@ -3,6 +3,9 @@ package Utils.Physics;
 import org.dyn4j.geometry.Vector2;
 import org.newdawn.slick.tiled.TiledMap;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Matthieu Le Boucher
  */
@@ -10,81 +13,79 @@ public class Physics2D {
     private static final int MAXIMAL_LOOPS = 100;
 
     public static RaycastHit raycast(Vector2 position, Vector2 direction, TiledMap map) {
-        Vector2 mapPosition = new Vector2((int) (position.x / map.getTileWidth()), (int) (position.y / map.getTileHeight()));
+        RaycastHit hit = null;
 
-        //length of ray from current position to next x or y-side
-        double sideDistX;
-        double sideDistY;
+        double rayLength = 1000;
 
-        //length of ray from one x or y-side to next x or y-side
-        double deltaDistX = Math.abs(map.getTileWidth() / direction.x);
-        double deltaDistY = Math.abs(map.getTileHeight() / direction.y);
+        List<Vector2> rayLine = BresenhamLine(position,
+                new Vector2(position).add(direction.getNormalized().multiply(rayLength)));
 
-        double perpWallDist;
-
-        //what direction to step in x or y-direction (either +1 or -1)
-        int stepX;
-        int stepY;
-
-        RaycastHit hit = null; //was there a wall hit?
-        int side; //was a NS or a EW wall hit?
-
-
-        //calculate step and initial sideDist
-        if (direction.x < 0)
-        {
-            stepX = -1;
-            sideDistX = Math.abs(position.x - mapPosition.x) * deltaDistX;
-        }
-        else
-        {
-            stepX = 1;
-            sideDistX = Math.abs(mapPosition.x + 1.0 - position.x) * deltaDistX;
-        }
-
-        if (direction.y < 0)
-        {
-            stepY = -1;
-            sideDistY = Math.abs(position.y - mapPosition.y) * deltaDistY;
-        }
-        else
-        {
-            stepY = 1;
-            sideDistY = Math.abs(mapPosition.y + 1.0 - position.y) * deltaDistY;
-        }
-
-        int i = 0;
-        while (hit == null && i < MAXIMAL_LOOPS)
-        {
-            //jump to next map square, OR in x-direction, OR in y-direction
-            if (sideDistX < sideDistY)
-            {
-                sideDistX += deltaDistX;
-                mapPosition.x += stepX;
-                side = 0;
+        for(Vector2 point : rayLine) {
+            if (!isPixelAccessible(point.x, point.y, map)) {
+                hit = new RaycastHit(position, direction, new Vector2(point), point.distance(position));
+                break;
             }
-            else
-            {
-                sideDistY += deltaDistY;
-                mapPosition.y += stepY;
-                side = 1;
-            }
-
-            if(mapPosition.x < 0 || mapPosition.y < 0 || mapPosition.x >= map.getWidth() || mapPosition.y >= map.getHeight())
-                return null;
-
-            //Check if ray has hit a wall
-            if (map.getTileImage((int) mapPosition.x, (int) mapPosition.y, map.getLayerIndex("Slow")) != null) {
-                //System.out.println("Obstacle found at (" + mapPosition.x + ", " + mapPosition.y + ")");
-                if(side == 1)
-                    mapPosition.add(1, 1);
-                mapPosition.multiply(map.getTileWidth());
-                hit = new RaycastHit(position, direction, new Vector2(mapPosition), mapPosition.subtract(position).getMagnitude());
-            }
-
-            i++;
         }
 
         return hit;
+    }
+
+    private static boolean isPointingUp(Vector2 vector) {
+        return vector.y < 0;
+    }
+
+    private static boolean isPixelAccessible(double x, double y, TiledMap map) {
+        // Get the tile coordinates from the pixel coord.
+        int tileX = (int) Math.floor(x / map.getTileWidth());
+        int tileY = (int) Math.floor(y / map.getTileHeight());
+
+        try {
+            return tileX >= 0 && tileX < map.getWidth() && tileY >= 0 && tileY < map.getHeight()
+                    && map.getTileImage(tileX, tileY, map.getLayerIndex("Environment")) != null;
+        } catch(ArrayIndexOutOfBoundsException e) {
+            return false;
+        }
+    }
+
+    private static <T> void Swap(T a, T b) {
+        T c = a;
+        a = b;
+        b = c;
+    }
+
+    private static List<Vector2> BresenhamLine(Vector2 p0, Vector2 p1) {
+        return BresenhamLine((int) p0.x, (int) p0.y, (int) p1.x, (int) p1.y);
+    }
+
+    private static List<Vector2> BresenhamLine(int x0, int y0, int x1, int y1) {
+        List<Vector2> result = new ArrayList<>();
+
+        boolean steep = Math.abs(y1 - y0) > Math.abs(x1 - x0);
+        if (steep) {
+            Swap(x0, y0);
+            Swap(x1, y1);
+        }
+        if (x0 > x1) {
+            Swap(x0, x1);
+            Swap(y0, y1);
+        }
+
+        int deltaX = x1 - x0;
+        int deltaY = Math.abs(y1 - y0);
+        int error = 0;
+        int yStep;
+        int y = y0;
+        if (y0 < y1) yStep = 1; else yStep = -1;
+        for (int x = x0; x <= x1; x++) {
+            if (steep) result.add(new Vector2(y, x));
+            else result.add(new Vector2(x, y));
+            error += deltaY;
+            if (2 * error >= deltaX) {
+                y += yStep;
+                error -= deltaX;
+            }
+        }
+
+        return result;
     }
 }
