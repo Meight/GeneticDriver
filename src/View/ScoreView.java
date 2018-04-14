@@ -11,17 +11,39 @@ import java.util.List;
  * @author Matthieu Le Boucher
  */
 public class ScoreView {
+    /**
+     * Left margin (in pixels) of the all time best individual score board.
+     */
     private static final int ALL_TIME_BEST_LEFT_MARGIN = 20;
+
+    /*
+     * Left margin (in pixels) of the current iteration's best individual score board.
+     */
     private static final int CURRENT_BEST_LEFT_MARGIN = 250;
+
+    /**
+     * All time best individual's score board's color.
+     */
     private static final Color ALL_TIME_BEST_COLOR = Color.green.darker(0.5f);
 
+    /**
+     * List of the players of the current iteration.
+     */
     private List<Player> players;
+
+    /**
+     * The all time best score reached so far.
+     */
     private PlayerScoreHolder allTimeBestPlayerScore;
 
     public ScoreView() {
         this.players = new ArrayList<>();
     }
 
+    /**
+     * Renders the global score board.
+     * @param graphics The graphics context on which to render.
+     */
     public void render(Graphics graphics) {
         // Render the best player onto the HUD.
         if(allTimeBestPlayerScore != null)
@@ -33,6 +55,10 @@ public class ScoreView {
             render(new PlayerScoreHolder(iterationBestPlayer), CURRENT_BEST_LEFT_MARGIN, graphics);
     }
 
+    /**
+     * Retrieves the iteration's best individual.
+     * @return The best individual of the current iteration.
+     */
     private Player getIterationBestPlayer() {
         double bestScore = 0;
         Player bestPlayer = null;
@@ -47,6 +73,13 @@ public class ScoreView {
         return bestPlayer;
     }
 
+    /**
+     * Renders a given player score instance. The rendering is displaced to the right depending on what type of score
+     * is being rendered (all time best vs. iteration best.)
+     * @param playerScore   The score to render.
+     * @param leftMargin    The left margin to apply to the rendering.
+     * @param graphics      The graphics context on which to render.
+     */
     private void render(PlayerScoreHolder playerScore, int leftMargin, Graphics graphics) {
         if(playerScore == null)
             return;
@@ -83,6 +116,9 @@ public class ScoreView {
         }
     }
 
+    /**
+     * Holds the scoring information about a player. Useful to avoid deep copies for score handling.
+     */
     private class PlayerScoreHolder {
         private String name;
         private float score;
@@ -102,6 +138,10 @@ public class ScoreView {
             this.scorePerSecond = scorePerSecond;
         }
 
+        /**
+         * Creates a score holder for a given player.
+         * @param player The player whose score is to be stored.
+         */
         PlayerScoreHolder(Player player) {
             this(player.getName(),
                     (float) player.getCar().getScore(),
@@ -112,31 +152,31 @@ public class ScoreView {
                     player.getCar().getScorePerSecond());
         }
 
-        public String getName() {
+        String getName() {
             return name;
         }
 
-        public float getScore() {
+        float getScore() {
             return score;
         }
 
-        public int getLaps() {
+        int getLaps() {
             return laps;
         }
 
-        public float getCurrentTime() {
+        float getCurrentTime() {
             return currentTime;
         }
 
-        public float getLastLapTime() {
+        float getLastLapTime() {
             return lastLapTime;
         }
 
-        public float getAverageLapTime() {
+        float getAverageLapTime() {
             return averageLapTime;
         }
 
-        public float getScorePerSecond() {
+        float getScorePerSecond() {
             return scorePerSecond;
         }
     }
