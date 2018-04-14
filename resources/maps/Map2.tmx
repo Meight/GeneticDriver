@@ -17,17 +17,17 @@
  </tileset>
  <layer name="Environment" width="20" height="15">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAACmNgoC9gIgEPpHmkqKHUbkrMI0UNMYBW5lGqhhz3UTv8qBW/lKodDPmDWuaRCgAB4D0rsAQAAA==
+   H4sIAAAAAAAACmNgoC9gIgEPpHmkqiHHblxqyPULMeaRAnDpIdYsQmFEinnEhBOx5hEKT1LMQzeDGPcQspeQOKnphZC7SUnP+AA5+Y1UAABKkigSsAQAAA==
   </data>
  </layer>
  <layer name="Slow" width="20" height="15" opacity="0.89">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAACmNmYGBgpiMmBQykeaSoodRuSswjRQ2l4UmJeZSqIcd9lKqlVfwOlvAixQ+0Mo9UDADd62PTsAQAAA==
+   H4sIAAAAAAAACmNmYGBgpiMmBQykeaSqIcduXGrI9Qsx5pETV+SEETMWNYTcR2w8U2oeNoDPf/jMQzeDGPcQspeQOD7zsAFKwoAYswjFBzUxAJOjRBuwBAAA
   </data>
  </layer>
- <layer name="Walls" width="20" height="15" visible="0">
+ <layer name="Walls" width="20" height="15">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAACmNgGAX0AixYMKXmUROQYx42P1HLf9jsGknmjQJMAAD3Q8DLsAQAAA==
+   H4sIAAAAAAAACmNgGAWjYBSMgqEBAGlKTgywBAAA
   </data>
  </layer>
  <layer name="Arrival" width="20" height="15" visible="0">
