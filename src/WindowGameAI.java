@@ -31,9 +31,9 @@ public class WindowGameAI extends BasicGame {
     @Override
     public void init(GameContainer container) throws SlickException {
         this.container = container;
-        this.map = new TiledMap("maps/Map.tmx");
+        this.map = new TiledMap("maps/Map2.tmx");
         this.scoreView = new ScoreView();
-        this.geneticSys = new GeneticSystem(20,map,4, scoreView);
+        this.geneticSys = new GeneticSystem(30,map,6, scoreView);
 
         for (Player player : geneticSys.getPlayers()) {
             keyPressedListeners.add(player.getCar());
