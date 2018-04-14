@@ -163,7 +163,7 @@ public class CarAI extends Car implements Comparable<CarAI>{
                 return 0;
             }
         //}else if(this.getAverageLapTime() < other.getAverageLapTime()){
-        /    return -1;
+        //    return -1;
         //}else{
         //    return 1;
         //}
