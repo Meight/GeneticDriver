@@ -28,7 +28,7 @@ public class Player implements Comparable<Player>{
         this.name = name;
         this.isAI = isai;
         if(isAI){
-            this.car = new CarAI(map, 150, 150);
+            this.car = new CarAI(map, 850, 100);
         }else{
             this.car = new Car(map, 150, 150);
         }
@@ -52,5 +52,9 @@ public class Player implements Comparable<Player>{
     @Override
     public int compareTo(Player o) {
         return ((CarAI)this.car).compareTo((CarAI)o.car);
+    }
+    @Override
+    public String toString() {
+        return getCar().toString();
     }
 }

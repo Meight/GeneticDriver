@@ -23,15 +23,16 @@ public class CarAI extends Car implements Comparable<CarAI>{
     /**
      * List of the directions the AI will constantly check for obstacles using raycasts.
      */
-    private Vector2[] checkedDirections = { forward, right, left };
+    private Vector2[] checkedDirections = { forward, right, left, diagLeft, diagRight };
 
     private double raycastsLength = 700;
 
     public CarAI(TiledMap map, int x, int y) {
         super(map, x, y);
         List<Integer> topology = new ArrayList<>();
+        topology.add(5);
+        topology.add(4);
         topology.add(3);
-        topology.add(8);
         topology.add(2);
 
         this.neuralNetwork = new Net(topology);
@@ -54,10 +55,10 @@ public class CarAI extends Car implements Comparable<CarAI>{
         for(Vector2 direction : checkedDirections) {
             RaycastHit raycastHit = Physics2D.raycast(position, direction, map, raycastsLength);
             if (raycastHit != null) {
-                distances.add(Math.floor(raycastHit.getDistance()/raycastsLength*100)/100);
+                distances.add(Math.floor(raycastHit.getDistance()/raycastsLength*100)/100 < 0.25 ? 1d:0d);
             }
         }
-        if(distances.size()==3){
+        if(distances.size()==5){
             inputVals.clear();
             inputVals.addAll(distances);
             //System.out.println(inputVals);
@@ -113,24 +114,26 @@ public class CarAI extends Car implements Comparable<CarAI>{
         this.fitness=0;
         this.isWinner=false;
         this.currentRotation=0f;
-        this.position = new Vector2(150, 150);
+        this.position = new Vector2(850, 100);
         this.turn = 0;
         this.speed = 0;
         this.angle = 0;
         this.laps = 0;
         this.forward = new Vector2(1, 0);
-        this.right = new Vector2(forward).rotate(Math.PI / 2);
-        this.left = new Vector2(forward).rotate(-Math.PI / 2);
-        checkedDirections = new Vector2[]{forward, right, left};
+        this.right = new Vector2(forward).rotate(Math.PI / 4);
+        this.diagRight = new Vector2(forward).rotate(Math.PI / 8);
+        this.left = new Vector2(forward).rotate(-Math.PI / 4);
+        this.diagLeft = new Vector2(forward).rotate(-Math.PI / 8);
+        checkedDirections = new Vector2[]{forward, right, left,diagLeft,diagRight};
         this.isAlive=true;
     }
 
     @Override
     public int compareTo(CarAI other) {
         if(this.fitness > other.fitness){
-            return 1;
-        }else if(this.fitness < other.fitness){
             return -1;
+        }else if(this.fitness < other.fitness){
+            return 1;
         }else{
             return 0;
         }

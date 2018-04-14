@@ -4,6 +4,7 @@ import Model.Game.Player;
 import Model.Game.RenderableObject;
 import Model.Game.CarAI;
 import Model.Network.InputFactory;
+import org.newdawn.slick.tests.SoundTest;
 import org.newdawn.slick.tiled.TiledMap;
 
 import java.util.*;
@@ -121,6 +122,7 @@ public class GeneticSystem {
                 offsprings.add(offspring);
             }
 
+
             for(int j = 0; j<winners.size();j++) {
                 ((CarAI)winners.get(j).getCar()).ResetStats();
             }
@@ -131,11 +133,7 @@ public class GeneticSystem {
             winners.addAll(offsprings);
         }
         // if the top winner has the best fitness in the history, store its achievement!
-        if (((CarAI)winners.get(0).getCar()).getFitness() > bestFitness){
-            bestPopulation = this.iteration;
-            bestFitness = ((CarAI)winners.get(0).getCar()).getFitness();
-            bestScore = ((CarAI)winners.get(0).getCar()).getScore();
-        }
+
         return winners;
     }
 
@@ -145,7 +143,11 @@ public class GeneticSystem {
 
     public List<Player> Selection(){
         Collections.sort(players);
-
+        if (players.get(0).getCar().getFitness() > bestFitness){
+            bestPopulation = this.iteration;
+            bestFitness = players.get(0).getCar().getFitness();
+            bestScore = players.get(0).getCar().getScore();
+        }
         for(int i =0;i<this.topUnitsToKeep;i++){
             ((CarAI)players.get(i).getCar()).setWinner(true);
         }
@@ -256,7 +258,7 @@ public class GeneticSystem {
         for (int i =0;i<neuron.GetOutputWeights().size();i++){
             mutatedWeight = neuron.GetOutputWeights().get(i).getWeight();
             if(new Random().nextFloat()< mutationRate){
-                double mutateFactor = (new Random().nextFloat() -0.5)*4;
+                double mutateFactor = (new Random().nextFloat() -0.5)*6;
                 mutatedWeight *= mutateFactor;
             }
             weights.add(mutatedWeight);

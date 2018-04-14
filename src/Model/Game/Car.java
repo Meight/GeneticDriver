@@ -36,7 +36,7 @@ public class Car extends RenderableObject implements KeyPressedListener {
 
     protected TiledMap map;
 
-    protected Vector2 forward, right, left;
+    protected Vector2 forward, right, left, diagRight, diagLeft;
 
     public Car(TiledMap map, int x, int y) {
         this.position = new Vector2(x, y);
@@ -46,8 +46,10 @@ public class Car extends RenderableObject implements KeyPressedListener {
         this.map = map;
         this.isAlive = true;
         this.forward = new Vector2(1, 0);
-        this.right = new Vector2(forward).rotate(Math.PI / 2);
-        this.left = new Vector2(forward).rotate(-Math.PI / 2);
+        this.right = new Vector2(forward).rotate(Math.PI / 4);
+        this.diagRight = new Vector2(forward).rotate(Math.PI / 8);
+        this.left = new Vector2(forward).rotate(-Math.PI / 4);
+        this.diagLeft = new Vector2(forward).rotate(-Math.PI / 8);
 
         File dir = new File("./resources/cars/");
         File[] files = dir.listFiles();
@@ -130,6 +132,8 @@ public class Car extends RenderableObject implements KeyPressedListener {
         forward.rotate(Math.toRadians(angleContribution));
         right.rotate(Math.toRadians(angleContribution));
         left.rotate(Math.toRadians(angleContribution));
+        diagLeft.rotate(Math.toRadians(angleContribution));
+        diagRight.rotate(Math.toRadians(angleContribution));
     }
 
     private double getTerrainFactor(double x, double y) {
@@ -180,5 +184,10 @@ public class Car extends RenderableObject implements KeyPressedListener {
 
     public void setFitness(double fitness) {
         this.fitness = fitness;
+    }
+
+    @Override
+    public String toString() {
+        return Double.toString(fitness) ;
     }
 }

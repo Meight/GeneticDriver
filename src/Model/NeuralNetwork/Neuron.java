@@ -32,7 +32,7 @@ public class Neuron {
 
     public void SetWeights(List<Double> weights) {
 
-        for (int i = 0; i < (int)weights.size(); i++)
+        for (int i = 0; i < weights.size(); i++)
         {
             outputWeights.get(i).weight = weights.get(i);
         }
