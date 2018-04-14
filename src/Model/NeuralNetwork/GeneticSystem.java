@@ -1,16 +1,19 @@
 package Model.NeuralNetwork;
 
+import Model.Game.CarAI;
 import Model.Game.Player;
 import Model.Game.RenderableObject;
-import Model.Game.CarAI;
 import Model.Network.InputFactory;
-import org.newdawn.slick.tests.SoundTest;
+import View.ScoreView;
 import org.newdawn.slick.tiled.TiledMap;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
 
 public class GeneticSystem {
     List<Player> players;
@@ -23,11 +26,14 @@ public class GeneticSystem {
     double bestFitness;
     double bestScore;
     SaveNetSystem saveSystem;
+    ScoreView scoreView;
 
-    public GeneticSystem(int carNumber, TiledMap map,int topUnitsToKeep) {
+    public GeneticSystem(int carNumber, TiledMap map, int topUnitsToKeep, ScoreView scoreView) {
         this.topUnitsToKeep=topUnitsToKeep;
         this.carNumber=carNumber;
         this.map = map;
+        this.scoreView = scoreView;
+
         players = new ArrayList<>();
         players = CreateNewPopulation();
         this.iteration = 0;
@@ -35,12 +41,12 @@ public class GeneticSystem {
         this.bestPopulation = 0;
         this.bestFitness = 0;
         this.bestScore = 0;
+
         try {
             saveSystem = new SaveNetSystem("save.txt");
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     /*
@@ -86,9 +92,13 @@ public class GeneticSystem {
 
     public List<Player> CreateNewPopulation(){
         List<Player> p = new ArrayList<>();
+        scoreView.clearPlayerList();
+
         //players.clear();
         for(int i =0;i<carNumber;i++){
-            p.add(new Player("AI", map, true));
+            Player newAI = new Player("AI " + iteration + "-" + i, map, true);
+            p.add(newAI);
+            scoreView.addPlayer(newAI);
         }
         return p;
     }
