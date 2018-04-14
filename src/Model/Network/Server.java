@@ -21,6 +21,7 @@ public class Server extends Thread{
     private static final int SERVER_PORT  = 13594;
     private static final int BUFFER_SIZE = 8192;
     private static final String SERVERS = "getServers";
+    private static final String ACCEPT = "go";
 
     private Server(String name) {
         try{
@@ -43,6 +44,11 @@ public class Server extends Thread{
                     buf = serverName.getBytes();
                     packet = new DatagramPacket(buf, buf.length, address, port);
                     socket.send(packet);
+                }else if(received.equalsIgnoreCase(ACCEPT)){
+                    ServerGame sg = new ServerGame(address);
+                    sg.start();
+                    running = false;
+                    break;
                 }
             } catch (IOException e) {
                 e.printStackTrace();

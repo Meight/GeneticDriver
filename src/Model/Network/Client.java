@@ -118,6 +118,8 @@ public class Client{
 
     public void accessServer(InetAddress server){
         System.out.println("Access server "+server);
+        OnlineGame og = new OnlineGame(server);
+        og.start();
     }
 
     public void openWindows() {

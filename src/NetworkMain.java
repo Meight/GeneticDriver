@@ -104,14 +104,6 @@ public class NetworkMain extends JFrame {
         return jPanel;
     }
 
-    private static void actionClient(){
-        who.setText("Je suis le client");
-        searchServer.setEnabled(true);
-        if(myServer != null){
-            myServer.stopServer();
-        }
-        myClient = new Client();
-    }
 
     public void showWindows(boolean show){
         this.setVisible(show);
