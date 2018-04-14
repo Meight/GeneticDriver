@@ -55,7 +55,7 @@ public class CarAI extends Car implements Comparable<CarAI>{
         for(Vector2 direction : checkedDirections) {
             RaycastHit raycastHit = Physics2D.raycast(position, direction, map, raycastsLength);
             if (raycastHit != null) {
-                distances.add(Math.floor(raycastHit.getDistance()/raycastsLength*100)/100 < 0.25 ? 1d:0d);
+                distances.add(Math.floor(raycastHit.getDistance()/raycastsLength*100)/100 < 0.20 ? 1d:0d);
             }
         }
         if(distances.size()==5){

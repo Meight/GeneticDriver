@@ -114,7 +114,7 @@ public class GeneticSystem {
 
                 } else {
                     // offspring is a random winner
-                    ((CarAI)offspring.getCar()).setNeuralNetwork(((CarAI)GetRandomPlayer(winners).getCar()).getNeuralNetwork());
+                    ((CarAI)offspring.getCar()).setNeuralNetwork(((CarAI)GetRandomPlayer(winners).getCar()).getCleanNeuralNetwork());
                 }
                 // mutate the new population
                 offspring = Mutate(offspring);
