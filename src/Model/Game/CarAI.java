@@ -61,7 +61,6 @@ public class CarAI extends Car implements Comparable<CarAI>{
         this.score = 0;
         this.fitness = 0;
         this.isWinner = false;
-        System.out.println(neuralNetwork);
     }
 
 
@@ -155,12 +154,18 @@ public class CarAI extends Car implements Comparable<CarAI>{
 
     @Override
     public int compareTo(CarAI other) {
-        if(this.fitness > other.fitness){
-            return -1;
-        }else if(this.fitness < other.fitness){
-            return 1;
-        }else{
-            return 0;
-        }
+        //if(this.getAverageLapTime() == other.getAverageLapTime()){
+            if(this.fitness > other.fitness){
+                return -1;
+            }else if(this.fitness < other.fitness){
+                return 1;
+            }else{
+                return 0;
+            }
+        //}else if(this.getAverageLapTime() < other.getAverageLapTime()){
+        /    return -1;
+        //}else{
+        //    return 1;
+        //}
     }
 }
