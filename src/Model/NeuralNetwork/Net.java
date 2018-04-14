@@ -6,11 +6,12 @@ import java.util.List;
 public class Net {
     List<Layer> layers = new ArrayList<>(); // m_layers.get(layersNum).getLayer().get(neuronNum) pour un neuronne donné
     double error;
-
+    List<Integer> topology;
     double recentAverageError;
     double recentAverageSmoothingFactor;
 
     public Net(List<Integer> topology) {
+        this.topology=topology;
         int numLayers = topology.size();
         for (int layerNum = 0; layerNum < numLayers; ++layerNum)
         {
@@ -141,6 +142,30 @@ public class Net {
             }
         }
         return res;
+    }
+
+    public Net GetSameNetWithNewAdress(){
+        Net resultNet = new Net(this.topology);
+        int numLayers = topology.size();
+
+        for (int layerNum = 0; layerNum < numLayers; ++layerNum)
+        {
+            Layer layer = this.getLayers().get(layerNum);
+            //we made a new layer, now fill it with neurons, and add
+            //a bias neuron to the layer
+            for (int neuronNum = 0; neuronNum <= topology.get(layerNum); ++neuronNum)
+            {
+                List<Double> weights = new ArrayList<>();
+                Neuron neuron = layer.getLayer().get(neuronNum);
+                for (int weightNum = 0; weightNum<neuron.GetOutputWeights().size();weightNum++){
+                    double weight = neuron.GetOutputWeights().get(weightNum).weight;
+                    weights.add(weight);
+                }
+                resultNet.GetNet().get(layerNum).getLayer().get(neuronNum).SetWeights(weights);
+            }
+
+        }
+        return resultNet;
     }
 
     public int neuronsHiddenNumber(){

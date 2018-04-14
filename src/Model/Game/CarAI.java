@@ -105,6 +105,10 @@ public class CarAI extends Car implements Comparable<CarAI>{
         return neuralNetwork;
     }
 
+    public Net getCleanNeuralNetwork() {
+        return neuralNetwork.GetSameNetWithNewAdress();
+    }
+
     public void setNeuralNetwork(Net neuralNetwork) {
         this.neuralNetwork = neuralNetwork;
     }
@@ -114,7 +118,7 @@ public class CarAI extends Car implements Comparable<CarAI>{
         this.fitness=0;
         this.isWinner=false;
         this.currentRotation=0f;
-        this.position = new Vector2(850, 100);
+        this.position = new Vector2(450, 320);
         this.turn = 0;
         this.speed = 0;
         this.angle = 0;

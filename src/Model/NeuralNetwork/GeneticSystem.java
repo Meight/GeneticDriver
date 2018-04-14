@@ -45,10 +45,9 @@ public class GeneticSystem {
         if(AreAllCarNotDead()){
             ActivatesBrain(delta);
         } else {
-            DisplayGeneticSystem();
             players = EvolvePopulation();
             iteration++;
-
+            DisplayGeneticSystem();
         }
         //if all car dead
         //Select
@@ -60,7 +59,6 @@ public class GeneticSystem {
     public void DisplayGeneticSystem(){
         System.out.flush();
         System.out.println("Iteration "+iteration);
-        System.out.println(players);
         System.out.println("Number of cars "+players.size());
         System.out.println("Best Population "+bestPopulation);
         System.out.println("Best Fitness "+bestFitness);
@@ -171,8 +169,8 @@ public class GeneticSystem {
     }
 
     public Player CrossOver(Player parentA, Player parentB){
-        Net netA = ((CarAI)parentA.getCar()).getNeuralNetwork();
-        Net netB = ((CarAI)parentB.getCar()).getNeuralNetwork();
+        Net netA = ((CarAI)parentA.getCar()).getCleanNeuralNetwork();
+        Net netB = ((CarAI)parentB.getCar()).getCleanNeuralNetwork();
         Player offspringA = new Player("aa", map, true);
         Player offspringB = new Player("aa", map, true);
 
@@ -262,7 +260,7 @@ public class GeneticSystem {
         for (int i =0;i<neuron.GetOutputWeights().size();i++){
             mutatedWeight = neuron.GetOutputWeights().get(i).getWeight();
             if(new Random().nextFloat()< mutationRate){
-                double mutateFactor = (new Random().nextFloat() -0.5)*6;
+                double mutateFactor = (new Random().nextFloat()+0.5);
                 mutatedWeight *= mutateFactor;
             }
             weights.add(mutatedWeight);
