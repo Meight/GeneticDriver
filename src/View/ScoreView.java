@@ -12,6 +12,7 @@ import java.util.List;
  */
 public class ScoreView {
     private List<Player> players;
+    private Player allTimeBestPlayer;
 
     public ScoreView() {
         this.players = new ArrayList<>();
@@ -43,9 +44,10 @@ public class ScoreView {
         graphics.resetTransform();
         graphics.setColor(Color.black);
         graphics.drawString("Best player: " + player.getName(), 20, 20);
-        graphics.drawString("Laps: " + player.getCar().getLapsAmount(), 20, 40);
-        graphics.drawString("Current time: " + player.getCar().getTimeAccumulator(), 20, 60);
-        graphics.drawString("Last lap time: " + player.getCar().getLastLapAbsoluteTime(), 20, 80);
+        graphics.drawString("Score: " + player.getCar().getScore(), 20, 40);
+        graphics.drawString("Laps: " + player.getCar().getLapsAmount(), 20, 60);
+        graphics.drawString("Current time: " + player.getCar().getTimeAccumulator() / 1_000 + " s", 20, 80);
+        graphics.drawString("Last lap time: " + player.getCar().getLastLapTime() / 1_000 + " s", 20, 100);
     }
 
     public void addPlayer(Player player) {
