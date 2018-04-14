@@ -95,7 +95,7 @@ public class Client{
         });
         jPanel.add(search);
         for(int i = 0; i < nomServer.size(); ++i){
-            JButton go = new JButton(nomServer.get(i));
+            /*JButton go = new JButton(nomServer.get(i));
             final int fI = i+1;
             go.addActionListener(new ActionListener() {
                 @Override
@@ -103,11 +103,10 @@ public class Client{
                     accessServer(addressServer.get(nomServer.get(fI)));
                 }
             });
-            jPanel.add(go);
+            jPanel.add(go);*/
 
-            System.out.println("Nom du serveur : "+nomServer.get(i));
-            System.out.println("Adresse du serveur : "+addressServer.get(nomServer.get(i)));
-            System.out.println();
+            accessServer(addressServer.get(nomServer.get(i)));
+            break;
         }
         System.out.println("NB Serv : "+nomServer.size());
         jFrame.add(jPanel);

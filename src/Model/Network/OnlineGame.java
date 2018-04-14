@@ -9,10 +9,12 @@ public class OnlineGame extends Thread{
     InetAddress server;
     private DatagramSocket socket;
     private final static int portClient = 33333;
+    private final static int acceptGame = 13594;
     private final static int portServer = 33334;
     boolean running = true;
     private byte[] buf = new byte[BUFFER_SIZE];
     private static final int BUFFER_SIZE = 8192;
+    private static final String ACCEPT = "go";
 
     public OnlineGame (InetAddress s){
         server = s;
@@ -22,11 +24,15 @@ public class OnlineGame extends Thread{
     }
 
     public void run(){
+        try {
+        buf = ACCEPT.getBytes();
+        DatagramPacket packet = new DatagramPacket(buf, buf.length, server, acceptGame);
+        socket.send(packet);
         //todo Lancer game CLIENT
         while (running){
-            try {
+
                 //todo buf prend input du joueur
-                DatagramPacket packet = new DatagramPacket(buf, buf.length, server, portServer);
+                packet = new DatagramPacket(buf, buf.length, server, portServer);
                 socket.send(packet);
                 buf = new byte[BUFFER_SIZE];
                 packet = new DatagramPacket(buf, buf.length);
@@ -35,11 +41,11 @@ public class OnlineGame extends Thread{
                 //todo received VERS le jeu (nouvelles positions)
                 buf = new byte[BUFFER_SIZE];
 
-
+        }
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }
+
     }
 
 }
