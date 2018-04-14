@@ -36,6 +36,7 @@ public class Car extends RenderableObject implements KeyPressedListener {
     protected double fitness = 0.0;
 
     protected boolean isOnArrivalLine = true;
+    private boolean hasCrossedArrivalLineOnce = false;
     protected List<Float> lapsTime;
     protected float lastLapAbsoluteTime = 0;
     protected float timeAccumulator = 0;
@@ -131,7 +132,7 @@ public class Car extends RenderableObject implements KeyPressedListener {
         double x = Math.cos(angle) * speed;
         double y = Math.sin(angle) * speed;
         double speedPenaltyFactor = getTerrainFactor(position.x + x, position.y + y);
-        checkForArrival(position.x + x, position.y + y, deltaTime);
+        checkForArrival(position.x + x, position.y + y);
 
         x /= speedPenaltyFactor;
         y /= speedPenaltyFactor;
@@ -148,15 +149,24 @@ public class Car extends RenderableObject implements KeyPressedListener {
 
     }
 
-    private void checkForArrival(double x, double y, float deltaTime) {
-        if(!isOnArrivalLine && this.map.getTileImage(
+    private void checkForArrival(double x, double y) {
+        if(this.map.getTileImage(
                 (int) x / this.map.getTileWidth(),
                 (int) y / this.map.getTileHeight(),
                 this.map.getLayerIndex("Arrival")) != null) {
-            isOnArrivalLine = true;
-            lapsTime.add(timeAccumulator - lastLapAbsoluteTime);
-            lastLapAbsoluteTime = timeAccumulator;
-        }
+
+            if(!isOnArrivalLine) {
+                isOnArrivalLine = true;
+
+                if(hasCrossedArrivalLineOnce) {
+                    lapsTime.add(timeAccumulator - lastLapAbsoluteTime);
+                    lastLapAbsoluteTime = timeAccumulator;
+                }
+
+                hasCrossedArrivalLineOnce = true;
+            }
+        } else
+            isOnArrivalLine = false;
     }
 
     private double getTerrainFactor(double x, double y) {
@@ -218,8 +228,8 @@ public class Car extends RenderableObject implements KeyPressedListener {
         return lapsTime.size();
     }
 
-    public float getLastLapAbsoluteTime() {
-        return lastLapAbsoluteTime;
+    public float getLastLapTime() {
+        return lapsTime.size() > 0 ? lapsTime.get(lapsTime.size() - 1) : 0;
     }
 
     public float getTimeAccumulator() {
