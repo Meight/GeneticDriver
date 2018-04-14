@@ -19,8 +19,8 @@ import java.util.Random;
 public class Car extends RenderableObject implements KeyPressedListener {
     private static final int MAXIMAL_DISTANCE_BEFORE_SNAP = 5;
 
-    private static final double TURN_INCREMENT = .15d;
-    private static final double MAXIMAL_SPEED = 1d;
+    private static final double TURN_INCREMENT = .08d;
+    private static final double MAXIMAL_SPEED = 3.5d;
     private static final double ACCELERATION_INCREMENT = 0.002d;
     private static final double ACCELERATION_DECREMENT = 0.002d;
     private static final double OBSTACLE_PENALTY_FACTOR = 3d;
