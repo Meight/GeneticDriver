@@ -92,7 +92,6 @@ public class GeneticSystem {
 
     public List<Player> CreateNewPopulation(){
         List<Player> p = new ArrayList<>();
-        scoreView.clearPlayerList();
 
         //players.clear();
         for(int i =0;i<carNumber;i++){
@@ -104,6 +103,7 @@ public class GeneticSystem {
     }
 
     public List<Player> EvolvePopulation(){
+        scoreView.clearPlayerList();
 
         // select the top units of the current population to get an array of winners
         // (they will be copied to the next population)
@@ -119,6 +119,7 @@ public class GeneticSystem {
             // fill the rest of the next population with new units using crossover and mutation
             for(int i = topUnitsToKeep; i<carNumber;i++){
                 Player offspring = new Player("aa", map, true);
+                scoreView.addPlayer(offspring);
                 if (i == topUnitsToKeep){
                     // offspring is made by a crossover of two best winners
                     Player parentA = winners.get(0);
