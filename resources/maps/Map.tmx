@@ -12,6 +12,9 @@
  <tileset firstgid="4" name="terrainTile6" tilewidth="64" tileheight="64" tilecount="1" columns="1">
   <image source="tiles/terrainTile6.png" width="64" height="64"/>
  </tileset>
+ <tileset firstgid="5" name="roadTile12" tilewidth="64" tileheight="64" tilecount="1" columns="0">
+   <image width="64" height="64" source="tiles/roadTile12.png"/>
+ </tileset>
  <layer name="Environment" width="20" height="15">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAACmNgoC9gIgEPpHmkqKHUbnqZRyrAZedgM4+QPcSGH73MwwdoZR6l+YJW5pEKADTAAt2wBAAA
@@ -25,6 +28,11 @@
  <layer name="Walls" width="20" height="15">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAACmNgGAX0AixYMKXmUROQYx42P1HLf9jsGknmjQJMAAD3Q8DLsAQAAA==
+  </data>
+ </layer>
+ <layer name="Arrival" width="20" height="15">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACmNgGAXUBqyD3LxRMAqGKgAADOcaELAEAAA=
   </data>
  </layer>
 </map>
