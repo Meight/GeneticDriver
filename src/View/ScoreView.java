@@ -55,6 +55,8 @@ public class ScoreView {
         graphics.drawString("Laps: " + player.getCar().getLapsAmount(), leftMargin, 80);
         graphics.drawString("Current time: " + player.getCar().getTimeAccumulator() / 1_000 + " s", leftMargin, 100);
         graphics.drawString("Last lap time: " + player.getCar().getLastLapTime() / 1_000 + " s", leftMargin, 120);
+        graphics.drawString("Avg. lap time: " + player.getCar().getAverageLapTime() / 1_000, leftMargin, 140);
+        graphics.drawString("Score per sec: " + player.getCar().getScorePerSecond(), leftMargin, 160);
     }
 
     public void addPlayer(Player player) {
@@ -75,5 +77,6 @@ public class ScoreView {
 
             this.players.add(allTimeBestPlayer);
         }
+
     }
 }
