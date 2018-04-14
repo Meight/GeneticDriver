@@ -7,6 +7,9 @@ import Model.Network.InputFactory;
 import org.newdawn.slick.tests.SoundTest;
 import org.newdawn.slick.tiled.TiledMap;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.*;
 
 public class GeneticSystem {
@@ -19,6 +22,7 @@ public class GeneticSystem {
     int bestPopulation;
     double bestFitness;
     double bestScore;
+    SaveNetSystem saveSystem;
 
     public GeneticSystem(int carNumber, TiledMap map,int topUnitsToKeep) {
         this.topUnitsToKeep=topUnitsToKeep;
@@ -31,6 +35,11 @@ public class GeneticSystem {
         this.bestPopulation = 0;
         this.bestFitness = 0;
         this.bestScore = 0;
+        try {
+            saveSystem = new SaveNetSystem("save.txt");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -132,8 +141,6 @@ public class GeneticSystem {
             //players.addAll(offsprings);
             winners.addAll(offsprings);
         }
-        // if the top winner has the best fitness in the history, store its achievement!
-
         return winners;
     }
 
@@ -143,10 +150,20 @@ public class GeneticSystem {
 
     public List<Player> Selection(){
         Collections.sort(players);
+        // if the top winner has the best fitness in the history, store its achievement!
         if (players.get(0).getCar().getFitness() > bestFitness){
             bestPopulation = this.iteration;
             bestFitness = players.get(0).getCar().getFitness();
             bestScore = players.get(0).getCar().getScore();
+            if(bestScore>saveSystem.getBestScoreEver()){
+                try {
+                    saveSystem.SavePlayer(players.get(0));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         for(int i =0;i<this.topUnitsToKeep;i++){
             ((CarAI)players.get(i).getCar()).setWinner(true);

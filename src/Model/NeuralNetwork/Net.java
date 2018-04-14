@@ -151,8 +151,6 @@ public class Net {
         for (int layerNum = 0; layerNum < numLayers; ++layerNum)
         {
             Layer layer = this.getLayers().get(layerNum);
-            //we made a new layer, now fill it with neurons, and add
-            //a bias neuron to the layer
             for (int neuronNum = 0; neuronNum <= topology.get(layerNum); ++neuronNum)
             {
                 List<Double> weights = new ArrayList<>();
@@ -166,6 +164,10 @@ public class Net {
 
         }
         return resultNet;
+    }
+
+    public List<Integer> getTopology() {
+        return topology;
     }
 
     public int neuronsHiddenNumber(){
