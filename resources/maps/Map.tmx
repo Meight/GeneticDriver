@@ -14,12 +14,12 @@
  </tileset>
  <layer name="Environment" width="20" height="15">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAACmNgoC9gIgHj00Nr84jxAzY+IbsH2jxiALHhN9DmESNPTPiR4j5amUes3/DpoWf+IMU8agIAeCNDXrAEAAA=
+   H4sIAAAAAAAACmNgoC9gIgEPpHmkqKHUbnqZRyrAZedgM4+QPcSGH73MwwdoZR6l+YJW5pEKADTAAt2wBAAA
   </data>
  </layer>
  <layer name="Slow" width="20" height="15" opacity="0.89">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAACmNmYGBgpiMmBeDTQ2vziPEDNj4huwfaPEriaLCZR4w8IbtJdR+tzKNG+sNnFzGAVuZREwMAOMoacbAEAAA=
+   H4sIAAAAAAAACmNmYGBgpiMmBQykeaSoodRueplHaVwNVvPISRMDaR656Y8S80h1O73MIxUDANLY+7OwBAAA
   </data>
  </layer>
  <layer name="Walls" width="20" height="15">
