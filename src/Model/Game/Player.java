@@ -28,7 +28,7 @@ public class Player implements Comparable<Player>{
         this.name = name;
         this.isAI = isai;
         if(isAI){
-            this.car = new CarAI(map, 450, 320);
+            this.car = new CarAI(map, 200, 320);
         }else{
             this.car = new Car(map, 150, 150);
         }

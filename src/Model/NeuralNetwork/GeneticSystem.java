@@ -90,7 +90,7 @@ public class GeneticSystem {
         // (they will be copied to the next population)
         List<Player> winners = Selection();
         List<Player> offsprings = new ArrayList<>();
-        if (this.mutationRate == 1 && ((CarAI)players.get(0).getCar()).getFitness() < 0){
+        if (this.mutationRate == 1 && ((CarAI)players.get(0).getCar()).getFitness() < 400){
             // If the best unit from the initial population has a negative fitness
             // then it means there is no any bird which reached the first barrier!
             // Playing as the God, we can destroy this bad population and try with another one.

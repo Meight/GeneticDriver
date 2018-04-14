@@ -118,7 +118,7 @@ public class CarAI extends Car implements Comparable<CarAI>{
         this.fitness=0;
         this.isWinner=false;
         this.currentRotation=0f;
-        this.position = new Vector2(450, 320);
+        this.position = new Vector2(200, 320);
         this.turn = 0;
         this.speed = 0;
         this.angle = 0;
