@@ -155,7 +155,7 @@ public class GeneticSystem {
             bestPopulation = this.iteration;
             bestFitness = players.get(0).getCar().getFitness();
             bestScore = players.get(0).getCar().getScore();
-            if(bestScore>saveSystem.getBestScoreEver()){
+            if(bestFitness>saveSystem.getBestScoreEver()){
                 try {
                     saveSystem.SavePlayer(players.get(0));
                 } catch (FileNotFoundException e) {

@@ -1,6 +1,7 @@
 package Model.Game;
 
 import Model.NeuralNetwork.Net;
+import Model.NeuralNetwork.SaveNetSystem;
 import Utils.Physics.Physics2D;
 import Utils.Physics.RaycastHit;
 import org.dyn4j.geometry.Vector2;
@@ -9,6 +10,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -44,6 +46,25 @@ public class CarAI extends Car implements Comparable<CarAI>{
         this.fitness = 0;
         this.isWinner = false;
     }
+
+    public CarAI(TiledMap map, int x, int y, String filename) {
+        super(map, x, y);
+
+        try {
+            this.neuralNetwork = SaveNetSystem.CreateNetFromFile(filename);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //Set all the lists use by the net
+        this.inputVals = new ArrayList<>();
+        this.targetVals = new ArrayList<>();
+        this.resultVals = new ArrayList<>();
+        this.score = 0;
+        this.fitness = 0;
+        this.isWinner = false;
+    }
+
+
 
     public List<Double> getResultVals() {
         return resultVals;

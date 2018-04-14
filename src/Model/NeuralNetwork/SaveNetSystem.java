@@ -19,7 +19,7 @@ public class SaveNetSystem {
 
     public void SavePlayer(Player player) throws FileNotFoundException, UnsupportedEncodingException {
         Net net = ((CarAI)player.getCar()).getNeuralNetwork();
-        bestScoreEver=player.getCar().getScore();
+        bestScoreEver=player.getCar().getFitness();
         PrintWriter writer = new PrintWriter(filename, "UTF-8");
         writer.println(bestScoreEver);//Best Score ever
         int numLayers = net.getTopology().size();
@@ -63,6 +63,43 @@ public class SaveNetSystem {
         }
         input.close();
         return res;
+    }
+
+    public static Net CreateNetFromFile(String filename) throws IOException {
+        FileReader input = new FileReader(filename);
+        BufferedReader bufRead = new BufferedReader(input);
+        String inputLine = null;
+        double score = 0.0;
+        double topoSize = 0.0;
+        List<Integer> topology = new ArrayList<>();
+        if((inputLine = bufRead.readLine()) != null) {
+            score = Double.parseDouble(inputLine);
+        }
+        if((inputLine = bufRead.readLine()) != null) {
+            topoSize = Double.parseDouble(inputLine);
+        }
+        if((inputLine = bufRead.readLine()) != null) {
+            String[] inputs = inputLine.split(",");
+            for (int i = 0; i < inputs.length; i++) {
+                topology.add(Integer.parseInt(inputs[i]));
+            }
+        }
+        Net net = new Net(topology);
+        for(int i=0;i<topoSize-1;i++){
+            List<Double> weights = new ArrayList<>();
+            for(int j=0; j<=topology.get(i);j++){
+                if((inputLine = bufRead.readLine()) != null) {
+                    String[] inputs = inputLine.split(",");
+                    for (int k = 0; k < inputs.length; k++) {
+                        weights.add(Double.parseDouble((inputs[k])));
+                    }
+                }
+                net.getLayers().get(i).getLayer().get(j).SetWeights(weights);
+                weights.clear();
+            }
+        }
+        input.close();
+        return net;
     }
 
     public double getBestScoreEver() {

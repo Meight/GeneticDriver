@@ -1,3 +1,4 @@
+import Model.Game.CarAI;
 import Model.Game.Player;
 import Model.Game.RenderableObject;
 import Model.KeyPressedListener;
@@ -28,7 +29,7 @@ public class WindowGame extends BasicGame {
         this.container = container;
         this.map = new TiledMap("maps/Map.tmx");
 
-        players.add(new Player("Matt", map, false));
+        players.add(new Player("Matt", map, "save.txt"));
 
         for (Player player : players) {
             keyPressedListeners.add(player.getCar());
@@ -48,8 +49,15 @@ public class WindowGame extends BasicGame {
     @Override
     public void update(GameContainer container, int delta) throws SlickException {
         for (Player player : players) {
-            RenderableObject car = player.getCar();
-            car.processInput(InputFactory.generateInput(container), delta);
+            if(player.IsAI()){
+                RenderableObject car = player.getCar();
+                ((CarAI)car).ProcessNet();
+                car.processInput(InputFactory.generateInputFromAI((CarAI)car), delta);
+            }else{
+                RenderableObject car = player.getCar();
+                car.processInput(InputFactory.generateInput(container), delta);
+            }
+
         }
     }
 

@@ -36,6 +36,14 @@ public class Player implements Comparable<Player>{
         this.color = Color.color(Math.random(),Math.random(),Math.random());
     }
 
+    public Player(String name, TiledMap map, String filename){
+        this.name = name;
+        this.isAI = true;
+        this.car = new CarAI(map, 200, 320, filename);
+
+        this.color = Color.color(Math.random(),Math.random(),Math.random());
+    }
+
     public void changeCarColor(Color color) {
         this.color = color;
     }
