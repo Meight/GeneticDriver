@@ -118,19 +118,19 @@ public class GeneticSystem {
             this.mutationRate = 0.2f; // else set the mutation rate to the real value
             // fill the rest of the next population with new units using crossover and mutation
             for(int i = topUnitsToKeep; i<carNumber;i++){
-                Player offspring = new Player("aa", map, true);
+                Player offspring = new Player("AI " + iteration + "-" + topUnitsToKeep, map, true);
                 scoreView.addPlayer(offspring);
                 if (i == topUnitsToKeep){
                     // offspring is made by a crossover of two best winners
                     Player parentA = winners.get(0);
                     Player parentB = winners.get(1);
-                    offspring = CrossOver(parentA, parentB);
+                    offspring = CrossOver(parentA, parentB, offspring.getName());
 
                 } else if (i < carNumber-2){
                     // offspring is made by a crossover of two random winners
                     Player parentA = GetRandomPlayer(winners);
                     Player parentB = GetRandomPlayer(winners);
-                    offspring = CrossOver(parentA, parentB);
+                    offspring = CrossOver(parentA, parentB, offspring.getName());
 
                 } else {
                     // offspring is a random winner
@@ -196,11 +196,11 @@ public class GeneticSystem {
          */
     }
 
-    public Player CrossOver(Player parentA, Player parentB){
+    public Player CrossOver(Player parentA, Player parentB, String name){
         Net netA = ((CarAI)parentA.getCar()).getCleanNeuralNetwork();
         Net netB = ((CarAI)parentB.getCar()).getCleanNeuralNetwork();
-        Player offspringA = new Player("aa", map, true);
-        Player offspringB = new Player("aa", map, true);
+        Player offspringA = new Player(name, map, true);
+        Player offspringB = new Player(name, map, true);
 
 
         //setup for the cross over
