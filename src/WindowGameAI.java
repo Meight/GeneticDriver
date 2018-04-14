@@ -61,6 +61,9 @@ public class WindowGameAI extends BasicGame {
         if (Input.KEY_ESCAPE == key) {
             this.container.exit();
         }
+        if (Input.KEY_ENTER == key) {
+            geneticSys.KillAllCarAI();
+        }
     }
 
     @Override

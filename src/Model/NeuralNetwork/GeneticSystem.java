@@ -298,6 +298,12 @@ public class GeneticSystem {
         return res;
     }
 
+    public void KillAllCarAI(){
+        for (Player p: players) {
+            p.getCar().setAlive(false);
+        }
+    }
+
     public List<Player> getPlayers() {
         return players;
     }
