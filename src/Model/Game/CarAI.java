@@ -31,8 +31,8 @@ public class CarAI extends Car implements Comparable<CarAI>{
         super(map, x, y);
         List<Integer> topology = new ArrayList<>();
         topology.add(5);
-        topology.add(4);
-        topology.add(3);
+        topology.add(10);
+        //topology.add(3);
         topology.add(2);
 
         this.neuralNetwork = new Net(topology);

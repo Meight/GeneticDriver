@@ -53,8 +53,6 @@ public class Player implements Comparable<Player>{
     public int compareTo(Player o) {
         return ((CarAI)this.car).compareTo((CarAI)o.car);
     }
-    @Override
-    public String toString() {
-        return getCar().toString();
-    }
+    //@Override
+    //public String toString() {return getCar().toString(); }
 }

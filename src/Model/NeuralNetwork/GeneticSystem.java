@@ -45,9 +45,10 @@ public class GeneticSystem {
         if(AreAllCarNotDead()){
             ActivatesBrain(delta);
         } else {
+            DisplayGeneticSystem();
             players = EvolvePopulation();
             iteration++;
-            DisplayGeneticSystem();
+
         }
         //if all car dead
         //Select
@@ -59,6 +60,7 @@ public class GeneticSystem {
     public void DisplayGeneticSystem(){
         System.out.flush();
         System.out.println("Iteration "+iteration);
+        System.out.println(players);
         System.out.println("Number of cars "+players.size());
         System.out.println("Best Population "+bestPopulation);
         System.out.println("Best Fitness "+bestFitness);
@@ -99,7 +101,7 @@ public class GeneticSystem {
             this.mutationRate = 0.2f; // else set the mutation rate to the real value
             // fill the rest of the next population with new units using crossover and mutation
             for(int i = topUnitsToKeep; i<carNumber;i++){
-                Player offspring;
+                Player offspring = new Player("aa", map, true);
                 if (i == topUnitsToKeep){
                     // offspring is made by a crossover of two best winners
                     Player parentA = winners.get(0);
@@ -114,7 +116,7 @@ public class GeneticSystem {
 
                 } else {
                     // offspring is a random winner
-                    offspring = GetRandomPlayer(winners);
+                    ((CarAI)offspring.getCar()).setNeuralNetwork(((CarAI)GetRandomPlayer(winners).getCar()).getNeuralNetwork());
                 }
                 // mutate the new population
                 offspring = Mutate(offspring);
@@ -171,6 +173,8 @@ public class GeneticSystem {
     public Player CrossOver(Player parentA, Player parentB){
         Net netA = ((CarAI)parentA.getCar()).getNeuralNetwork();
         Net netB = ((CarAI)parentB.getCar()).getNeuralNetwork();
+        Player offspringA = new Player("aa", map, true);
+        Player offspringB = new Player("aa", map, true);
 
 
         //setup for the cross over
@@ -191,7 +195,7 @@ public class GeneticSystem {
         finalA.addAll(bAfterCut);
         neuronA.setOutputWeights(finalA);
         netA.GetNet().get(1).SetBiasNeuron(neuronA);
-        ((CarAI)parentA.getCar()).setNeuralNetwork(netA);
+        ((CarAI)offspringA.getCar()).setNeuralNetwork(netA);
 
         //merge for parentB net
         List<Connection> finalB = new ArrayList<>();
@@ -199,9 +203,9 @@ public class GeneticSystem {
         finalB.addAll(aAfterCut);
         neuronB.setOutputWeights(finalB);
         netB.GetNet().get(1).SetBiasNeuron(neuronB);
-        ((CarAI)parentB.getCar()).setNeuralNetwork(netB);
+        ((CarAI)offspringB.getCar()).setNeuralNetwork(netB);
 
-        return new Random().nextInt(2) == 1 ? parentA : parentB;
+        return new Random().nextInt(2) == 1 ? offspringA : offspringB;
         //Merge both layer
         /*
         // performs a single point crossover between two parents
