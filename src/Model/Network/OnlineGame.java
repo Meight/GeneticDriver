@@ -28,9 +28,8 @@ public class OnlineGame extends Thread{
         buf = ACCEPT.getBytes();
         DatagramPacket packet = new DatagramPacket(buf, buf.length, server, acceptGame);
         socket.send(packet);
-        //todo Lancer game CLIENT
+        NetworkGame.launch();
         while (running){
-
                 //todo buf prend input du joueur
                 packet = new DatagramPacket(buf, buf.length, server, portServer);
                 socket.send(packet);

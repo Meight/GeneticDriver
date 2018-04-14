@@ -21,10 +21,10 @@ public class ServerGame extends Thread{
         }catch (Exception E){}
     }
 
-    public void run() {
-        //todo lancer la game SERVEUR
+    public void run() {try {
+        NetworkGame.launch();
         while (running) {
-            try {
+
                 buf = new byte[BUFFER_SIZE];
                 DatagramPacket packet = new DatagramPacket(buf, buf.length);
                 socket.receive(packet);
@@ -35,11 +35,11 @@ public class ServerGame extends Thread{
                 //todo buf prend nouvelle position des deux voitures en Serialized
                 packet = new DatagramPacket(buf, buf.length, client, portClient);
                 socket.send(packet);
-
+        }
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }
+
     }
 
 }

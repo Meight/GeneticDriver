@@ -47,6 +47,7 @@ public class Server extends Thread{
                 }else if(received.equalsIgnoreCase(ACCEPT)){
                     ServerGame sg = new ServerGame(address);
                     sg.start();
+                    close();
                     running = false;
                     break;
                 }
@@ -100,5 +101,11 @@ public class Server extends Thread{
             jPanel.validate();
             jFrame.setVisible(true);
         }
+    }
+
+    private static void close(){
+        jFrame.removeAll();
+        jFrame.validate();
+        jFrame.setVisible(false);
     }
 }
