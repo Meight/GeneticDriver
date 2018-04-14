@@ -94,25 +94,16 @@ public class Client{
             }
         });
         jPanel.add(search);
-        for(int i = 0; i < nomServer.size(); ++i){
-            /*JButton go = new JButton(nomServer.get(i));
-            final int fI = i+1;
-            go.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    accessServer(addressServer.get(nomServer.get(fI)));
-                }
-            });
-            jPanel.add(go);*/
-
-            accessServer(addressServer.get(nomServer.get(i)));
-            break;
+        if(nomServer.size()>0){
+            accessServer(addressServer.get(nomServer.get(0)));
+        }else {
+            System.out.println("NB Serv : "+nomServer.size());
+            jFrame.add(jPanel);
+            jPanel.validate();
+            jFrame.validate();
+            jFrame.setVisible(true);
         }
-        System.out.println("NB Serv : "+nomServer.size());
-        jFrame.add(jPanel);
-        jPanel.validate();
-        jFrame.validate();
-        jFrame.setVisible(true);
+
     }
 
     public void accessServer(InetAddress server){
