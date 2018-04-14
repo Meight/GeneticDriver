@@ -56,6 +56,9 @@ public class Player implements Comparable<Player>{
         return isAI;
     }
 
+    public String getName() {
+        return name;
+    }
 
     @Override
     public int compareTo(Player o) {

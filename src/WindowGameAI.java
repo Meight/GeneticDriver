@@ -2,6 +2,7 @@ import Model.Game.Player;
 import Model.Game.RenderableObject;
 import Model.KeyPressedListener;
 import Model.NeuralNetwork.GeneticSystem;
+import View.ScoreView;
 import org.newdawn.slick.*;
 import org.newdawn.slick.tiled.TiledMap;
 
@@ -14,6 +15,8 @@ public class WindowGameAI extends BasicGame {
 
     private GeneticSystem geneticSys;
     private List<KeyPressedListener> keyPressedListeners = new ArrayList<KeyPressedListener>();
+
+    private ScoreView scoreView;
 
     public static void main(String[] args) throws SlickException {
         AppGameContainer app = new AppGameContainer(new WindowGameAI(), 1300, 960, false);
@@ -29,9 +32,12 @@ public class WindowGameAI extends BasicGame {
     public void init(GameContainer container) throws SlickException {
         this.container = container;
         this.map = new TiledMap("maps/Map.tmx");
-        this.geneticSys = new GeneticSystem(20,map,8);
+        this.scoreView = new ScoreView();
+        this.geneticSys = new GeneticSystem(100,map,8, scoreView);
+
         for (Player player : geneticSys.getPlayers()) {
             keyPressedListeners.add(player.getCar());
+            scoreView.addPlayer(player);
         }
 
         /*(new Thread() {
@@ -49,6 +55,8 @@ public class WindowGameAI extends BasicGame {
             RenderableObject car = player.getCar();
             car.render(container, g);
         }
+
+        scoreView.render(g);
     }
 
     @Override

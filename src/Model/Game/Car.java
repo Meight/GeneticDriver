@@ -11,6 +11,8 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -32,7 +34,11 @@ public class Car extends RenderableObject implements KeyPressedListener {
     protected boolean isAlive;
     protected double score = 0.0;
     protected double fitness = 0.0;
-    protected int laps;
+
+    protected boolean isOnArrivalLine = true;
+    protected List<Float> lapsTime;
+    protected float lastLapAbsoluteTime = 0;
+    protected float timeAccumulator = 0;
 
     protected TiledMap map;
 
@@ -50,6 +56,8 @@ public class Car extends RenderableObject implements KeyPressedListener {
         this.diagRight = new Vector2(forward).rotate(Math.PI / 8);
         this.left = new Vector2(forward).rotate(-Math.PI / 4);
         this.diagLeft = new Vector2(forward).rotate(-Math.PI / 8);
+
+        this.lapsTime = new ArrayList<>();
 
         File dir = new File("./resources/cars/");
         File[] files = dir.listFiles();
@@ -99,6 +107,8 @@ public class Car extends RenderableObject implements KeyPressedListener {
     }
 
     private void updatePhysics(Input input, float deltaTime) {
+        timeAccumulator += deltaTime;
+
         turn = 0;
         if(input.isTurningRight())
             turn = TURN_INCREMENT * deltaTime; //Math.min(RIGHT_MOST_TURN, 0.5d);
@@ -121,6 +131,7 @@ public class Car extends RenderableObject implements KeyPressedListener {
         double x = Math.cos(angle) * speed;
         double y = Math.sin(angle) * speed;
         double speedPenaltyFactor = getTerrainFactor(position.x + x, position.y + y);
+        checkForArrival(position.x + x, position.y + y, deltaTime);
 
         x /= speedPenaltyFactor;
         y /= speedPenaltyFactor;
@@ -134,6 +145,18 @@ public class Car extends RenderableObject implements KeyPressedListener {
         left.rotate(Math.toRadians(angleContribution));
         diagLeft.rotate(Math.toRadians(angleContribution));
         diagRight.rotate(Math.toRadians(angleContribution));
+
+    }
+
+    private void checkForArrival(double x, double y, float deltaTime) {
+        if(!isOnArrivalLine && this.map.getTileImage(
+                (int) x / this.map.getTileWidth(),
+                (int) y / this.map.getTileHeight(),
+                this.map.getLayerIndex("Arrival")) != null) {
+            isOnArrivalLine = true;
+            lapsTime.add(timeAccumulator - lastLapAbsoluteTime);
+            lastLapAbsoluteTime = timeAccumulator;
+        }
     }
 
     private double getTerrainFactor(double x, double y) {
@@ -144,13 +167,13 @@ public class Car extends RenderableObject implements KeyPressedListener {
                     this.map.getLayerIndex("Walls")) != null){
                 isAlive = false;
                 return 9000;
-            }else if (this.map.getTileImage(
+            } else if (this.map.getTileImage(
                     (int) x / this.map.getTileWidth(),
                     (int) y / this.map.getTileHeight(),
                     this.map.getLayerIndex("Slow")) != null){
                 isAlive = false;
                 return OBSTACLE_PENALTY_FACTOR;
-            }else{
+            } else {
                 score++;
                 fitness++;
                 return 1;
@@ -189,5 +212,17 @@ public class Car extends RenderableObject implements KeyPressedListener {
     @Override
     public String toString() {
         return Double.toString(fitness) ;
+    }
+
+    public int getLapsAmount() {
+        return lapsTime.size();
+    }
+
+    public float getLastLapAbsoluteTime() {
+        return lastLapAbsoluteTime;
+    }
+
+    public float getTimeAccumulator() {
+        return timeAccumulator;
     }
 }

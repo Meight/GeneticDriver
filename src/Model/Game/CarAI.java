@@ -13,7 +13,6 @@ import org.newdawn.slick.tiled.TiledMap;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class CarAI extends Car implements Comparable<CarAI>{
     private Net neuralNetwork;
@@ -143,7 +142,7 @@ public class CarAI extends Car implements Comparable<CarAI>{
         this.turn = 0;
         this.speed = 0;
         this.angle = 0;
-        this.laps = 0;
+        this.lapsTime = new ArrayList<>();
         this.forward = new Vector2(1, 0);
         this.right = new Vector2(forward).rotate(Math.PI / 4);
         this.diagRight = new Vector2(forward).rotate(Math.PI / 8);
