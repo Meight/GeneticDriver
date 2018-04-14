@@ -236,6 +236,23 @@ public class Car extends RenderableObject implements KeyPressedListener {
         return timeAccumulator;
     }
 
+    public float getAverageLapTime() {
+        if(lapsTime.isEmpty())
+            return 0;
+
+        float sum = 0;
+
+        for(float lapTime : lapsTime) {
+            sum += lapTime;
+        }
+
+        return sum / lapsTime.size();
+    }
+
+    public float getScorePerSecond() {
+        return (float) (score / (timeAccumulator / 1_000));
+    }
+
     public float getLastLapAbsoluteTime() {
         return lastLapAbsoluteTime;
     }
