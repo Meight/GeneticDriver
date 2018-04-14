@@ -11,6 +11,9 @@ import java.util.List;
  * @author Matthieu Le Boucher
  */
 public class ScoreView {
+    private static final int ALL_TIME_BEST_LEFT_MARGIN = 20;
+    private static final int CURRENT_BEST_LEFT_MARGIN = 250;
+
     private List<Player> players;
     private Player allTimeBestPlayer;
 
@@ -20,10 +23,11 @@ public class ScoreView {
 
     public void render(Graphics graphics) {
         // Render the best player onto the HUD.
-        render(getBestPlayer(), graphics);
+        render(allTimeBestPlayer, ALL_TIME_BEST_LEFT_MARGIN, graphics);
+        render(getIterationBestPlayer(), CURRENT_BEST_LEFT_MARGIN, graphics);
     }
 
-    private Player getBestPlayer() {
+    private Player getIterationBestPlayer() {
         double bestScore = 0;
         Player bestPlayer = null;
 
@@ -37,17 +41,20 @@ public class ScoreView {
         return bestPlayer;
     }
 
-    private void render(Player player, Graphics graphics) {
+    private void render(Player player, int leftMargin, Graphics graphics) {
         if(player == null)
             return;
 
         graphics.resetTransform();
-        graphics.setColor(Color.black);
-        graphics.drawString("Best player: " + player.getName(), 20, 20);
-        graphics.drawString("Score: " + player.getCar().getScore(), 20, 40);
-        graphics.drawString("Laps: " + player.getCar().getLapsAmount(), 20, 60);
-        graphics.drawString("Current time: " + player.getCar().getTimeAccumulator() / 1_000 + " s", 20, 80);
-        graphics.drawString("Last lap time: " + player.getCar().getLastLapTime() / 1_000 + " s", 20, 100);
+
+        graphics.setColor(leftMargin == ALL_TIME_BEST_LEFT_MARGIN ? Color.green : Color.black);
+        graphics.drawString(leftMargin == ALL_TIME_BEST_LEFT_MARGIN ? "All time best" : "Iteration best", leftMargin, 20);
+
+        graphics.drawString("Best player: " + player.getName(), leftMargin, 40);
+        graphics.drawString("Score: " + player.getCar().getScore(), leftMargin, 60);
+        graphics.drawString("Laps: " + player.getCar().getLapsAmount(), leftMargin, 80);
+        graphics.drawString("Current time: " + player.getCar().getTimeAccumulator() / 1_000 + " s", leftMargin, 100);
+        graphics.drawString("Last lap time: " + player.getCar().getLastLapTime() / 1_000 + " s", leftMargin, 120);
     }
 
     public void addPlayer(Player player) {
@@ -58,11 +65,15 @@ public class ScoreView {
      * Clears the players list held by the score board, except the best player from last generation.
      */
     public void clearPlayerList() {
-        Player bestPlayer = getBestPlayer();
+        Player iterationBestPlayer = getIterationBestPlayer();
 
         this.players = new ArrayList<>();
 
-        if(bestPlayer != null)
-            this.players.add(bestPlayer);
+        if(iterationBestPlayer != null) {
+            if(allTimeBestPlayer == null || iterationBestPlayer.getCar().getScore() > allTimeBestPlayer.getCar().getScore())
+                allTimeBestPlayer = iterationBestPlayer;
+
+            this.players.add(allTimeBestPlayer);
+        }
     }
 }
