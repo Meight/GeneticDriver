@@ -33,7 +33,7 @@ public class WindowGameAI extends BasicGame {
         this.container = container;
         this.map = new TiledMap("maps/Map.tmx");
         this.scoreView = new ScoreView();
-        this.geneticSys = new GeneticSystem(100,map,8, scoreView);
+        this.geneticSys = new GeneticSystem(20,map,4, scoreView);
 
         for (Player player : geneticSys.getPlayers()) {
             keyPressedListeners.add(player.getCar());
