@@ -61,6 +61,7 @@ public class CarAI extends Car implements Comparable<CarAI>{
         this.score = 0;
         this.fitness = 0;
         this.isWinner = false;
+        System.out.println(neuralNetwork);
     }
 
 

@@ -235,4 +235,8 @@ public class Car extends RenderableObject implements KeyPressedListener {
     public float getTimeAccumulator() {
         return timeAccumulator;
     }
+
+    public float getLastLapAbsoluteTime() {
+        return lastLapAbsoluteTime;
+    }
 }
