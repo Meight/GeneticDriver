@@ -49,7 +49,7 @@ public class NetworkGame extends BasicGame {
     public void update(GameContainer container, int delta) throws SlickException {
         for (NetworkPlayer player : players) {
             if(player.IsDistant()){
-                if(serverGame ==null){
+                if(serverGame == null){
                     RenderableObject car = player.getCar();
                     car.setPosition(onlineGame.getReceiveClient().getPos());
                     car.setAngle(onlineGame.getReceiveClient().getAngle());

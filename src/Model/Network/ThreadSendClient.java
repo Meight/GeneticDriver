@@ -59,15 +59,6 @@ public class ThreadSendClient extends Thread {
         }
     }
 
-    public void sendInput(String serial, int delta) {
-        if(!sending){
-            System.out.println("ENVOI");
-            String envoi = serial + "," + delta;
-            buf = envoi.getBytes();
-            sending = true;
-        }
-    }
-
     public void sendPos(Vector2 pos, double angle){
         if(!sending){
             String envoi = pos.x + "," + pos.y+ "," + angle;

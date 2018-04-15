@@ -38,7 +38,7 @@ public class ThreadReceiveClient extends Thread {
                 e1.printStackTrace();
             }
             String received = new String(packet.getData(), 0, packet.getLength());
-            System.out.println("RECU CLIENT : "+received);
+            System.out.println("RECU FROM SERVEUR : "+received);
             String[] inpt = received.split(",");
             pos=new Vector2(new Float(inpt[0]),new Float(inpt[1]));
             angle=new Double(inpt[2]);

@@ -31,7 +31,7 @@ public class ThreadReceiveServer extends Thread {
     public void run() {
         super.run();
         while(running) {
-            System.out.println("RECEIVE FROM SERVER");
+            System.out.println("RECEIVE FROM CLIENT");
             buf = new byte[BUFFER_SIZE];
             DatagramPacket packet = new DatagramPacket(buf, buf.length);
             try {
@@ -40,7 +40,7 @@ public class ThreadReceiveServer extends Thread {
                 e.printStackTrace();
             }
             String received = new String(packet.getData(), 0, packet.getLength());
-            System.out.println("RECU SERVEUR : "+received);
+            System.out.println("RECU CLIENT : "+received);
             String[] inpt = received.split(",");
             pos=new Vector2(new Float(inpt[0]),new Float(inpt[1]));
             angle=new Double(inpt[2]);

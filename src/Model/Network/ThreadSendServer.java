@@ -32,6 +32,7 @@ public class ThreadSendServer extends Thread {
     public void run() {
         super.run();
         while (running) {
+            System.out.println();
             if(sending){
                 System.out.println("SEND FROM SERVER");
                 DatagramPacket packet = new DatagramPacket(buf, buf.length, client, portClient);
