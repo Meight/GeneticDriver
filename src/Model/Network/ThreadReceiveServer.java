@@ -26,6 +26,8 @@ public class ThreadReceiveServer extends Thread {
             e.printStackTrace();
             System.out.println(e);
         }
+        pos = new Vector2(200,320);
+        angle = 0;
     }
 
     @Override
