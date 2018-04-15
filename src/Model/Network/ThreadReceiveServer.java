@@ -12,6 +12,10 @@ public class ThreadReceiveServer extends Thread {
     private static final int BUFFER_SIZE = 8192;
     private byte[] buf = new byte[BUFFER_SIZE];
     boolean running = true;
+    private Input inputFromClient;
+    private int deltaFromClient = 0;
+
+
 
     public ThreadReceiveServer() {
         try {
@@ -19,6 +23,7 @@ public class ThreadReceiveServer extends Thread {
         } catch (SocketException e) {
             e.printStackTrace();
         }
+        inputFromClient = new Input(false,false,false);
     }
 
     @Override
@@ -35,8 +40,18 @@ public class ThreadReceiveServer extends Thread {
             }
             String received = new String(packet.getData(), 0, packet.getLength());
             System.out.println("RECU SERVEUR : "+received);
-            //todo received VERS le jeu (input du joueur distant)
+            String[] inpt = received.split(",");
+            inputFromClient = new Input(inpt[0],inpt[1],inpt[2]);
+            deltaFromClient = new Integer(inpt[3]);
             buf = new byte[BUFFER_SIZE];
         }
+    }
+
+    public int getDelta(){
+        return deltaFromClient;
+    }
+
+    public Input getInput(){
+        return inputFromClient;
     }
 }

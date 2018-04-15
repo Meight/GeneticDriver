@@ -1,10 +1,8 @@
 package Model.Network;
 
-import Model.Game.CarAI;
 import Model.Game.Player;
 import Model.Game.RenderableObject;
 import Model.KeyPressedListener;
-import Model.NeuralNetwork.Net;
 import org.newdawn.slick.*;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.tiled.TiledMap;
@@ -50,9 +48,10 @@ public class NetworkGame extends BasicGame {
     public void update(GameContainer container, int delta) throws SlickException {
         for (NetworkPlayer player : players) {
             if(player.IsDistant()){
-                /*RenderableObject car = player.getCar();
-                ((NetworkCar)car).ProcessNet();
-                car.processInput(InputFactory.generateInputFromAI((CarAI)car), delta);*/
+                Model.Network.Input input  = serverGame.getReceiveServer().getInput();
+                int cdelta = serverGame.getReceiveServer().getDelta();
+                RenderableObject car = player.getCar();
+                car.processInput(input, cdelta);
             }else{
                 RenderableObject car = player.getCar();
                 Model.Network.Input i = InputFactory.generateInput(container);

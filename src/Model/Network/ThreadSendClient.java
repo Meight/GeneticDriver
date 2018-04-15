@@ -42,9 +42,9 @@ public class ThreadSendClient extends Thread {
         }
         buf = new byte[BUFFER_SIZE];
         while (running) {
+            System.out.println(sending);
             if (sending){
                 System.out.println("SEND FROM CLIENT");
-                sending = false;
                 packet = new DatagramPacket(buf, buf.length, server, portServer);
                 try {
                     socket.send(packet);
@@ -52,13 +52,17 @@ public class ThreadSendClient extends Thread {
                     e.printStackTrace();
                 }
                 buf = new byte[BUFFER_SIZE];
+                sending = false;
             }
         }
     }
 
     public void sendInput(String serial, int delta) {
-        String envoi = serial + "," + delta;
-        buf = envoi.getBytes();
-        sending = true;
+        if(!sending){
+            System.out.println("ENVOI");
+            String envoi = serial + "," + delta;
+            buf = envoi.getBytes();
+            sending = true;
+        }
     }
 }

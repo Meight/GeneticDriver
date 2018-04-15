@@ -22,4 +22,8 @@ public class ServerGame{
             e.printStackTrace();
         }
     }
+
+    public ThreadReceiveServer getReceiveServer() {
+        return receiveServer;
+    }
 }
