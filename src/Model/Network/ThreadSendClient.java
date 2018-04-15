@@ -22,6 +22,11 @@ public class ThreadSendClient extends Thread {
 
     public ThreadSendClient(InetAddress s){
         server = s;
+        try {
+            socket = new DatagramSocket(portClient+5);
+        } catch (SocketException e) {
+            e.printStackTrace();
+        }
     }
 
 
