@@ -53,11 +53,11 @@ public class NetworkGame extends BasicGame {
                 int cdelta = serverGame.getReceiveServer().getDelta();
                 RenderableObject car = player.getCar();
                 car.processInput(input, cdelta);*/
-                Car car = player.getCar();
+                RenderableObject car = player.getCar();
                 car.setPosition(serverGame.getReceiveServer().getPos());
                 car.setAngle(serverGame.getReceiveServer().getAngle());
             }else{
-                Car car = player.getCar();
+                RenderableObject car = player.getCar();
                 Model.Network.Input i = InputFactory.generateInput(container);
                 car.processInput(i, delta);
                 if(serverGame == null){

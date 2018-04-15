@@ -29,7 +29,6 @@ public class Car extends RenderableObject implements KeyPressedListener {
 
     protected double turn;
 
-    protected double angle;
     protected double speed;
     protected boolean isAlive;
     protected double score = 0.0;
@@ -255,21 +254,5 @@ public class Car extends RenderableObject implements KeyPressedListener {
 
     public float getLastLapAbsoluteTime() {
         return lastLapAbsoluteTime;
-    }
-
-    public Vector2 getPosition(){
-        return this.position;
-    }
-
-    public double getAngle(){
-        return this.angle;
-    }
-
-    public void setPosition(Vector2 v){
-        this.position = v;
-    }
-
-    public void setAngle(double d){
-        this.angle = d;
     }
 }

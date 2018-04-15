@@ -18,6 +18,7 @@ public abstract class RenderableObject implements NetworkBehavior {
 
     private float scale = 1f;
 
+    protected double angle;
 
 
     void init(GameContainer container) throws SlickException {
@@ -37,12 +38,28 @@ public abstract class RenderableObject implements NetworkBehavior {
         image.setRotation(currentRotation);
     }
 
-    protected void setAngle(float angle) {
+    /*protected void setAngle(float angle) {
         image.setCenterOfRotation(image.getWidth() * scale / 2, image.getHeight() * scale / 2);
         image.setRotation(angle);
-    }
+    }*/
 
     protected void translate(Vector2 movement) {
         position.add(movement);
+    }
+
+    public Vector2 getPosition() {
+        return this.position;
+    }
+
+    public void setPosition(Vector2 v){
+        this.position = v;
+    }
+
+    public double getAngle(){
+        return this.angle;
+    }
+
+    public void setAngle(double d){
+        this.angle = d;
     }
 }
