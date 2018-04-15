@@ -12,11 +12,11 @@ public class ServerGame{
     public ServerGame(InetAddress cclient){
         client = cclient;
         System.out.println("SERVER SIDE");
-        /*try {
+        try {
             NetworkGame.launch(this);
         } catch (SlickException e) {
             e.printStackTrace();
-        }*/
+        }
         receiveServer = new ThreadReceiveServer();
         sendServer = new ThreadSendServer(client);
         receiveServer.start();
