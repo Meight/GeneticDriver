@@ -29,7 +29,6 @@ public class Server extends Thread{
         try{
             socket = new DatagramSocket(SERVER_PORT);
             serverName = name;
-            checkServeur();
         }catch (Exception E){}
     }
 
@@ -71,13 +70,12 @@ public class Server extends Thread{
         jLabel = new JLabel("En attente de votre ami sans VPN");
         jPanel.add(jLabel);
         jFrame.setVisible(true);
+        checkServeur();
     }
 
     private static void checkServeur(){
-        if(nameServ.getText().length() > 0){
             Server s = new Server(nameServ.getText());
             s.start();
-        }
     }
 
     private static void close(){
