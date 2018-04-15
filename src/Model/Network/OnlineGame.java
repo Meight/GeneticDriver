@@ -15,15 +15,15 @@ public class OnlineGame{
 
     public OnlineGame (InetAddress s){
         server = s;
+        receiveClient = new ThreadReceiveClient();
+        sendClient = new ThreadSendClient(server);
+        receiveClient.start();
+        sendClient.start();
         try {
             NetworkGame.launch(this);
         } catch (SlickException e) {
             e.printStackTrace();
         }
-        receiveClient = new ThreadReceiveClient();
-        sendClient = new ThreadSendClient(server);
-        receiveClient.start();
-        sendClient.start();
     }
 
 
