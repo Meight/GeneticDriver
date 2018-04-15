@@ -1,3 +1,5 @@
+package Mains;
+
 import Model.NeuralNetwork.Net;
 import com.sun.net.httpserver.Authenticator;
 import sun.font.CreatedFontTracker;

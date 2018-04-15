@@ -1,76 +1,74 @@
+package Mains;
+
+import Model.Game.CarAI;
 import Model.Game.Player;
 import Model.Game.RenderableObject;
 import Model.KeyPressedListener;
-import Model.NeuralNetwork.GeneticSystem;
-import View.ScoreView;
+import Model.Network.InputFactory;
 import org.newdawn.slick.*;
 import org.newdawn.slick.tiled.TiledMap;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class WindowGameAI extends BasicGame {
+public class WindowGame extends BasicGame {
     private GameContainer container;
     private TiledMap map;
 
-    private GeneticSystem geneticSys;
+    private List<Player> players = new ArrayList<Player>();
     private List<KeyPressedListener> keyPressedListeners = new ArrayList<KeyPressedListener>();
 
-    private ScoreView scoreView;
-
-    public static void main(String[] args) throws SlickException {
-        AppGameContainer app = new AppGameContainer(new WindowGameAI(), 1300, 960, false);
+    public static void launch() throws SlickException {
+        AppGameContainer app = new AppGameContainer(new WindowGame(), 1300, 960, false);
         app.setTargetFrameRate(100);
         app.start();
     }
 
-    public WindowGameAI() {
+    public WindowGame() {
         super("GeneticDriver");
     }
 
     @Override
     public void init(GameContainer container) throws SlickException {
         this.container = container;
-        this.map = new TiledMap("maps/Map2.tmx");
-        this.scoreView = new ScoreView();
-        this.geneticSys = new GeneticSystem(40,map,8, scoreView);
+        this.map = new TiledMap("maps/Map.tmx");
 
-        for (Player player : geneticSys.getPlayers()) {
+        players.add(new Player("Matt", map, false));
+        players.add(new Player("AI", map, "save.txt"));
+        for (Player player : players) {
             keyPressedListeners.add(player.getCar());
-            scoreView.addPlayer(player);
         }
-
-        /*(new Thread() {
-            public void run() {
-                NeuralNetworkView neuralNetworkView = new NeuralNetworkView(((CarAI) geneticSys.getPlayers().get(0).getCar()).getNeuralNetwork());
-            }
-        }).start();*/
     }
 
     @Override
     public void render(GameContainer container, Graphics g) throws SlickException {
         this.map.render(0, 0);
 
-        for (Player player : geneticSys.getPlayers()) {
+        for (Player player : players) {
             RenderableObject car = player.getCar();
             car.render(container, g);
         }
-
-        scoreView.render(g);
     }
 
     @Override
     public void update(GameContainer container, int delta) throws SlickException {
-        geneticSys.Update(delta);
+        for (Player player : players) {
+            if(player.IsAI()){
+                RenderableObject car = player.getCar();
+                ((CarAI)car).ProcessNet();
+                car.processInput(InputFactory.generateInputFromAI((CarAI)car), delta);
+            }else{
+                RenderableObject car = player.getCar();
+                car.processInput(InputFactory.generateInput(container), delta);
+            }
+
+        }
     }
 
     @Override
     public void keyReleased(int key, char c) {
         if (Input.KEY_ESCAPE == key) {
             this.container.exit();
-        }
-        if (Input.KEY_ENTER == key) {
-            geneticSys.KillAllCarAI();
         }
     }
 
