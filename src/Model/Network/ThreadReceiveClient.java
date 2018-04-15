@@ -23,6 +23,7 @@ public class ThreadReceiveClient extends Thread {
             socket= new DatagramSocket(portClient);
         } catch (SocketException e) {
             e.printStackTrace();
+            System.out.println(e);
         }
     }
 
@@ -36,6 +37,7 @@ public class ThreadReceiveClient extends Thread {
                 socket.receive(packet);
             } catch (IOException e1) {
                 e1.printStackTrace();
+                System.out.println(e1);
             }
             String received = new String(packet.getData(), 0, packet.getLength());
             System.out.println("RECU FROM SERVEUR : "+received);

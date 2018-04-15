@@ -24,6 +24,7 @@ public class ThreadReceiveServer extends Thread {
             socketRecept = new DatagramSocket(portServer);
         } catch (SocketException e) {
             e.printStackTrace();
+            System.out.println(e);
         }
     }
 
@@ -38,6 +39,7 @@ public class ThreadReceiveServer extends Thread {
                 socketRecept.receive(packet);
             } catch (IOException e) {
                 e.printStackTrace();
+                System.out.println(e);
             }
             String received = new String(packet.getData(), 0, packet.getLength());
             System.out.println("RECU CLIENT : "+received);

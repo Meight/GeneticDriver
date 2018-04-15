@@ -25,6 +25,7 @@ public class ThreadSendServer extends Thread {
             socket = new DatagramSocket(portServer+54);
         } catch (SocketException e) {
             e.printStackTrace();
+            System.out.println(e);
         }
     }
 
@@ -40,6 +41,7 @@ public class ThreadSendServer extends Thread {
                     socket.send(packet);
                 } catch (IOException e) {
                     e.printStackTrace();
+                    System.out.println(e);
                 }
                 buf = new byte[BUFFER_SIZE];
                 sending = false;
