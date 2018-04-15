@@ -1,5 +1,7 @@
 package Model.Network;
 
+import org.dyn4j.geometry.Vector2;
+
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -12,8 +14,10 @@ public class ThreadReceiveServer extends Thread {
     private static final int BUFFER_SIZE = 8192;
     private byte[] buf = new byte[BUFFER_SIZE];
     boolean running = true;
-    private Input inputFromClient;
-    private int deltaFromClient = 0;
+    /*private Input inputFromClient;
+    private int deltaFromClient = 0;*/
+    private Vector2 pos;
+    private double angle;
 
 
 
@@ -23,7 +27,7 @@ public class ThreadReceiveServer extends Thread {
         } catch (SocketException e) {
             e.printStackTrace();
         }
-        inputFromClient = new Input(false,false,false);
+        //inputFromClient = new Input(false,false,false);
     }
 
     @Override
@@ -41,17 +45,27 @@ public class ThreadReceiveServer extends Thread {
             String received = new String(packet.getData(), 0, packet.getLength());
             System.out.println("RECU SERVEUR : "+received);
             String[] inpt = received.split(",");
-            inputFromClient = new Input(inpt[0],inpt[1],inpt[2]);
-            deltaFromClient = new Integer(inpt[3]);
+            /*inputFromClient = new Input(inpt[0],inpt[1],inpt[2]);
+            deltaFromClient = new Integer(inpt[3]);*/
+            pos=new Vector2(new Integer(inpt[0]),new Integer(inpt[1]));
+            angle=new Double(inpt[2]);
             buf = new byte[BUFFER_SIZE];
         }
     }
 
-    public int getDelta(){
+    /*public int getDelta(){
         return deltaFromClient;
     }
 
     public Input getInput(){
         return inputFromClient;
+    }*/
+
+    public Vector2 getPos() {
+        return pos;
+    }
+
+    public double getAngle() {
+        return angle;
     }
 }

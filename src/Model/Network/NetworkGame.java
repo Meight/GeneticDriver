@@ -1,5 +1,6 @@
 package Model.Network;
 
+import Model.Game.Car;
 import Model.Game.Player;
 import Model.Game.RenderableObject;
 import Model.KeyPressedListener;
@@ -48,16 +49,19 @@ public class NetworkGame extends BasicGame {
     public void update(GameContainer container, int delta) throws SlickException {
         for (NetworkPlayer player : players) {
             if(player.IsDistant()){
-                Model.Network.Input input  = serverGame.getReceiveServer().getInput();
+                /*Model.Network.Input input  = serverGame.getReceiveServer().getInput();
                 int cdelta = serverGame.getReceiveServer().getDelta();
                 RenderableObject car = player.getCar();
-                car.processInput(input, cdelta);
+                car.processInput(input, cdelta);*/
+                Car car = player.getCar();
+                car.setPosition(serverGame.getReceiveServer().getPos());
+                car.setAngle(serverGame.getReceiveServer().getAngle());
             }else{
-                RenderableObject car = player.getCar();
+                Car car = player.getCar();
                 Model.Network.Input i = InputFactory.generateInput(container);
                 car.processInput(i, delta);
                 if(serverGame == null){
-                    onlineGame.getSendClient().sendInput(i.serial(),delta);
+                    onlineGame.getSendClient().sendPos(car.getPosition(),car.getAngle());
                 }else {
 
                 }

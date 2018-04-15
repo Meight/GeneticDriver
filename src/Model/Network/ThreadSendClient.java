@@ -1,5 +1,7 @@
 package Model.Network;
 
+import org.dyn4j.geometry.Vector2;
+
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -42,7 +44,7 @@ public class ThreadSendClient extends Thread {
         }
         buf = new byte[BUFFER_SIZE];
         while (running) {
-            System.out.println(sending);
+            System.out.println();
             if (sending){
                 System.out.println("SEND FROM CLIENT");
                 packet = new DatagramPacket(buf, buf.length, server, portServer);
@@ -61,6 +63,14 @@ public class ThreadSendClient extends Thread {
         if(!sending){
             System.out.println("ENVOI");
             String envoi = serial + "," + delta;
+            buf = envoi.getBytes();
+            sending = true;
+        }
+    }
+
+    public void sendPos(Vector2 pos, double angle){
+        if(!sending){
+            String envoi = pos.x + "," + pos.y+ "," + angle;
             buf = envoi.getBytes();
             sending = true;
         }
