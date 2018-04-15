@@ -4,6 +4,7 @@ import Model.Game.CarAI;
 import Model.Game.Player;
 import Model.Game.RenderableObject;
 import Model.KeyPressedListener;
+import Model.NeuralNetwork.Net;
 import org.newdawn.slick.*;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.tiled.TiledMap;
@@ -15,7 +16,7 @@ public class NetworkGame extends BasicGame {
     private GameContainer container;
     private TiledMap map;
 
-    private List<Player> players = new ArrayList<Player>();
+    private List<NetworkPlayer> players = new ArrayList<NetworkPlayer>();
     private List<KeyPressedListener> keyPressedListeners = new ArrayList<KeyPressedListener>();
 
     public static void launch() throws SlickException {
@@ -33,8 +34,8 @@ public class NetworkGame extends BasicGame {
         this.container = container;
         this.map = new TiledMap("maps/Map.tmx");
 
-        players.add(new Player("Matt", map, false));
-        players.add(new Player("AI", map, "save.txt"));
+        players.add(new NetworkPlayer("Matt", map, false,false));
+        players.add(new NetworkPlayer("Distant", map, false,true));
         for (Player player : players) {
             keyPressedListeners.add(player.getCar());
         }
@@ -44,7 +45,7 @@ public class NetworkGame extends BasicGame {
     public void render(GameContainer container, Graphics g) throws SlickException {
         this.map.render(0, 0);
 
-        for (Player player : players) {
+        for (NetworkPlayer player : players) {
             RenderableObject car = player.getCar();
             car.render(container, g);
         }
@@ -52,11 +53,11 @@ public class NetworkGame extends BasicGame {
 
     @Override
     public void update(GameContainer container, int delta) throws SlickException {
-        for (Player player : players) {
-            if(player.IsAI()){
-                RenderableObject car = player.getCar();
-                ((CarAI)car).ProcessNet();
-                car.processInput(InputFactory.generateInputFromAI((CarAI)car), delta);
+        for (NetworkPlayer player : players) {
+            if(player.IsDistant()){
+                /*RenderableObject car = player.getCar();
+                ((NetworkCar)car).ProcessNet();
+                car.processInput(InputFactory.generateInputFromAI((CarAI)car), delta);*/
             }else{
                 RenderableObject car = player.getCar();
                 car.processInput(InputFactory.generateInput(container), delta);
