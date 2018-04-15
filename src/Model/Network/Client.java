@@ -78,6 +78,8 @@ public class Client{
         if(nomServer.size()>0){
             menu.setVisible(false);
             accessServer(addressServer.get(nomServer.get(0)));
+        }else {
+            socket.close();
         }
     }
 
@@ -85,9 +87,5 @@ public class Client{
         System.out.println("Access server "+server);
         System.out.println("Client créé");
         og = new OnlineGame(server);
-    }
-
-    public int getNbServ(){
-        return nomServer.size();
     }
 }
