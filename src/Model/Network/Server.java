@@ -14,6 +14,7 @@ public class Server extends Thread{
     private DatagramSocket socket;
     static JTextField nameServ;
     static JPanel jPanel;
+    static JLabel jLabel;
     static JFrame jFrame;
     private String serverName;
     private boolean running;
@@ -28,6 +29,8 @@ public class Server extends Thread{
         try{
             socket = new DatagramSocket(SERVER_PORT);
             serverName = name;
+            jLabel = new JLabel("En attente de votre ami sans VPN");
+            checkServeur();
         }catch (Exception E){}
     }
 
@@ -58,31 +61,16 @@ public class Server extends Thread{
         socket.close();
     }
 
-    public synchronized void stopServer(){
-        running = false;
-    }
-
     public static void openWindows() {
         jFrame = new JFrame();
-        jPanel = new JPanel(new GridLayout(2,1));
+        jPanel = new JPanel(new GridLayout(1,1));
         jFrame.add(jPanel);
         jFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         jFrame.setBounds(0, 0, 500, 250);
         jFrame.setTitle("Server Side");
+        nameServ = new JTextField("Michel");
 
-        nameServ = new JTextField("Nom de la room");
-        JButton launch = new JButton("Créer la room");
-
-        jPanel.add(nameServ);
-        jPanel.add(launch);
-
-        launch.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                checkServeur();
-            }
-        });
-
+        jPanel.add(jLabel);
         jFrame.setVisible(true);
     }
 
@@ -90,14 +78,6 @@ public class Server extends Thread{
         if(nameServ.getText().length() > 0){
             Server s = new Server(nameServ.getText());
             s.start();
-            jFrame.remove(jPanel);
-            jPanel.removeAll();
-            JLabel attente = new JLabel("En attente de l'adversaire ...");
-            jPanel.add(attente);
-            jFrame.add(jPanel);
-            jFrame.validate();
-            jPanel.validate();
-            jFrame.setVisible(true);
         }
     }
 
