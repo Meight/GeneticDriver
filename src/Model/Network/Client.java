@@ -30,6 +30,7 @@ public class Client{
     private static final int SERVER_PORT  = 13594;
     private static final long DELTATIME = 1000;
     private byte[] buf = new byte[BUFFER_SIZE];
+    private OnlineGame og;
 
     public Client() {
         try {
@@ -103,8 +104,9 @@ public class Client{
 
     public void accessServer(InetAddress server){
         System.out.println("Access server "+server);
-        OnlineGame og = new OnlineGame(server);
+        og = new OnlineGame(server);
         og.launch();
+        System.out.println("Client créé");
     }
 
     public void openWindows() {
