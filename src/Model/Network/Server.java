@@ -29,7 +29,6 @@ public class Server extends Thread{
         try{
             socket = new DatagramSocket(SERVER_PORT);
             serverName = name;
-            jLabel = new JLabel("En attente de votre ami sans VPN");
             checkServeur();
         }catch (Exception E){}
     }
@@ -69,7 +68,7 @@ public class Server extends Thread{
         jFrame.setBounds(0, 0, 500, 250);
         jFrame.setTitle("Server Side");
         nameServ = new JTextField("Michel");
-
+        jLabel = new JLabel("En attente de votre ami sans VPN");
         jPanel.add(jLabel);
         jFrame.setVisible(true);
     }
