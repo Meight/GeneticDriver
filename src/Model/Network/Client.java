@@ -86,4 +86,8 @@ public class Client{
         System.out.println("Client créé");
         og = new OnlineGame(server);
     }
+
+    public int getNbServ(){
+        return nomServer.size();
+    }
 }
