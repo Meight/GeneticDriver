@@ -30,4 +30,8 @@ public class OnlineGame{
     public ThreadSendClient getSendClient() {
         return sendClient;
     }
+
+    public ThreadReceiveClient getReceiveClient() {
+        return receiveClient;
+    }
 }

@@ -26,15 +26,4 @@ public class Input {
         return accelerate;
     }
 
-
-    public String serial(){
-        return turnLeft+","+turnRight+","+accelerate;
-    }
-
-    public Input (String left,String right,String acc){
-        this.turnLeft = Boolean.valueOf(left);
-        this.turnRight = Boolean.valueOf(right);
-        this.accelerate = Boolean.valueOf(acc);
-    }
-
 }

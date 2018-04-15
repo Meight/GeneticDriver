@@ -49,13 +49,16 @@ public class NetworkGame extends BasicGame {
     public void update(GameContainer container, int delta) throws SlickException {
         for (NetworkPlayer player : players) {
             if(player.IsDistant()){
-                /*Model.Network.Input input  = serverGame.getReceiveServer().getInput();
-                int cdelta = serverGame.getReceiveServer().getDelta();
-                RenderableObject car = player.getCar();
-                car.processInput(input, cdelta);*/
-                RenderableObject car = player.getCar();
-                car.setPosition(serverGame.getReceiveServer().getPos());
-                car.setAngle(serverGame.getReceiveServer().getAngle());
+                if(serverGame ==null){
+                    RenderableObject car = player.getCar();
+                    car.setPosition(onlineGame.getReceiveClient().getPos());
+                    car.setAngle(onlineGame.getReceiveClient().getAngle());
+                }else{
+                    RenderableObject car = player.getCar();
+                    car.setPosition(serverGame.getReceiveServer().getPos());
+                    car.setAngle(serverGame.getReceiveServer().getAngle());
+                }
+
             }else{
                 RenderableObject car = player.getCar();
                 Model.Network.Input i = InputFactory.generateInput(container);
@@ -63,7 +66,7 @@ public class NetworkGame extends BasicGame {
                 if(serverGame == null){
                     onlineGame.getSendClient().sendPos(car.getPosition(),car.getAngle());
                 }else {
-
+                    serverGame.getSendServer().sendPos(car.getPosition(),car.getAngle());
                 }
             }
 

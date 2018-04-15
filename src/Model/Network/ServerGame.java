@@ -26,4 +26,8 @@ public class ServerGame{
     public ThreadReceiveServer getReceiveServer() {
         return receiveServer;
     }
+
+    public ThreadSendServer getSendServer(){
+        return sendServer;
+    }
 }

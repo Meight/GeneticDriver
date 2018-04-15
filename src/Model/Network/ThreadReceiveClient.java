@@ -1,5 +1,7 @@
 package Model.Network;
 
+import org.dyn4j.geometry.Vector2;
+
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -13,6 +15,8 @@ public class ThreadReceiveClient extends Thread {
     private static byte[] buf = new byte[BUFFER_SIZE];
     private DatagramPacket packet;
     private DatagramSocket socket;
+    private Vector2 pos;
+    private double angle;
 
     public ThreadReceiveClient(){
         try {
@@ -26,6 +30,7 @@ public class ThreadReceiveClient extends Thread {
     public void run() {
         super.run();
         while(running) {
+            buf = new byte[BUFFER_SIZE];
             packet = new DatagramPacket(buf, buf.length);
             try {
                 socket.receive(packet);
@@ -34,8 +39,18 @@ public class ThreadReceiveClient extends Thread {
             }
             String received = new String(packet.getData(), 0, packet.getLength());
             System.out.println("RECU CLIENT : "+received);
-            //todo received VERS le jeu (nouvelles positions)
+            String[] inpt = received.split(",");
+            pos=new Vector2(new Float(inpt[0]),new Float(inpt[1]));
+            angle=new Double(inpt[2]);
             buf = new byte[BUFFER_SIZE];
         }
+    }
+
+    public Vector2 getPos() {
+        return pos;
+    }
+
+    public double getAngle() {
+        return angle;
     }
 }

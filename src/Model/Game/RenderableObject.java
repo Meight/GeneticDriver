@@ -60,6 +60,7 @@ public abstract class RenderableObject implements NetworkBehavior {
     }
 
     public void setAngle(double d){
+        rotate((float) Math.toDegrees( d - this.angle ));
         this.angle = d;
     }
 }
