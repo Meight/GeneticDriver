@@ -22,12 +22,12 @@ public class ThreadSendClient extends Thread {
 
     public ThreadSendClient(InetAddress s){
         server = s;
-        packet = new DatagramPacket(buf, buf.length, server, acceptGame);
-        try {
-            socket = new DatagramSocket(portClient+12);
-        } catch (SocketException e) {
-            e.printStackTrace();
-        }
+    }
+
+
+    @Override
+    public void run() {
+        super.run();
         buf = ACCEPT.getBytes();
         packet = new DatagramPacket(buf, buf.length, server, acceptGame);
         try {
@@ -36,12 +36,6 @@ public class ThreadSendClient extends Thread {
             e.printStackTrace();
         }
         buf = new byte[BUFFER_SIZE];
-    }
-
-
-    @Override
-    public void run() {
-        super.run();
         while (running) {
             System.out.println("TRY SEND");
             if (sending){
