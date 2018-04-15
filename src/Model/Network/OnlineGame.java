@@ -78,7 +78,7 @@ public class OnlineGame extends Thread{
         try {
             System.out.println("CLIENT SIDE");
             buf = ACCEPT.getBytes();
-
+            packet[0] = new DatagramPacket(buf, buf.length, server, acceptGame);
             socket.send(packet[0]);
             buf = new byte[BUFFER_SIZE];
             try {
@@ -88,7 +88,7 @@ public class OnlineGame extends Thread{
             }
             recuPaquet.start();
             envoiPacket.start();
-            
+
             }catch (IOException e1){
                 e1.printStackTrace();
             }
