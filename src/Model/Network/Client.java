@@ -43,13 +43,10 @@ public class Client{
     }
 
     public void foundServers() throws Exception {
-            System.out.println("1");
             buf = SERVERS.getBytes();
             final InetAddress[] address = {InetAddress.getByName("255.255.255.255")};
             final DatagramPacket packet = new DatagramPacket(buf, buf.length, address[0], SERVER_PORT);
-            System.out.println("2");
             socket.send(packet);
-            System.out.println("3");
             long begin = System.currentTimeMillis();
             Thread search = new Thread(){
                 @Override
@@ -71,10 +68,8 @@ public class Client{
             };
             search.start();
             while (begin + DELTATIME > System.currentTimeMillis()){
-                System.out.println("44444");
             }
             search.stop();
-            System.out.println("5");
         }
 
 

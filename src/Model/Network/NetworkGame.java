@@ -15,15 +15,10 @@ import java.util.List;
 public class NetworkGame extends BasicGame {
     private GameContainer container;
     private TiledMap map;
-
+    private static ServerGame serverGame = null;
+    private static OnlineGame onlineGame = null;
     private List<NetworkPlayer> players = new ArrayList<NetworkPlayer>();
     private List<KeyPressedListener> keyPressedListeners = new ArrayList<KeyPressedListener>();
-
-    public static void launch() throws SlickException {
-        AppGameContainer app = new AppGameContainer(new NetworkGame(), 1300, 960, false);
-        app.setTargetFrameRate(100);
-        app.start();
-    }
 
     public NetworkGame() {
         super("GeneticDriver");
@@ -60,7 +55,13 @@ public class NetworkGame extends BasicGame {
                 car.processInput(InputFactory.generateInputFromAI((CarAI)car), delta);*/
             }else{
                 RenderableObject car = player.getCar();
-                car.processInput(InputFactory.generateInput(container), delta);
+                Model.Network.Input i = InputFactory.generateInput(container);
+                car.processInput(i, delta);
+                if(serverGame == null){
+                    OnlineGame.sendInput(i.serial(),delta);
+                }else {
+
+                }
             }
 
         }
@@ -78,5 +79,19 @@ public class NetworkGame extends BasicGame {
         for(KeyPressedListener object : keyPressedListeners) {
             object.keyPressed(key, c);
         }
+    }
+
+    public static void launch(ServerGame pserverGame) throws SlickException {
+        serverGame = pserverGame;
+        AppGameContainer app = new AppGameContainer(new NetworkGame(), 1300, 960, false);
+        app.setTargetFrameRate(100);
+        app.start();
+    }
+
+    public static void launch(OnlineGame ponlineGame) throws SlickException {
+        onlineGame = ponlineGame;
+        AppGameContainer app = new AppGameContainer(new NetworkGame(), 1300, 960, false);
+        app.setTargetFrameRate(100);
+        app.start();
     }
 }

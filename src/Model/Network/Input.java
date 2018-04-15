@@ -25,4 +25,17 @@ public class Input {
     public boolean isAccelerating() {
         return accelerate;
     }
+
+
+    public String serial(){
+        return turnLeft+"/"+turnRight+"/"+accelerate;
+    }
+
+    public Input (String serie){
+        String[] res = serie.split("/");
+        this.turnLeft = Boolean.valueOf(res[0]);
+        this.turnRight = Boolean.valueOf(res[1]);
+        this.accelerate = Boolean.valueOf(res[2]);
+    }
+
 }
