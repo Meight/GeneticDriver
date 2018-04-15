@@ -104,9 +104,8 @@ public class Client{
 
     public void accessServer(InetAddress server){
         System.out.println("Access server "+server);
-        og = new OnlineGame(server);
-        og.launch();
         System.out.println("Client créé");
+        og = new OnlineGame(server);
     }
 
     public void openWindows() {

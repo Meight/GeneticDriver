@@ -46,12 +46,10 @@ public class Server extends Thread{
                     packet = new DatagramPacket(buf, buf.length, address, port);
                     socket.send(packet);
                 }else if(received.equalsIgnoreCase(ACCEPT)){
-                    sg = new ServerGame(address);
-                    sg.launch();
                     System.out.println("Serveur créé");
                     close();
                     running = false;
-                    break;
+                    sg = new ServerGame(address);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
