@@ -58,7 +58,7 @@ public class NetworkGame extends BasicGame {
                 Model.Network.Input i = InputFactory.generateInput(container);
                 car.processInput(i, delta);
                 if(serverGame == null){
-                    //onlineGame.getSendClient().sendInput(i.serial(),delta);
+                    onlineGame.getSendClient().sendInput(i.serial(),delta);
                 }else {
 
                 }

@@ -42,7 +42,6 @@ public class ThreadSendClient extends Thread {
         }
         buf = new byte[BUFFER_SIZE];
         while (running) {
-            System.out.println("TRY SEND");
             if (sending){
                 System.out.println("SEND FROM CLIENT");
                 sending = false;
