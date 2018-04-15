@@ -37,6 +37,7 @@ public class Client{
             socket.setBroadcast(true);
             menu = frame;
             foundServers();
+            afficheServers();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -70,7 +71,6 @@ public class Client{
             while (begin + DELTATIME > System.currentTimeMillis()){
             }
             search.stop();
-            afficheServers();
         }
 
 

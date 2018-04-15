@@ -92,10 +92,8 @@ public class Server extends Thread{
             s.start();
             jFrame.remove(jPanel);
             jPanel.removeAll();
-            JButton cancel = new JButton("Annuler la room");
             JLabel attente = new JLabel("En attente de l'adversaire ...");
             jPanel.add(attente);
-            jPanel.add(cancel);
             jFrame.add(jPanel);
             jFrame.validate();
             jPanel.validate();

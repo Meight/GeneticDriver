@@ -38,7 +38,7 @@ public class NetworkMain {
         client.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Client actu = new Client(jFrame);
+                new Client(jFrame);
                 showWindows(false);
             }
         });
