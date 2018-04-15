@@ -7,15 +7,18 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class NetworkMain extends JFrame {
+public class NetworkMain {
+
+    JFrame jFrame;
 
 
     public NetworkMain() {
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        jFrame = new JFrame();
+        jFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         JPanel panel = networkPanel();
-        setContentPane(panel);
-        setBounds(0, 0, 500, 250);
-        setVisible(true);
+        jFrame.setContentPane(panel);
+        jFrame.setBounds(0, 0, 500, 250);
+        jFrame.setVisible(true);
     }
 
     public static void launch() {
@@ -35,8 +38,7 @@ public class NetworkMain extends JFrame {
         client.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Client actu = new Client();
-                actu.openWindows();
+                Client actu = new Client(jFrame);
                 showWindows(false);
             }
         });
@@ -54,6 +56,6 @@ public class NetworkMain extends JFrame {
 
 
     public void showWindows(boolean show){
-        this.setVisible(show);
+        jFrame.setVisible(show);
     }
 }

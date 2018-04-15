@@ -19,8 +19,7 @@ import java.util.List;
  */
 
 public class Client{
-    private int port;
-    static JFrame jFrame;
+    JFrame menu;
     private DatagramSocket socket;
     private List<String> nomServer = new ArrayList<>(0);
     private HashMap<String,InetAddress> addressServer = new HashMap<>(0);
@@ -32,11 +31,11 @@ public class Client{
     private byte[] buf = new byte[BUFFER_SIZE];
     private OnlineGame og;
 
-    public Client() {
+    public Client(JFrame frame) {
         try {
             socket = new DatagramSocket(CLIENT_PORT);
             socket.setBroadcast(true);
-            this.port = CLIENT_PORT;
+            menu = frame;
             foundServers();
         } catch (Exception e) {
             e.printStackTrace();
@@ -71,48 +70,20 @@ public class Client{
             while (begin + DELTATIME > System.currentTimeMillis()){
             }
             search.stop();
+            afficheServers();
         }
 
 
     public void afficheServers(){
-        jFrame.removeAll();
-        JPanel jPanel = new JPanel(new GridLayout(nomServer.size()+1,1));
-        JButton search = new JButton("Chercher les serveurs");
-        search.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    foundServers();
-                    afficheServers();
-                } catch (Exception e1) {
-                    e1.printStackTrace();
-                }
-            }
-        });
-        jPanel.add(search);
         if(nomServer.size()>0){
+            menu.setVisible(false);
             accessServer(addressServer.get(nomServer.get(0)));
-        }else {
-            System.out.println("NB Serv : "+nomServer.size());
-            jFrame.add(jPanel);
-            jPanel.validate();
-            jFrame.validate();
-            jFrame.setVisible(true);
         }
-
     }
 
     public void accessServer(InetAddress server){
         System.out.println("Access server "+server);
         System.out.println("Client créé");
         og = new OnlineGame(server);
-    }
-
-    public void openWindows() {
-        jFrame = new JFrame();
-        jFrame.setTitle("Client Side");
-        jFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        jFrame.setBounds(0, 0, 300, 1000);
-        afficheServers();
     }
 }
