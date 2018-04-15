@@ -46,7 +46,7 @@ public class Server extends Thread{
                     socket.send(packet);
                 }else if(received.equalsIgnoreCase(ACCEPT)){
                     ServerGame sg = new ServerGame(address);
-                    sg.start();
+                    sg.launch();
                     close();
                     running = false;
                     break;
