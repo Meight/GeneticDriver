@@ -46,7 +46,7 @@ public class ThreadSendClient extends Thread {
         }
         buf = new byte[BUFFER_SIZE];
         while (running) {
-            System.out.println();
+            //System.out.println();
             if (sending){
                 System.out.println("SEND FROM CLIENT");
                 packet = new DatagramPacket(buf, buf.length, server, portServer);
