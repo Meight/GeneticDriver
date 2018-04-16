@@ -14,6 +14,7 @@
             <includes>
                 <include>start.bat</include>
                 <include>start.sh</include>
+                <include>save.txt</include>
             </includes>
         </fileSet>
         <fileSet>
