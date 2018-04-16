@@ -9,6 +9,14 @@
     <baseDirectory>/</baseDirectory>
     <fileSets>
         <fileSet>
+            <directory>/</directory>
+            <outputDirectory>/</outputDirectory>
+            <includes>
+                <include>start.bat</include>
+                <include>start.sh</include>
+            </includes>
+        </fileSet>
+        <fileSet>
             <directory>target</directory>
             <outputDirectory>/</outputDirectory>
             <includes>
@@ -16,17 +24,19 @@
             </includes>
         </fileSet>
         <fileSet>
-            <directory>/</directory>
+            <directory>target/natives</directory>
             <outputDirectory>natives</outputDirectory>
             <includes>
-                <include>*.dll</include>
+                <include>*</include>
             </includes>
         </fileSet>
         <fileSet>
             <directory>resources</directory>
             <outputDirectory>/</outputDirectory>
             <includes>
-                <include>*</include>
+                <include>maps/*</include>
+                <include>maps/tiles/*</include>
+                <include>cars/*</include>
             </includes>
         </fileSet>
     </fileSets>
@@ -36,6 +46,7 @@
             <excludes>
                 <exclude>org.lwjgl.lwjgl:lwjgl-platform</exclude>
                 <exclude>net.java.jinput:jinput-platform</exclude>
+                <exclude>org.geneticdriver:GeneticDriver</exclude>
             </excludes>
         </dependencySet>
     </dependencySets>
