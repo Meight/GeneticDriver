@@ -1,6 +1,6 @@
 # GeneticDriver
 
-## Run application
+## Run the application
 
 Grab the latest build [here](https://github.com/Meight/GeneticDriver/tree/master/builds) or head to the ``builds/`` folder.
 
@@ -15,7 +15,7 @@ You can check these scripts before running them to ensure they're safe.
 * press <kbd>SPACE</kbd> to make your car accelerate;
 * press <kbd>←</kbd> to turn left and <kbd>→</kbd> to turn right.
 
-## Build project
+## Build the project
 
 You will need [Maven](https://maven.apache.org/) to build the project using the preconfigured ``pom.xml`` file.
 
@@ -32,3 +32,9 @@ This will generate ``.zip`` and ``.tag.gz`` archives in ``target`` temporary fol
 * [Matthieu Le Boucher](https://github.com/Meight)
 * [Guilhem Cichocki](https://github.com/gcichocki)
 * [Vincent Pera](https://github.com/VincentPera)
+
+## Details
+
+Since the project's goal was more to work around the game's and machine learning logic than its aesthetics, it uses the [Slick2D](http://slick.ninjacave.com/) library for rendering purposes, which requires itself a few other libraries such as [LWJGL](https://www.lwjgl.org/) or [JInput](https://github.com/jinput/jinput) (hence the ``.dll``s at the project's root).
+
+The cars' "physics" as well as the neural network and the netcode, on which we focused more, are totally hand-made.
