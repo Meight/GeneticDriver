@@ -10,6 +10,11 @@ To run the application, simply run one of the root scripts:
 
 You can check these scripts before running them to ensure they're safe.
 
+## In-game controls
+
+* press <kbd>SPACE</kbd> to make your car accelerate;
+* press <kbd>←</kbd> to turn left and <kbd>→</kbd> to turn right.
+
 ## Build project
 
 You will need [Maven](https://maven.apache.org/) to build the project using the preconfigured ``pom.xml`` file.
