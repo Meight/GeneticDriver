@@ -9,8 +9,10 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
+import org.newdawn.slick.util.ResourceLoader;
 
 import java.io.File;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -59,13 +61,15 @@ public class Car extends RenderableObject implements KeyPressedListener {
 
         this.lapsTime = new ArrayList<>();
 
-        File dir = new File("./resources/cars/");
-        File[] files = dir.listFiles();
-        Random rand = new Random();
-        File file = files[rand.nextInt(files.length)];
+        File dir = null;
         try {
+            dir = new File(ResourceLoader.getResource("cars/").toURI());
+            File[] files = dir.listFiles();
+            Random rand = new Random();
+            assert files != null;
+            File file = files[rand.nextInt(files.length)];
             this.image = new Image(file.getPath());
-        } catch (SlickException e) {
+        } catch (URISyntaxException | SlickException e) {
             e.printStackTrace();
         }
     }
