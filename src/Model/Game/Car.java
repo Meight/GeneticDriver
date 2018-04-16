@@ -82,13 +82,6 @@ public class Car extends RenderableObject implements KeyPressedListener {
 
     @Override
     public void processInput(Input input, double time) {
-        /*float currentTime = System.currentTimeMillis();
-
-        if (time < currentTime)
-            return; // Ignore packets out of order.
-
-        float deltaTime = (float) (currentTime - time);*/
-
         updatePhysics(input, (float) time);
     }
 
@@ -115,9 +108,9 @@ public class Car extends RenderableObject implements KeyPressedListener {
 
         turn = 0;
         if(input.isTurningRight())
-            turn = TURN_INCREMENT * deltaTime; //Math.min(RIGHT_MOST_TURN, 0.5d);
+            turn = TURN_INCREMENT * deltaTime;
         else if (input.isTurningLeft())
-            turn = -TURN_INCREMENT * deltaTime; //Math.max(LEFT_MOST_TURN, -0.5d);
+            turn = -TURN_INCREMENT * deltaTime;
 
         if(input.isAccelerating())
             speed += ACCELERATION_INCREMENT * deltaTime;
