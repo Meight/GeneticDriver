@@ -37,7 +37,8 @@ public class CarAI extends Car implements Comparable<CarAI>{
         topology.add(2);
 
         this.neuralNetwork = new Net(topology);
-        //Set all the lists use by the net
+
+        //S et all the lists used by the net.
         this.inputVals = new ArrayList<>();
         this.targetVals = new ArrayList<>();
         this.resultVals = new ArrayList<>();
@@ -69,31 +70,31 @@ public class CarAI extends Car implements Comparable<CarAI>{
         return resultVals;
     }
 
-    //use wall detectors
-    private void UpdateNetInput(){
+    // Use wall detectors.
+    private void updateNetInput(){
         List<Double> distances = new ArrayList<>();
         for(Vector2 direction : checkedDirections) {
             RaycastHit raycastHit = Physics2D.raycast(position, direction, map, raycastsLength);
             if (raycastHit != null) {
-                distances.add(Math.floor(raycastHit.getDistance()/raycastsLength*100)/100 < 0.25 ? 1d:0d);
+                distances.add(Math.floor(raycastHit.getDistance() / raycastsLength * 100) / 100 < 0.25 ? 1d  : 0d);
             }
         }
-        if(distances.size()==5){
+
+        if(distances.size() == 5) {
             inputVals.clear();
             inputVals.addAll(distances);
-            //System.out.println(inputVals);
         }
     }
 
-    public void ClearNet(){
+    public void clearNet() {
         inputVals.clear();
         targetVals.clear();
         resultVals.clear();
     }
 
-    public void ProcessNet(){
-        ClearNet();
-        UpdateNetInput();
+    public void processNet(){
+        clearNet();
+        updateNetInput();
         neuralNetwork.FeedForward(inputVals);
         resultVals = neuralNetwork.GetResult();
     }
@@ -119,8 +120,6 @@ public class CarAI extends Car implements Comparable<CarAI>{
         isWinner = winner;
     }
 
-
-
     public Net getNeuralNetwork() {
         return neuralNetwork;
     }
@@ -134,10 +133,10 @@ public class CarAI extends Car implements Comparable<CarAI>{
     }
 
     public void ResetStats(){
-        this.score=0;
-        this.fitness=0;
-        this.isWinner=false;
-        this.currentRotation=0f;
+        this.score = 0;
+        this.fitness = 0;
+        this.isWinner = false;
+        this.currentRotation = 0f;
         this.position = new Vector2(200, 320);
         this.turn = 0;
         this.speed = 0;
@@ -149,23 +148,11 @@ public class CarAI extends Car implements Comparable<CarAI>{
         this.left = new Vector2(forward).rotate(-Math.PI / 4);
         this.diagLeft = new Vector2(forward).rotate(-Math.PI / 8);
         checkedDirections = new Vector2[]{forward, right, left,diagLeft,diagRight};
-        this.isAlive=true;
+        this.isAlive = true;
     }
 
     @Override
     public int compareTo(CarAI other) {
-        //if(this.getAverageLapTime() == other.getAverageLapTime()){
-            if(this.fitness > other.fitness){
-                return -1;
-            }else if(this.fitness < other.fitness){
-                return 1;
-            }else{
-                return 0;
-            }
-        //}else if(this.getAverageLapTime() < other.getAverageLapTime()){
-        //    return -1;
-        //}else{
-        //    return 1;
-        //}
+        return Double.compare(other.fitness, this.fitness);
     }
 }

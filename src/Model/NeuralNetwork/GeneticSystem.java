@@ -84,7 +84,7 @@ public class GeneticSystem {
         for (Player player : players) {
             if(player.getCar().isAlive()){
                 RenderableObject car = player.getCar();
-                ((CarAI)car).ProcessNet();
+                ((CarAI)car).processNet();
                 car.processInput(InputFactory.generateInputFromAI((CarAI)car), delta);
             }
         }

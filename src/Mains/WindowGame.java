@@ -55,7 +55,7 @@ public class WindowGame extends BasicGame {
         for (Player player : players) {
             if(player.IsAI()){
                 RenderableObject car = player.getCar();
-                ((CarAI)car).ProcessNet();
+                ((CarAI)car).processNet();
                 car.processInput(InputFactory.generateInputFromAI((CarAI)car), delta);
             }else{
                 RenderableObject car = player.getCar();
