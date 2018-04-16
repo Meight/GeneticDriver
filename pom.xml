@@ -6,7 +6,7 @@
     <name>Genetic Driver</name>
     <groupId>org.geneticdriver</groupId>
     <artifactId>GeneticDriver</artifactId>
-    <version>1.0</version>
+    <version>1.2</version>
 
     <developers>
         <developer>
@@ -98,6 +98,11 @@
                 <version>2.4.3</version>
             </plugin>
         </plugins>
+        <resources>
+            <resource>
+                <directory>resources</directory>
+            </resource>
+        </resources>
     </build>
 
     <dependencies>
