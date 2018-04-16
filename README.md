@@ -15,10 +15,10 @@ You can check these scripts before running them to ensure they're safe.
 You will need [Maven](https://maven.apache.org/) to build the project using the preconfigured ``pom.xml`` file.
 
 To clean the project from previous builds, including ``target`` temporary folder, first run 
-```mvn clean```
+```mvn clean```.
 
 Then compile, package and assemble the project by running
-```mvn compile package assembly:single```
+```mvn compile package assembly:single```.
 
 This will generate ``.zip`` and ``.tag.gz`` archives in ``target`` temporary folder.
 
