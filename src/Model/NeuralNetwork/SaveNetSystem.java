@@ -41,11 +41,11 @@ public class SaveNetSystem {
             {
                 List<Double> weights = new ArrayList<>();
                 Neuron neuron = layer.getLayer().get(neuronNum);
-                for (int weightNum = 0; weightNum<neuron.GetOutputWeights().size();weightNum++){
-                    if(weightNum==neuron.GetOutputWeights().size()-1){
-                        writer.println(neuron.GetOutputWeights().get(weightNum).weight);
+                for (int weightNum = 0; weightNum<neuron.getOutputWeights().size(); weightNum++){
+                    if(weightNum==neuron.getOutputWeights().size()-1){
+                        writer.println(neuron.getOutputWeights().get(weightNum).weight);
                     }else{
-                        writer.print(neuron.GetOutputWeights().get(weightNum).weight+",");
+                        writer.print(neuron.getOutputWeights().get(weightNum).weight+",");
                     }
                 }
             }
@@ -94,7 +94,7 @@ public class SaveNetSystem {
                         weights.add(Double.parseDouble((inputs[k])));
                     }
                 }
-                net.getLayers().get(i).getLayer().get(j).SetWeights(weights);
+                net.getLayers().get(i).getLayer().get(j).setWeights(weights);
                 weights.clear();
             }
         }

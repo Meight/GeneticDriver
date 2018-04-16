@@ -11,7 +11,7 @@ public class Net {
     double recentAverageSmoothingFactor;
 
     public Net(List<Integer> topology) {
-        this.topology=topology;
+        this.topology = topology;
         int numLayers = topology.size();
         for (int layerNum = 0; layerNum < numLayers; ++layerNum)
         {
@@ -25,31 +25,34 @@ public class Net {
             //a bias neuron to the layer
             for (int neuronNum = 0; neuronNum <= topology.get(layerNum); ++neuronNum)
             {
-                tmpLayer.AddNeuron(new Neuron(numOutputs, neuronNum));
+                tmpLayer.addNeuron(new Neuron(numOutputs, neuronNum));
             }
             layers.add(tmpLayer);
             // Force the bias node's output value to 1.0 , it is the last neuron created above
-            layers.get(layers.size()-1).getLayer().get(layers.get(layers.size()-1).getLayer().size()-1).SetOutputVal(1.0);
-            //Layers.back().back().SetOutputVal(1.0); c++ version
+            layers.get(layers.size() - 1)
+                    .getLayer()
+                    .get(layers.get(layers.size() - 1)
+                            .getLayer().size() - 1)
+                    .setOutputValue(1.0);
+            //Layers.back().back().setOutputValue(1.0); c++ version
         }
     }
 
-    List<Layer> GetNet() { return layers; }
-    int GetNBLayers() { return GetNet().size(); }
+    List<Layer> getNet() { return layers; }
+    int getLayersAmount() { return getNet().size(); }
 
-    public double GetRecentAverageError() {
+    public double getRecentAverageError() {
         return recentAverageError;
     }
 
-    public void FeedForward(List<Double> inputVals)
-    {
+    public void feedForward(List<Double> inputVals) {
         //check if the number of input values fit the number of input neurons
         //(counting the bias neuron)(m_Layers.size()-1)
         assert(inputVals.size() == layers.get(0).getLayer().size() - 1);
 
         for (int i = 0; i < inputVals.size(); ++i)
         {
-            layers.get(0).getLayer().get(i).SetOutputVal(inputVals.get(i));
+            layers.get(0).getLayer().get(i).setOutputValue(inputVals.get(i));
         }
 
         //forward propagate
@@ -60,14 +63,12 @@ public class Net {
             Layer prevLayer = layers.get(layerNum - 1);
             for (int n = 0; n < layers.get(layerNum).getLayer().size() - 1; ++n)
             {
-                layers.get(layerNum).getLayer().get(n).FeedForward(prevLayer);
+                layers.get(layerNum).getLayer().get(n).feedForward(prevLayer);
             }
         }
     }
 
-
-    public void BackProp(List<Double> targetVals)
-    {
+    public void backPropagate(List<Double> targetVals) {
         // Calculate overall net error (RMS (root mean square) of output neuron error)
         //rms = sqrt((1/n(sum(i->1->n)(target(i)-actual(i))²)
         Layer outputLayer = layers.get(layers.size()-1);
@@ -75,7 +76,7 @@ public class Net {
 
         for (int n = 0; n < outputLayer.getLayer().size() - 1; ++n)
         {
-            double delta = targetVals.get(n) - outputLayer.getLayer().get(n).GetOutputVal();
+            double delta = targetVals.get(n) - outputLayer.getLayer().get(n).getOutputValue();
             error += delta * delta;
         }
         error /= outputLayer.getLayer().size() - 1; // get the average error squared
@@ -90,7 +91,7 @@ public class Net {
 
         for (int n = 0; n < outputLayer.getLayer().size() - 1; ++n)
         {
-            outputLayer.getLayer().get(n).CalcOutputGradients(targetVals.get(n));
+            outputLayer.getLayer().get(n).calculateOutputGradients(targetVals.get(n));
         }
 
         // Calculate gradient on hidden layers
@@ -102,7 +103,7 @@ public class Net {
 
             for(int n = 0; n < hiddenLayer.getLayer().size(); ++n)
             {
-                hiddenLayer.getLayer().get(n).CalcHiddenGradients(nextLayer);
+                hiddenLayer.getLayer().get(n).calculateHiddenGradients(nextLayer);
             }
         }
 
@@ -116,17 +117,17 @@ public class Net {
 
             for (int n = 0; n < layer.getLayer().size() - 1; ++n)
             {
-                layer.getLayer().get(n).UpdateInputWeights(prevLayer);
+                layer.getLayer().get(n).updateInputWeights(prevLayer);
             }
         }
     }
 
 
-    public List<Double> GetResult(){
+    public List<Double> getResult() {
         List<Double> resultVals = new ArrayList<>();
-        for (int n = 0; n < layers.get(layers.size()-1).getLayer().size() - 1; ++n)
+        for (int n = 0; n < layers.get(layers.size() - 1).getLayer().size() - 1; ++n)
         {
-            resultVals.add(layers.get(layers.size()-1).getLayer().get(n).GetOutputVal());
+            resultVals.add(layers.get(layers.size() - 1).getLayer().get(n).getOutputValue());
         }
         return resultVals;
     }
@@ -135,16 +136,16 @@ public class Net {
     @Override
     public String toString(){
         String res = "";
-        for(int i =0; i<layers.size();i++){
+        for(int i = 0; i < layers.size(); i++){
             res +="Layer :" + i +"\n";
-            for(int j=0; j<layers.get(i).getLayer().size();j++){
-                res +="Neuron " + j +" is " +layers.get(i).getLayer().get(j)+"\n";
+            for(int j = 0; j < layers.get(i).getLayer().size(); j++){
+                res += "Neuron " + j +" is " + layers.get(i).getLayer().get(j) + "\n";
             }
         }
         return res;
     }
 
-    public Net GetSameNetWithNewAdress(){
+    public Net getSameNetWithNewAddress(){
         Net resultNet = new Net(this.topology);
         int numLayers = topology.size();
 
@@ -155,11 +156,11 @@ public class Net {
             {
                 List<Double> weights = new ArrayList<>();
                 Neuron neuron = layer.getLayer().get(neuronNum);
-                for (int weightNum = 0; weightNum<neuron.GetOutputWeights().size();weightNum++){
-                    double weight = neuron.GetOutputWeights().get(weightNum).weight;
+                for (int weightNum = 0; weightNum<neuron.getOutputWeights().size(); weightNum++){
+                    double weight = neuron.getOutputWeights().get(weightNum).weight;
                     weights.add(weight);
                 }
-                resultNet.GetNet().get(layerNum).getLayer().get(neuronNum).SetWeights(weights);
+                resultNet.getNet().get(layerNum).getLayer().get(neuronNum).setWeights(weights);
             }
 
         }
@@ -171,7 +172,7 @@ public class Net {
     }
 
     public int neuronsHiddenNumber(){
-       return layers.get(1).getLayer().size();
+        return layers.get(1).getLayer().size();
     }
 
     public List<Layer> getLayers() {

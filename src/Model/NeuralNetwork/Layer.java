@@ -1,7 +1,6 @@
 package Model.NeuralNetwork;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
 public class Layer {
 
@@ -23,14 +22,14 @@ public class Layer {
         this.layer = layer;
     }
 
-    public void AddNeuron(Neuron n) {
+    public void addNeuron(Neuron n) {
         this.layer.add(n);
     }
 
-    public Neuron GetBiasNeuron() {
-        return this.layer.get(this.layer.size()-1);
+    public Neuron getBiasNeuron() {
+        return this.layer.get(this.layer.size() - 1);
     }
 
-    public void SetBiasNeuron(Neuron neuron){this.layer.set(this.layer.size()-1,neuron);}
+    public void setBiasNeuron(Neuron neuron){this.layer.set(this.layer.size() - 1, neuron);}
 }
 

@@ -8,7 +8,7 @@ public class SigmoidFunction{
         return  Math.tanh(value);
     }
 
-    public static double EvaluateDerivative(double value) {
+    public static double evaluateDerivative(double value) {
         //tanh approximated derivative
         return 1.0 - value * value;
     }

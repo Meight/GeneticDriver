@@ -95,8 +95,8 @@ public class CarAI extends Car implements Comparable<CarAI>{
     public void processNet(){
         clearNet();
         updateNetInput();
-        neuralNetwork.FeedForward(inputVals);
-        resultVals = neuralNetwork.GetResult();
+        neuralNetwork.feedForward(inputVals);
+        resultVals = neuralNetwork.getResult();
     }
 
     @Override
@@ -125,7 +125,7 @@ public class CarAI extends Car implements Comparable<CarAI>{
     }
 
     public Net getCleanNeuralNetwork() {
-        return neuralNetwork.GetSameNetWithNewAdress();
+        return neuralNetwork.getSameNetWithNewAddress();
     }
 
     public void setNeuralNetwork(Net neuralNetwork) {

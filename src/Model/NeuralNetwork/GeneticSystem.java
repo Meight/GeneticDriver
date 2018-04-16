@@ -205,22 +205,22 @@ public class GeneticSystem {
 
         //setup for the cross over
         //cutting the bias weights of parentA in two lists
-        Neuron neuronA = netA.GetNet().get(1).GetBiasNeuron();
-        int cutPoint = new Random().nextInt(neuronA.GetOutputWeights().size());
-        List<Connection> aBeforeCut = neuronA.GetOutputWeights().subList(0,cutPoint);
-        List<Connection> aAfterCut = neuronA.GetOutputWeights().subList(cutPoint,neuronA.GetOutputWeights().size());
+        Neuron neuronA = netA.getNet().get(1).getBiasNeuron();
+        int cutPoint = new Random().nextInt(neuronA.getOutputWeights().size());
+        List<Connection> aBeforeCut = neuronA.getOutputWeights().subList(0,cutPoint);
+        List<Connection> aAfterCut = neuronA.getOutputWeights().subList(cutPoint,neuronA.getOutputWeights().size());
 
         //Same thing for B
-        Neuron neuronB = netB.GetNet().get(1).GetBiasNeuron();
-        List<Connection> bBeforeCut = neuronB.GetOutputWeights().subList(0,cutPoint);
-        List<Connection> bAfterCut = neuronB.GetOutputWeights().subList(cutPoint,neuronB.GetOutputWeights().size());
+        Neuron neuronB = netB.getNet().get(1).getBiasNeuron();
+        List<Connection> bBeforeCut = neuronB.getOutputWeights().subList(0,cutPoint);
+        List<Connection> bAfterCut = neuronB.getOutputWeights().subList(cutPoint,neuronB.getOutputWeights().size());
 
         //merge for parentA net
         List<Connection> finalA = new ArrayList<>();
         finalA.addAll(aBeforeCut);
         finalA.addAll(bAfterCut);
         neuronA.setOutputWeights(finalA);
-        netA.GetNet().get(1).SetBiasNeuron(neuronA);
+        netA.getNet().get(1).setBiasNeuron(neuronA);
         ((CarAI)offspringA.getCar()).setNeuralNetwork(netA);
 
         //merge for parentB net
@@ -228,7 +228,7 @@ public class GeneticSystem {
         finalB.addAll(bBeforeCut);
         finalB.addAll(aAfterCut);
         neuronB.setOutputWeights(finalB);
-        netB.GetNet().get(1).SetBiasNeuron(neuronB);
+        netB.getNet().get(1).setBiasNeuron(neuronB);
         ((CarAI)offspringB.getCar()).setNeuralNetwork(netB);
 
         return new Random().nextInt(2) == 1 ? offspringA : offspringB;
@@ -256,12 +256,12 @@ public class GeneticSystem {
     //We choose to mutate the hidden layer only
     public Player Mutate(Player player){
 
-        Layer finalLayer = ((CarAI)player.getCar()).getNeuralNetwork().GetNet().get(1);
+        Layer finalLayer = ((CarAI)player.getCar()).getNeuralNetwork().getNet().get(1);
 
         for(int i=0;i<finalLayer.getLayer().size();i++){
-            finalLayer.getLayer().get(i).SetWeights(MutateNeuron(finalLayer.getLayer().get(i)));
+            finalLayer.getLayer().get(i).setWeights(MutateNeuron(finalLayer.getLayer().get(i)));
         }
-        ((CarAI)player.getCar()).getNeuralNetwork().GetNet().set(1,finalLayer);
+        ((CarAI)player.getCar()).getNeuralNetwork().getNet().set(1,finalLayer);
         return player;
         /*
         // performs random mutations on the offspring
@@ -285,8 +285,8 @@ public class GeneticSystem {
         List<Double> weights = new ArrayList<>();
         double mutatedWeight;
 
-        for (int i =0;i<neuron.GetOutputWeights().size();i++){
-            mutatedWeight = neuron.GetOutputWeights().get(i).getWeight();
+        for (int i = 0; i<neuron.getOutputWeights().size(); i++){
+            mutatedWeight = neuron.getOutputWeights().get(i).getWeight();
             if(new Random().nextFloat()< mutationRate){
                 double mutateFactor = (new Random().nextFloat()+0.5);
                 mutatedWeight *= mutateFactor;
@@ -374,12 +374,12 @@ public class GeneticSystem {
 
         //setup for the cross over
         //cutting the hidden layer of parentA in two lists
-        Layer layerA = (Layer) netA.GetNet().get(1).getLayer();
+        Layer layerA = (Layer) netA.getNet().get(1).getLayer();
         Layer aBeforeCut = (Layer)layerA.getLayer().subList(0,cutPoint);
         Layer aAfterCut = (Layer)layerA.getLayer().subList(cutPoint,layerA.getLayer().size());
 
         //Same thing for B
-        Layer layerB = (Layer) netB.GetNet().get(1).getLayer();
+        Layer layerB = (Layer) netB.getNet().get(1).getLayer();
         Layer bBeforeCut = (Layer)layerB.getLayer().subList(0,cutPoint);
         Layer bAfterCut = (Layer)layerB.getLayer().subList(cutPoint,layerB.getLayer().size());
 
@@ -387,13 +387,13 @@ public class GeneticSystem {
         List<Neuron> finalA = new ArrayList<>();
         finalA.addAll((Collection<? extends Neuron>) aBeforeCut);
         finalA.addAll((Collection<? extends Neuron>) bAfterCut);
-        netA.GetNet().get(1).setLayer(finalA);
+        netA.getNet().get(1).setLayer(finalA);
         ((CarAI)parentA.getCar()).setNeuralNetwork(netA);
         //merge for parentB net
         List<Neuron> finalB = new ArrayList<>();
         finalA.addAll((Collection<? extends Neuron>) bBeforeCut);
         finalA.addAll((Collection<? extends Neuron>) aAfterCut);
-        netB.GetNet().get(1).setLayer(finalB);
+        netB.getNet().get(1).setLayer(finalB);
         ((CarAI)parentA.getCar()).setNeuralNetwork(netB);
 
         return new Random().nextInt(2) == 1 ? parentA : parentB;

@@ -1,12 +1,9 @@
 package Mains;
 
 import Model.NeuralNetwork.Net;
-import com.sun.net.httpserver.Authenticator;
-import sun.font.CreatedFontTracker;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -66,12 +63,12 @@ public class IAMain {
                     targetVals.add(Double.parseDouble(targets[i]));
                 }
             }
-            myNet.FeedForward(inputVals);
+            myNet.feedForward(inputVals);
 
             //get actual result
-            resultVals = myNet.GetResult();
+            resultVals = myNet.getResult();
             if(run<=NUMBER_OF_TESTS*2/3){
-                myNet.BackProp(targetVals);
+                myNet.backPropagate(targetVals);
             }else{
                 total++;
                 if(Math.abs(targetVals.get(0)-resultVals.get(0)) <0.50){
@@ -83,7 +80,7 @@ public class IAMain {
             System.out.println("Inputs : "+inputVals);
             System.out.println("Target value : "+targetVals);
             System.out.println("Real Value : "+resultVals);
-            System.out.println("Recent Average Error : "+myNet.GetRecentAverageError()+"\n\n\n");
+            System.out.println("Recent Average Error : "+myNet.getRecentAverageError()+"\n\n\n");
 
             inputVals.clear();
             targetVals.clear();

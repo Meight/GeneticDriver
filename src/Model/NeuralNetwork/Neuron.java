@@ -4,7 +4,6 @@ import Model.NeuralNetwork.Transfer.SigmoidFunction;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.Vector;
 
 public class Neuron {
 
@@ -26,11 +25,11 @@ public class Neuron {
         myIndex = index;
     }
 
-    void SetOutputVal(double val) { outputVal = val; }
-    double GetOutputVal() { return outputVal; }
-    public List<Connection> GetOutputWeights() { return outputWeights; }
+    void setOutputValue(double val) { outputVal = val; }
+    double getOutputValue() { return outputVal; }
+    public List<Connection> getOutputWeights() { return outputWeights; }
 
-    public void SetWeights(List<Double> weights) {
+    public void setWeights(List<Double> weights) {
 
         for (int i = 0; i < weights.size(); i++)
         {
@@ -42,7 +41,7 @@ public class Neuron {
         this.outputWeights = outputWeights;
     }
 
-    void UpdateInputWeights(Layer prevLayer)
+    void updateInputWeights(Layer prevLayer)
     {
         // The weights to be updated are in the connection container
         // in the neurons in the preceding layer
@@ -55,7 +54,7 @@ public class Neuron {
             double newDeltaWeight =
                     //Individual input, magnified by the gradient and train rate
                     eta // learning rate (0.0 - slow learner, 0.2 - medium learner, 1.0 - reckless learner
-                            * neuron.GetOutputVal()
+                            * neuron.getOutputValue()
                             * gradient
                             // Also add momentum = a fraction of the previous delta weight
                             + alpha
@@ -67,14 +66,14 @@ public class Neuron {
     }
 
     //make the sum of the product of all the weight by their input value
-    void FeedForward(Layer prevLayer)
+    void feedForward(Layer prevLayer)
     {
         double sum = 0.0;
         //sum the previous layer's output (which become inputs of the next layer)
         //include the bias node from the previous layer
         for (int n = 0; n < prevLayer.getLayer().size(); ++n)
         {
-            sum += prevLayer.getLayer().get(n).GetOutputVal() *
+            sum += prevLayer.getLayer().get(n).getOutputValue() *
                     prevLayer.getLayer().get(n).outputWeights.get(myIndex).weight;
         }
 
@@ -91,19 +90,19 @@ public class Neuron {
         return 1.0 - x * x;
     }*/
 
-    void CalcOutputGradients(double targetVal)
+    void calculateOutputGradients(double targetVal)
     {
         double delta = targetVal - outputVal;
-        gradient = delta * SigmoidFunction.EvaluateDerivative(outputVal);
+        gradient = delta * SigmoidFunction.evaluateDerivative(outputVal);
     }
 
-    void CalcHiddenGradients(Layer nextLayer)
+    void calculateHiddenGradients(Layer nextLayer)
     {
-        double dow = SumDOW(nextLayer);
-        gradient = dow * SigmoidFunction.EvaluateDerivative(outputVal);
+        double dow = sumDOW(nextLayer);
+        gradient = dow * SigmoidFunction.evaluateDerivative(outputVal);
     }
 
-    private double SumDOW(Layer nextLayer){
+    private double sumDOW(Layer nextLayer){
         double sum = 0.0;
 
         //Sum our contributions of the error at the nodes we feed
