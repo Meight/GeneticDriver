@@ -2,7 +2,7 @@
 
 ## Run application
 
-Grab the latest build in [https://github.com/Meight/GeneticDriver/tree/master/builds](here) or head to the ``builds/`` folder.
+Grab the latest build [here](https://github.com/Meight/GeneticDriver/tree/master/builds) or head to the ``builds/`` folder.
 
 To run the application, simply run one of the root scripts:
 * ``start.bat`` for Windows-based platforms;
