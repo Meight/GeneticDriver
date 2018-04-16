@@ -19,31 +19,86 @@ import java.util.Random;
 
 /**
  * @author Matthieu Boucher
+ *
+ * Basic implementation of a 2D controllable car.
  */
 public class Car extends RenderableObject implements KeyPressedListener {
+    /**
+     * Maximal distance between simulation and actual position before snapping the car's position.
+     */
     private static final int MAXIMAL_DISTANCE_BEFORE_SNAP = 5;
 
+    /**
+     * The increment applied to the car's rotation each time a turning key is pressed.
+     */
     private static final double TURN_INCREMENT = .08d;
+
+    /**
+     * The maximal speed a car can reach, in pixels per second.
+     */
     private static final double MAXIMAL_SPEED = 3.5d;
+
+    /**
+     * The increment applied to the car's acceleration each time the acceleration key is pressed.
+     */
     private static final double ACCELERATION_INCREMENT = 0.002d;
+
+    /**
+     * The decrement applied to the car's acceleration each time the acceleration key is pressed.
+     */
     private static final double ACCELERATION_DECREMENT = 0.002d;
+
+    /**
+     * The car's speed is divided by this factor whenever it enters a tile marked belonging to the "slow" layer.
+     */
     private static final double OBSTACLE_PENALTY_FACTOR = 3d;
 
+    /**
+     * The car's turn at any given moment.
+     */
     protected double turn;
 
+    /**
+     * The current car's speed.
+     */
     protected double speed;
+
+    /**
+     * Whether or not the car is considered active.
+     */
     protected boolean isAlive;
+
+    /**
+     * The current score of the car, used for learning purposes.
+     */
     protected double score = 0.0;
+
+    /**
+     * The current fitness of the car, used for learning purposes.
+     */
     protected double fitness = 0.0;
 
+    /**
+     * Laps handling variables.
+     */
     protected boolean isOnArrivalLine = true;
     private boolean hasCrossedArrivalLineOnce = false;
     protected List<Float> lapsTime;
     protected float lastLapAbsoluteTime = 0;
+
+    /**
+     * The absolute time this car has been running.
+     */
     protected float timeAccumulator = 0;
 
+    /**
+     * The track on which the car lives.
+     */
     protected TiledMap map;
 
+    /**
+     * Some key directions used for position tracking, by AIs mostly.
+     */
     protected Vector2 forward, right, left, diagRight, diagLeft;
 
     public Car(TiledMap map, int x, int y) {
@@ -61,10 +116,11 @@ public class Car extends RenderableObject implements KeyPressedListener {
 
         this.lapsTime = new ArrayList<>();
 
-        File dir = null;
+        // Assign a random image to this car.
+        File imagesDirectory = null;
         try {
-            dir = new File(ResourceLoader.getResource("cars/").toURI());
-            File[] files = dir.listFiles();
+            imagesDirectory = new File(ResourceLoader.getResource("cars/").toURI());
+            File[] files = imagesDirectory.listFiles();
             Random rand = new Random();
             assert files != null;
             File file = files[rand.nextInt(files.length)];
@@ -74,10 +130,9 @@ public class Car extends RenderableObject implements KeyPressedListener {
         }
     }
 
-
     @Override
     public void keyPressed(int key, char c) {
-
+        // Nothing to do for now.
     }
 
     @Override
@@ -142,7 +197,6 @@ public class Car extends RenderableObject implements KeyPressedListener {
         left.rotate(Math.toRadians(angleContribution));
         diagLeft.rotate(Math.toRadians(angleContribution));
         diagRight.rotate(Math.toRadians(angleContribution));
-
     }
 
     private void checkForArrival(double x, double y) {
@@ -165,6 +219,13 @@ public class Car extends RenderableObject implements KeyPressedListener {
             isOnArrivalLine = false;
     }
 
+    /**
+     * Returns the speed factor pertaining to the tile (x, y).
+     *
+     * @param x The x grid-coordinate of the tile to check.
+     * @param y The y grid-coordinate of the tile to check.
+     * @return The speed factor on that tile.
+     */
     private double getTerrainFactor(double x, double y) {
         try {
             if (this.map.getTileImage(
