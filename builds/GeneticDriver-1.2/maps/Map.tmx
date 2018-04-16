@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" tiledversion="1.1.4" orientation="orthogonal" renderorder="right-down" width="20" height="15" tilewidth="64" tileheight="64" infinite="0" nextobjectid="1">
+ <tileset firstgid="1" name="terrainTile3" tilewidth="64" tileheight="64" tilecount="1" columns="1">
+  <image source="tiles/terrainTile3.png" width="64" height="64"/>
+ </tileset>
+ <tileset firstgid="2" name="terrainTile2" tilewidth="64" tileheight="64" tilecount="1" columns="1">
+  <image source="tiles/terrainTile2.png" width="64" height="64"/>
+ </tileset>
+ <tileset firstgid="3" name="terrainTile4" tilewidth="64" tileheight="64" tilecount="1" columns="1">
+  <image source="tiles/terrainTile4.png" width="64" height="64"/>
+ </tileset>
+ <tileset firstgid="4" name="terrainTile6" tilewidth="64" tileheight="64" tilecount="1" columns="1">
+  <image source="tiles/terrainTile6.png" width="64" height="64"/>
+ </tileset>
+ <tileset firstgid="5" name="roadTile12" tilewidth="64" tileheight="64" tilecount="1" columns="0">
+   <image width="64" height="64" source="tiles/roadTile12.png"/>
+ </tileset>
+ <layer name="Environment" width="20" height="15">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACmNgoC9gIgEPpHmkqKHUbnqZRyrAZedgM4+QPcSGH73MwwdoZR6l+YJW5pEKADTAAt2wBAAA
+  </data>
+ </layer>
+ <layer name="Slow" width="20" height="15" opacity="0.89">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACmNmYGBgpiMmBQykeaSoodRueplHaVwNVvPISRMDaR656Y8S80h1O73MIxUDANLY+7OwBAAA
+  </data>
+ </layer>
+ <layer name="Walls" width="20" height="15">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACmNgGAX0AixYMKXmUROQYx42P1HLf9jsGknmjQJMAAD3Q8DLsAQAAA==
+  </data>
+ </layer>
+ <layer name="Arrival" width="20" height="15">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACmNgGAXUBqyD3LxRMAqGKgAADOcaELAEAAA=
+  </data>
+ </layer>
+</map>
