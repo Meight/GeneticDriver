@@ -35,7 +35,7 @@ public class GeneticSystem {
         this.scoreView = scoreView;
 
         players = new ArrayList<>();
-        players = CreateNewPopulation();
+        players = createNewPopulation();
         this.iteration = 0;
         this.mutationRate = 1.0f;
         this.bestPopulation = 0;
@@ -55,14 +55,14 @@ public class GeneticSystem {
     HANDLE SCORE
     HANDLE RAYCAST DISTANCE AS INPUT
      */
-    public void Update(int delta){
+    public void update(int delta){
         //if not all car dead
-        if(AreAllCarNotDead()){
-            ActivatesBrain(delta);
+        if(areAllCarsNotDead()){
+            activateBrain(delta);
         } else {
-            players = EvolvePopulation();
+            players = evolvePopulation();
             iteration++;
-            DisplayGeneticSystem();
+            displayGeneticSystem();
         }
         //if all car dead
         //Select
@@ -71,7 +71,7 @@ public class GeneticSystem {
         //Let's GO
     }
 
-    public void DisplayGeneticSystem(){
+    public void displayGeneticSystem(){
         System.out.flush();
         System.out.println("Iteration "+iteration);
         System.out.println("Number of cars "+players.size());
@@ -80,7 +80,7 @@ public class GeneticSystem {
         System.out.println("Best Score "+bestScore);
     }
 
-    public void ActivatesBrain(int delta){
+    public void activateBrain(int delta){
         for (Player player : players) {
             if(player.getCar().isAlive()){
                 RenderableObject car = player.getCar();
@@ -90,7 +90,7 @@ public class GeneticSystem {
         }
     }
 
-    public List<Player> CreateNewPopulation(){
+    public List<Player> createNewPopulation(){
         List<Player> p = new ArrayList<>();
 
         //players.clear();
@@ -102,18 +102,18 @@ public class GeneticSystem {
         return p;
     }
 
-    public List<Player> EvolvePopulation(){
+    public List<Player> evolvePopulation(){
         scoreView.clearPlayerList();
 
         // select the top units of the current population to get an array of winners
         // (they will be copied to the next population)
-        List<Player> winners = Selection();
+        List<Player> winners = selection();
         List<Player> offsprings = new ArrayList<>();
         if (this.mutationRate == 1 && ((CarAI)players.get(0).getCar()).getFitness() < 400){
             // If the best unit from the initial population has a negative fitness
             // then it means there is no any bird which reached the first barrier!
             // Playing as the God, we can destroy this bad population and try with another one.
-            return CreateNewPopulation();
+            return createNewPopulation();
         } else {
             this.mutationRate = 0.2f; // else set the mutation rate to the real value
             // fill the rest of the next population with new units using crossover and mutation
@@ -124,20 +124,20 @@ public class GeneticSystem {
                     // offspring is made by a crossover of two best winners
                     Player parentA = winners.get(0);
                     Player parentB = winners.get(1);
-                    offspring = CrossOver(parentA, parentB, offspring.getName());
+                    offspring = crossOver(parentA, parentB, offspring.getName());
 
                 } else if (i < carNumber-2){
                     // offspring is made by a crossover of two random winners
-                    Player parentA = GetRandomPlayer(winners);
-                    Player parentB = GetRandomPlayer(winners);
-                    offspring = CrossOver(parentA, parentB, offspring.getName());
+                    Player parentA = getRandomPlayer(winners);
+                    Player parentB = getRandomPlayer(winners);
+                    offspring = crossOver(parentA, parentB, offspring.getName());
 
                 } else {
                     // offspring is a random winner
-                    ((CarAI)offspring.getCar()).setNeuralNetwork(((CarAI)GetRandomPlayer(winners).getCar()).getCleanNeuralNetwork());
+                    ((CarAI)offspring.getCar()).setNeuralNetwork(((CarAI) getRandomPlayer(winners).getCar()).getCleanNeuralNetwork());
                 }
                 // mutate the new population
-                offspring = Mutate(offspring);
+                offspring = mutate(offspring);
                 ((CarAI)offspring.getCar()).ResetStats();
                 offsprings.add(offspring);
             }
@@ -159,7 +159,7 @@ public class GeneticSystem {
 
 
 
-    public List<Player> Selection(){
+    public List<Player> selection(){
         Collections.sort(players);
         // if the top winner has the best fitness in the history, store its achievement!
         if (players.get(0).getCar().getFitness() > bestFitness){
@@ -196,7 +196,7 @@ public class GeneticSystem {
          */
     }
 
-    public Player CrossOver(Player parentA, Player parentB, String name){
+    public Player crossOver(Player parentA, Player parentB, String name){
         Net netA = ((CarAI)parentA.getCar()).getCleanNeuralNetwork();
         Net netB = ((CarAI)parentB.getCar()).getCleanNeuralNetwork();
         Player offspringA = new Player(name, map, true);
@@ -254,12 +254,12 @@ public class GeneticSystem {
     }
 
     //We choose to mutate the hidden layer only
-    public Player Mutate(Player player){
+    public Player mutate(Player player){
 
         Layer finalLayer = ((CarAI)player.getCar()).getNeuralNetwork().getNet().get(1);
 
         for(int i=0;i<finalLayer.getLayer().size();i++){
-            finalLayer.getLayer().get(i).setWeights(MutateNeuron(finalLayer.getLayer().get(i)));
+            finalLayer.getLayer().get(i).setWeights(mutateNeuron(finalLayer.getLayer().get(i)));
         }
         ((CarAI)player.getCar()).getNeuralNetwork().getNet().set(1,finalLayer);
         return player;
@@ -281,7 +281,7 @@ public class GeneticSystem {
         */
     }
 
-    public List<Double> MutateNeuron(Neuron neuron){
+    public List<Double> mutateNeuron(Neuron neuron){
         List<Double> weights = new ArrayList<>();
         double mutatedWeight;
 
@@ -314,11 +314,11 @@ public class GeneticSystem {
 
      */
 
-    private Player GetRandomPlayer(List<Player> list){
+    private Player getRandomPlayer(List<Player> list){
         return list.get(new Random().nextInt(list.size()-1));
     }
 
-    private boolean AreAllCarNotDead(){
+    private boolean areAllCarsNotDead(){
         boolean res = false;
         for (Player p: players) {
             res |= p.getCar().isAlive();
@@ -326,7 +326,7 @@ public class GeneticSystem {
         return res;
     }
 
-    public void KillAllCarAI(){
+    public void killAllCarsAI(){
         for (Player p: players) {
             p.getCar().setAlive(false);
         }
@@ -364,38 +364,3 @@ public class GeneticSystem {
         return bestScore;
     }
 }
-
-
-/*
-    public Player CrossOver(Player parentA, Player parentB){
-        Net netA = ((CarAI)parentA.getCar()).getNeuralNetwork();
-        Net netB = ((CarAI)parentB.getCar()).getNeuralNetwork();
-        int cutPoint = new Random().nextInt(netA.neuronsHiddenNumber());
-
-        //setup for the cross over
-        //cutting the hidden layer of parentA in two lists
-        Layer layerA = (Layer) netA.getNet().get(1).getLayer();
-        Layer aBeforeCut = (Layer)layerA.getLayer().subList(0,cutPoint);
-        Layer aAfterCut = (Layer)layerA.getLayer().subList(cutPoint,layerA.getLayer().size());
-
-        //Same thing for B
-        Layer layerB = (Layer) netB.getNet().get(1).getLayer();
-        Layer bBeforeCut = (Layer)layerB.getLayer().subList(0,cutPoint);
-        Layer bAfterCut = (Layer)layerB.getLayer().subList(cutPoint,layerB.getLayer().size());
-
-        //merge for parentA net
-        List<Neuron> finalA = new ArrayList<>();
-        finalA.addAll((Collection<? extends Neuron>) aBeforeCut);
-        finalA.addAll((Collection<? extends Neuron>) bAfterCut);
-        netA.getNet().get(1).setLayer(finalA);
-        ((CarAI)parentA.getCar()).setNeuralNetwork(netA);
-        //merge for parentB net
-        List<Neuron> finalB = new ArrayList<>();
-        finalA.addAll((Collection<? extends Neuron>) bBeforeCut);
-        finalA.addAll((Collection<? extends Neuron>) aAfterCut);
-        netB.getNet().get(1).setLayer(finalB);
-        ((CarAI)parentA.getCar()).setNeuralNetwork(netB);
-
-        return new Random().nextInt(2) == 1 ? parentA : parentB;
-     }
- */

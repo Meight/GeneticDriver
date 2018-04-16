@@ -63,7 +63,7 @@ public class WindowGameAI extends BasicGame {
 
     @Override
     public void update(GameContainer container, int delta) throws SlickException {
-        geneticSys.Update(delta);
+        geneticSys.update(delta);
     }
 
     @Override
@@ -72,7 +72,7 @@ public class WindowGameAI extends BasicGame {
             this.container.exit();
         }
         if (Input.KEY_ENTER == key) {
-            geneticSys.KillAllCarAI();
+            geneticSys.killAllCarsAI();
         }
     }
 

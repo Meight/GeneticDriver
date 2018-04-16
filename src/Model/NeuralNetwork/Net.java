@@ -108,7 +108,7 @@ public class Net {
         }
 
         // For all layers from ouputs to first hidden layer
-        // Update the connection weights
+        // update the connection weights
 
         for (int layerNum = layers.size() - 1; layerNum > 0; --layerNum)
         {
