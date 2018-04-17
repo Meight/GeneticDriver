@@ -8,7 +8,7 @@ import org.newdawn.slick.tiled.TiledMap;
 public class Rules {
     private static final String ARRIVAL_LAYER_NAME = "Arrival";
     private static final String SLOW_LAYER_NAME = "Slow";
-    private static final String OBSTACLE_LAYER_NAME = "Wall";
+    private static final String OBSTACLE_LAYER_NAME = "Walls";
 
     public static boolean isTileArrival(TiledMap map, double x, double y) {
         return map.getTileImage(
