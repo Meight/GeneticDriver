@@ -211,7 +211,7 @@ public class Car extends RenderableObject implements KeyPressedListener {
     }
 
     private void updateLaps(double x, double y) {
-        if(Rules.isArrivalTile(map, x, y)) {
+        if(MapRules.isArrivalTile(map, x, y)) {
             if(!isOnArrivalLine) {
                 isOnArrivalLine = true;
 
@@ -234,7 +234,7 @@ public class Car extends RenderableObject implements KeyPressedListener {
      * @return The speed factor on that tile.
      */
     private double getTerrainFactor(double x, double y) {
-        return Rules.getSpeedPenaltyFactorForTile(map, x, y);
+        return MapRules.getSpeedPenaltyFactorForTile(map, x, y);
     }
 
     public float getAverageLapTime() {
