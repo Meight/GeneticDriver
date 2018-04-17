@@ -158,6 +158,11 @@ public class Car extends RenderableObject implements KeyPressedListener {
         super.render(container, g);
     }
 
+    /**
+     * Updates the car's physique based on the fed input and the time elapsed since last update.
+     * @param input     Input to apply to the car.
+     * @param deltaTime Time elapsed since last update.
+     */
     private void updatePhysics(Input input, float deltaTime) {
         timeAccumulator += deltaTime;
 
@@ -184,13 +189,23 @@ public class Car extends RenderableObject implements KeyPressedListener {
         double y = Math.sin(angle) * speed;
         double speedPenaltyFactor = getTerrainFactor(position.x + x, position.y + y);
 
+        // Update car's stats.
+        if(speedPenaltyFactor > 1) {
+            isAlive = false;
+        } else {
+            score++;
+            fitness++;
+        }
+
         updateLaps(position.x + x, position.y + y);
 
+        // Applies penalty factor to the car.
         x /= speedPenaltyFactor;
         y /= speedPenaltyFactor;
-        position.add(x, y);
         angleContribution /= speedPenaltyFactor;
 
+        // Update the car's state.
+        position.add(x, y);
         angle += Math.toRadians(angleContribution);
         rotate((float) angleContribution);
         forward.rotate(Math.toRadians(angleContribution));
@@ -201,7 +216,7 @@ public class Car extends RenderableObject implements KeyPressedListener {
     }
 
     private void updateLaps(double x, double y) {
-        if(Rules.isTileArrival(map, x, y)) {
+        if(Rules.isArrivalTile(map, x, y)) {
             if(!isOnArrivalLine) {
                 isOnArrivalLine = true;
 
@@ -224,29 +239,20 @@ public class Car extends RenderableObject implements KeyPressedListener {
      * @return The speed factor on that tile.
      */
     private double getTerrainFactor(double x, double y) {
-        try {
-            if (this.map.getTileImage(
-                    (int) x / this.map.getTileWidth(),
-                    (int) y / this.map.getTileHeight(),
-                    this.map.getLayerIndex("Walls")) != null){
-                isAlive = false;
-                return 9000;
-            } else if (this.map.getTileImage(
-                    (int) x / this.map.getTileWidth(),
-                    (int) y / this.map.getTileHeight(),
-                    this.map.getLayerIndex("Slow")) != null){
-                isAlive = false;
-                return OBSTACLE_PENALTY_FACTOR;
-            } else {
-                score++;
-                fitness++;
-                return 1;
-            }
+        return Rules.getSpeedPenaltyFactorForTile(map, x, y);
+    }
 
-        } catch(ArrayIndexOutOfBoundsException e) {
-            isAlive = false;
-            return 9000;
+    public float getAverageLapTime() {
+        if(lapsTime.isEmpty())
+            return 0;
+
+        float sum = 0;
+
+        for(float lapTime : lapsTime) {
+            sum += lapTime;
         }
+
+        return sum / lapsTime.size();
     }
 
     public boolean isAlive() {
@@ -288,19 +294,6 @@ public class Car extends RenderableObject implements KeyPressedListener {
 
     public float getTimeAccumulator() {
         return timeAccumulator;
-    }
-
-    public float getAverageLapTime() {
-        if(lapsTime.isEmpty())
-            return 0;
-
-        float sum = 0;
-
-        for(float lapTime : lapsTime) {
-            sum += lapTime;
-        }
-
-        return sum / lapsTime.size();
     }
 
     public float getScorePerSecond() {
