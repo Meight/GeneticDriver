@@ -183,7 +183,8 @@ public class Car extends RenderableObject implements KeyPressedListener {
         double x = Math.cos(angle) * speed;
         double y = Math.sin(angle) * speed;
         double speedPenaltyFactor = getTerrainFactor(position.x + x, position.y + y);
-        checkForArrival(position.x + x, position.y + y);
+
+        updateLaps(position.x + x, position.y + y);
 
         x /= speedPenaltyFactor;
         y /= speedPenaltyFactor;
@@ -199,12 +200,8 @@ public class Car extends RenderableObject implements KeyPressedListener {
         diagRight.rotate(Math.toRadians(angleContribution));
     }
 
-    private void checkForArrival(double x, double y) {
-        if(this.map.getTileImage(
-                (int) x / this.map.getTileWidth(),
-                (int) y / this.map.getTileHeight(),
-                this.map.getLayerIndex("Arrival")) != null) {
-
+    private void updateLaps(double x, double y) {
+        if(Rules.isTileArrival(map, x, y)) {
             if(!isOnArrivalLine) {
                 isOnArrivalLine = true;
 
