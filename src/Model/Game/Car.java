@@ -49,11 +49,6 @@ public class Car extends RenderableObject implements KeyPressedListener {
     private static final double ACCELERATION_DECREMENT = 0.002d;
 
     /**
-     * The car's speed is divided by this factor whenever it enters a tile marked belonging to the "slow" layer.
-     */
-    private static final double OBSTACLE_PENALTY_FACTOR = 3d;
-
-    /**
      * The car's turn at any given moment.
      */
     protected double turn;
