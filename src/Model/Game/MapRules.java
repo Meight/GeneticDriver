@@ -4,24 +4,31 @@ import org.newdawn.slick.tiled.TiledMap;
 
 /**
  * @author Matthieu Le Boucher
+ *
+ * Set of static methods stating the rules of the game for a given map and tile.
  */
-public class Rules {
+public class MapRules {
     private static final String ARRIVAL_LAYER_NAME = "Arrival";
     private static final String SLOW_LAYER_NAME = "Slow";
     private static final String OBSTACLE_LAYER_NAME = "Walls";
+    private static final String ROAD_LAYER_NAME = "Environment";
 
     private static final double WALL_SPEED_PENALTY_FACTOR = 9000d;
     private static final double SLOW_SPEED_PENALTY_FACTOR = 3d;
 
-    static boolean isArrivalTile(TiledMap map, double x, double y) {
+    public static boolean isArrivalTile(TiledMap map, double x, double y) {
         return !isLayerNull(map, x, y, ARRIVAL_LAYER_NAME);
     }
 
-    static boolean isSlowTile(TiledMap map, double x, double y) {
+    public static boolean isRoadTile(TiledMap map, double x, double y) {
+        return !isLayerNull(map, x, y, ROAD_LAYER_NAME);
+    }
+
+    public static boolean isSlowTile(TiledMap map, double x, double y) {
         return !isLayerNull(map, x, y, SLOW_LAYER_NAME);
     }
 
-    static boolean isWallTile(TiledMap map, double x, double y) {
+    public static boolean isWallTile(TiledMap map, double x, double y) {
         return !isLayerNull(map, x, y, OBSTACLE_LAYER_NAME);
     }
 
