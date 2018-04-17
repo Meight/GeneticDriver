@@ -30,13 +30,8 @@ public class Physics2D {
     }
 
     private static boolean isPixelAccessible(double x, double y, TiledMap map) {
-        // Get the tile coordinates from the pixel coord.
-        int tileX = (int) Math.floor(x / map.getTileWidth());
-        int tileY = (int) Math.floor(y / map.getTileHeight());
-
         try {
-            return tileX >= 0 && tileX < map.getWidth() && tileY >= 0 && tileY < map.getHeight()
-                    && MapRules.isRoadTile(map, tileX, tileY);
+            return MapRules.isRoadTile(map, x, y);
         } catch(ArrayIndexOutOfBoundsException e) {
             return false;
         }
