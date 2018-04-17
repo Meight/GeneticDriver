@@ -1,5 +1,6 @@
 package Utils.Physics;
 
+import Model.Game.MapRules;
 import org.dyn4j.geometry.Vector2;
 import org.newdawn.slick.tiled.TiledMap;
 
@@ -35,7 +36,7 @@ public class Physics2D {
 
         try {
             return tileX >= 0 && tileX < map.getWidth() && tileY >= 0 && tileY < map.getHeight()
-                    && map.getTileImage(tileX, tileY, map.getLayerIndex("Environment")) != null;
+                    && MapRules.isRoadTile(map, tileX, tileY);
         } catch(ArrayIndexOutOfBoundsException e) {
             return false;
         }
