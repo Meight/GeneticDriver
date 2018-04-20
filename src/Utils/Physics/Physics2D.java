@@ -22,7 +22,7 @@ public class Physics2D {
      * @param direction The direction of the ray.
      * @param map       The map constraining the ray.
      * @param rayLength The maximal length of the ray.
-     * @return          A @see Utils.Physics.RaycastHit containing data about the hit if there was a hit,
+     * @return          A {@link Utils.Physics.RaycastHit} containing data about the hit if there was a hit,
      *                  null otherwise.
      */
     public static RaycastHit raycast(Vector2 position, Vector2 direction, TiledMap map, double rayLength) {
