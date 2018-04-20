@@ -17,19 +17,19 @@ public class MapRules {
     private static final double SLOW_SPEED_PENALTY_FACTOR = 3d;
 
     public static boolean isArrivalTile(TiledMap map, double x, double y) {
-        return !isLayerNull(map, x, y, ARRIVAL_LAYER_NAME);
+        return isLayerNotNull(map, x, y, ARRIVAL_LAYER_NAME);
     }
 
     public static boolean isRoadTile(TiledMap map, double x, double y) {
-        return !isLayerNull(map, x, y, ROAD_LAYER_NAME);
+        return isLayerNotNull(map, x, y, ROAD_LAYER_NAME);
     }
 
     public static boolean isSlowTile(TiledMap map, double x, double y) {
-        return !isLayerNull(map, x, y, SLOW_LAYER_NAME);
+        return isLayerNotNull(map, x, y, SLOW_LAYER_NAME);
     }
 
     public static boolean isWallTile(TiledMap map, double x, double y) {
-        return !isLayerNull(map, x, y, OBSTACLE_LAYER_NAME);
+        return isLayerNotNull(map, x, y, OBSTACLE_LAYER_NAME);
     }
 
     static double getSpeedPenaltyFactorForTile(TiledMap map, double x, double y) {
@@ -47,10 +47,10 @@ public class MapRules {
         }
     }
 
-    private static boolean isLayerNull(TiledMap map, double x, double y, String layerName) {
+    private static boolean isLayerNotNull(TiledMap map, double x, double y, String layerName) {
         return map.getTileImage(
                 (int) x / map.getTileWidth(),
                 (int) y / map.getTileHeight(),
-                map.getLayerIndex(layerName)) == null;
+                map.getLayerIndex(layerName)) != null;
     }
 }
