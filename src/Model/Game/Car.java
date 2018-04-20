@@ -18,9 +18,9 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * @author Matthieu Boucher
- *
  * Basic implementation of a 2D controllable car.
+ *
+ * @author Matthieu Boucher
  */
 public class Car extends RenderableObject implements KeyPressedListener {
     /**
