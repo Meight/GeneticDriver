@@ -3,15 +3,30 @@ package Utils.Physics;
 import org.dyn4j.geometry.Vector2;
 
 /**
+ * Abstraction to store important information about a physical hit between a ray and an obstacle.
+ *
  * @author Matthieu Le Boucher
  */
 public class RaycastHit {
+    /**
+     * The origin of the ray.
+     */
     private Vector2 origin;
+
+    /**
+     * The direction of the ray.
+     */
     private Vector2 direction;
+
+    /**
+     * Coordinates of the hit point.
+     */
     private Vector2 hitPoint;
 
+    /**
+     * Distance between the origin and the hit point.
+     */
     private double distance;
-    private int type;
 
     public RaycastHit(Vector2 origin, Vector2 direction, Vector2 hitPoint, double distance) {
         this.origin = origin;
@@ -34,9 +49,5 @@ public class RaycastHit {
 
     public double getDistance() {
         return distance;
-    }
-
-    public int getType() {
-        return type;
     }
 }
