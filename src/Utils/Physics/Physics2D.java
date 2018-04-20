@@ -13,8 +13,6 @@ import java.util.List;
  * @author Matthieu Le Boucher
  */
 public class Physics2D {
-    private static final int MAXIMAL_LOOPS = 100;
-
     /**
      * Casts a ray from a given origin into a given direction with an arbitrary length.
      *
