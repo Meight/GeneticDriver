@@ -8,11 +8,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * A small custom library to cast rays around the map. Optimized using Bresenham's algorithm.
+ *
  * @author Matthieu Le Boucher
  */
 public class Physics2D {
     private static final int MAXIMAL_LOOPS = 100;
 
+    /**
+     * Casts a ray from a given origin into a given direction with an arbitrary length.
+     *
+     * @param position  The origin of the ray.
+     * @param direction The direction of the ray.
+     * @param map       The map constraining the ray.
+     * @param rayLength The maximal length of the ray.
+     * @return          A @see Utils.Physics.RaycastHit containing data about the hit if there was a hit,
+     *                  null otherwise.
+     */
     public static RaycastHit raycast(Vector2 position, Vector2 direction, TiledMap map, double rayLength) {
         RaycastHit hit = null;
 
@@ -29,6 +41,13 @@ public class Physics2D {
         return hit;
     }
 
+    /**
+     * Tells whether or not a pixel is reachable based on map's constraints.
+     *
+     * @param x     The x-coordinate of the pixel.
+     * @param y     The y-coordinate of the pixel.
+     * @param map   The map constraining the pixels.
+     */
     private static boolean isPixelAccessible(double x, double y, TiledMap map) {
         try {
             return MapRules.isRoadTile(map, x, y);
@@ -37,23 +56,41 @@ public class Physics2D {
         }
     }
 
+    /**
+     * Returns a list of points being part of the line between two points.
+     *
+     * @param p0 The first point of the line.
+     * @param p1 The second point of the line.
+     * @return A list of all points situated on that line.
+     */
     private static List<Vector2> BresenhamLine(Vector2 p0, Vector2 p1) {
         return BresenhamLine((int) p0.x, (int) p0.y, (int) p1.x, (int) p1.y);
     }
 
+    /**
+     * Returns a list of points being part of the line between two points (x1, y1) and (x2, y2).
+     *
+     * @param x1 The x-coordinate of the first point of the line.
+     * @param y1 The y-coordinate of the first point of the line.
+     * @param x2 The x-coordinate of the second point of the line.
+     * @param y2 The y-coordinate of the second point of the line.
+     * @return A list of all points situated on that line.
+     */
     private static List<Vector2> BresenhamLine(int x1, int y1, int x2, int y2) {
         List<Vector2> result = new ArrayList<>();
 
-        // delta of exact value and rounded value of the dependent variable
+        // Delta of exact value and rounded value of the dependent variable.
         int d = 0;
 
         int dx = Math.abs(x2 - x1);
         int dy = Math.abs(y2 - y1);
 
-        int dx2 = 2 * dx; // slope scaling factors to
-        int dy2 = 2 * dy; // avoid floating point
+        // Slope scaling factors to avoid floating point.
+        int dx2 = 2 * dx;
+        int dy2 = 2 * dy;
 
-        int ix = x1 < x2 ? 1 : -1; // increment direction
+        // Increment direction.
+        int ix = x1 < x2 ? 1 : -1;
         int iy = y1 < y2 ? 1 : -1;
 
         int x = x1;
