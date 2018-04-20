@@ -3,9 +3,9 @@ package Model.Game;
 import org.newdawn.slick.tiled.TiledMap;
 
 /**
- * @author Matthieu Le Boucher
- *
  * Set of static methods stating the rules of the game for a given map and tile.
+ *
+ * @author Matthieu Le Boucher
  */
 public class MapRules {
     private static final String ARRIVAL_LAYER_NAME = "Arrival";
