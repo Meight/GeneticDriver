@@ -1,5 +1,11 @@
 # GeneticDriver
 
+## Preview
+
+![20 AI cars learning.](https://github.com/Meight/GeneticDriver/blob/master/docs/images/preview-learning.png "20 AI cars learning.")
+
+![Player versus AI.](https://github.com/Meight/GeneticDriver/blob/master/docs/images/preview-vs-ai.png "Player versus the best stored AI.")
+
 ## Run the application
 
 Grab the latest build [here](https://github.com/Meight/GeneticDriver/tree/master/builds) or head to the ``builds/`` folder.
