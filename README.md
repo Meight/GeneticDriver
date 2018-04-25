@@ -4,7 +4,11 @@
 
 ![20 AI cars learning.](https://github.com/Meight/GeneticDriver/blob/master/docs/images/preview-learning.png "20 AI cars learning.")
 
+20 AI cars learning how to drive through the use of raycasts.
+
 ![Player versus AI.](https://github.com/Meight/GeneticDriver/blob/master/docs/images/preview-vs-ai.png "Player versus the best stored AI.")
+
+Player vers the best stored AI (all-time best individual from the training phases).
 
 ## Run the application
 
