@@ -8,7 +8,7 @@
 
 ![Player versus AI.](https://github.com/Meight/GeneticDriver/blob/master/docs/images/preview-vs-ai.png "Player versus the best stored AI.")
 
-Player vers the best stored AI (all-time best individual from the training phases).
+Player vers the best stored AI (all-time best individual from the training phases). Though this individual's car isn't boosted in any way, it's pratictally almost impossible to beat its nearly perfect trajectories.
 
 ## Run the application
 
